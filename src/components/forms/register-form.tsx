@@ -1,34 +1,44 @@
 "use client";
 
-import { LoginSchemaType, loginSchema } from "@/schema/login-schema";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form } from "../ui/form";
 import RHFInput from "../rhf-components/rhf-input";
 import { Button } from "../ui/button";
 import ButtonLoader from "../ui/button-loader";
-export default function LoginForm() {
-  const form = useForm<LoginSchemaType>({
-    resolver: zodResolver(loginSchema),
+import {
+  registerSchema,
+  type RegisterSchemaType,
+} from "@/schema/register-schema";
+export default function RegisterForm() {
+  const form = useForm<RegisterSchemaType>({
+    resolver: zodResolver(registerSchema),
   });
   const {
     handleSubmit,
     formState: { isSubmitting },
   } = form;
 
-  async function loginUser() {}
+  async function registerUser() {}
   return (
     <>
       <Form {...form}>
-        <form onSubmit={handleSubmit(loginUser)} className="space-y-4 p-10">
-          <RHFInput<LoginSchemaType>
+        <form onSubmit={handleSubmit(registerUser)} className="space-y-4 p-10">
+          <RHFInput<RegisterSchemaType>
             name="username"
             type="text"
             placeHolder="Enter your username"
             formLabel="Username"
           />
 
-          <RHFInput<LoginSchemaType>
+          <RHFInput<RegisterSchemaType>
+            name="email"
+            type="email"
+            placeHolder="Enter your email"
+            formLabel="Email"
+          />
+
+          <RHFInput<RegisterSchemaType>
             name="password"
             type="password"
             placeHolder="Enter your password"
@@ -37,7 +47,7 @@ export default function LoginForm() {
 
           <Button disabled={isSubmitting} type="submit" className="w-full">
             {isSubmitting && <ButtonLoader />}
-            {isSubmitting ? "Logging in..." : "Login"}
+            {isSubmitting ? "Registering..." : "Register"}
           </Button>
         </form>
       </Form>
