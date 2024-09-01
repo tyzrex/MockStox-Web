@@ -5,7 +5,7 @@ import SectionWrapper from "../wrappers/section-wrapper";
 
 export default function HeroSection() {
   return (
-    <SectionWrapper className="relative overflow-hidden min-h-[80vh] flex items-center">
+    <SectionWrapper className="relative overflow-hidden flex items-center">
       <SectionContainerWrapper>
         <BlurryBlob
           className="rounded-xl opacity-35"
@@ -28,7 +28,7 @@ export default function HeroSection() {
           </div>
           <div className="space-x-4">
             <Button className="bg-black text-white hover:bg-gray-800">
-              Get MockStox for Mobile
+              Sign Up Now
             </Button>
             <Button variant="outline">Open Dashboard</Button>
           </div>

@@ -1,32 +1,34 @@
 import type { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import GoogleProvider from "next-auth/providers/google";
 import { jwtDecode } from "jwt-decode";
-import { redirect } from "next/navigation";
 
 export const options: NextAuthOptions = {
   providers: [
-    GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID as string,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
-    }),
     CredentialsProvider({
       name: "Credentials",
       credentials: {
-        email: { label: "Email", type: "email", placeholder: "jsmith" },
+        username: { label: "Email", type: "text", placeholder: "jsmith" },
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials, _req) {
         try {
+          console.log("credentials", credentials);
           // const response = await PostRequest("auth/jwt/create/",);
-          const response = await fetch("auth/jwt/create", {
-            method: "POST",
-            body: JSON.stringify(credentials),
-            headers: {
-              "Content-Type": "application/json",
-            },
-          });
+          const response = await fetch(
+            `${process.env.NEXT_PUBLIC_API_URL}auth/jwt/create`,
+            {
+              method: "POST",
+              body: JSON.stringify(credentials),
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+          if (!response.ok) {
+            throw await response.json();
+          }
           const data = await response.json();
+          console.log("data", data);
           return data;
         } catch (err: any) {
           switch (err.status) {
@@ -83,12 +85,14 @@ export const options: NextAuthOptions = {
       );
 
       const info = await userInfo.json();
+      console.log("info", info);
       // console.log(info);
       const decodedJWT = jwtDecode(token.access as string);
       // console.log(decodedJWT);
       token.name = info.name;
       token.email = info.email;
       token.accessExpireTime = decodedJWT.exp;
+      token.acces;
 
       return token;
     },

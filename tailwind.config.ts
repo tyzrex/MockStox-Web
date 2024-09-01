@@ -14,7 +14,7 @@ const config = {
       center: true,
       padding: "2rem",
       screens: {
-        "2xl": "1400px",
+        "2xl": "1500px",
       },
     },
 
@@ -24,14 +24,14 @@ const config = {
           "blur-20": "blur(20px)",
           "blur-25": "blur(25px)",
         },
-        "primary-accent": "#d7c7a2",
+        "primary-accent": "#84a4fc",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: {
-          DEFAULT: "hsl(var(--primary))",
+          DEFAULT: "#10a4fc",
           foreground: "hsl(var(--primary-foreground))",
         },
         secondary: {
