@@ -2,6 +2,7 @@
 import { useState } from "react";
 import SectionWrapper from "../wrappers/section-wrapper";
 import SectionContainerWrapper from "../wrappers/section-container-wrapper";
+import { Button } from "../ui/button";
 
 export default function FAQSection() {
   // State to manage open/close of each FAQ item
@@ -62,19 +63,14 @@ export default function FAQSection() {
                   <h5 className="text-xl font-bold">Still have questions?</h5>
                   <div className="max-w-sm">
                     <p className="text-gray-500 text-sm sm:text-base">
-                      Can’t find the answer you’re looking for? Please chat to
-                      our support.
+                      Can&apos;t find the answer you&apos;re looking for? Please
+                      chat to our support.
                     </p>
                   </div>
                 </div>
               </div>
               <div className="mb-6 mt-8 h-[0.5px] w-full bg-gray-300"></div>
-              <a
-                href="#"
-                className="inline-block items-center rounded-md bg-black px-6 py-3 text-center font-semibold text-white"
-              >
-                Get In Touch
-              </a>
+              <Button>Get in touch</Button>
             </div>
           </div>
           <div className="lg:flex-[1_1_500px] w-full flex-none">

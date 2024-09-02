@@ -5,8 +5,8 @@ import SectionWrapper from "../wrappers/section-wrapper";
 
 export default function HeroSection() {
   return (
-    <SectionWrapper className="relative overflow-hidden flex items-center">
-      <SectionContainerWrapper>
+    <SectionWrapper className="relative overflow-hidden  flex items-center">
+      <SectionContainerWrapper className="py-20">
         <BlurryBlob
           className="rounded-xl opacity-35"
           firstBlobColor="bg-yellow-300"
@@ -27,9 +27,7 @@ export default function HeroSection() {
             </p>
           </div>
           <div className="space-x-4">
-            <Button className="bg-black text-white hover:bg-gray-800">
-              Sign Up Now
-            </Button>
+            <Button>Sign Up Now</Button>
             <Button variant="outline">Open Dashboard</Button>
           </div>
         </div>

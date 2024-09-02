@@ -8,31 +8,9 @@ export default function Footer() {
         <SectionContainerWrapper>
           {/* Component */}
           <div className="sm:flex-row flex justify-between flex-col">
-            <h2 className="font-bold text-3xl md:text-5xl w-full max-w-xl">
-              Lightning fast Webflow Dev made easy
+            <h2 className="font-bold text-center text-3xl md:text-5xl w-full">
+              MockStox: Stock Prediction and Paper Trading Platform
             </h2>
-            <div className="mt-8 md:mt-0">
-              <div className="mb-4 flex max-w-72 items-start justify-start">
-                <img
-                  src="https://assets.website-files.com/6458c625291a94a195e6cf3a/6458c625291a94bb99e6cf78_MapPin.svg"
-                  alt=""
-                  className="inline-block mr-3"
-                />
-                <p className="text-gray-500 text-sm sm:text-base">
-                  8502 Preston Rd. Inglewood, Maine 98380, USA
-                </p>
-              </div>
-              <div className="mb-4 flex max-w-72 items-start justify-start">
-                <img
-                  src="https://assets.website-files.com/6458c625291a94a195e6cf3a/6458c625291a944119e6cf76_EnvelopeSimple-2.svg"
-                  alt=""
-                  className="inline-block mr-3"
-                />
-                <p className="text-gray-500 text-sm sm:text-base">
-                  support@flowspark.co
-                </p>
-              </div>
-            </div>
           </div>
           <div className="mb-14 w-full border-b border-black mt-16"></div>
           <div className="md:flex-row flex justify-between sm:items-center sm:flex-col items-start flex-col-reverse">
