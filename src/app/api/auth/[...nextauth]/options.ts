@@ -1,4 +1,8 @@
-import type { NextAuthOptions } from "next-auth";
+import {
+  getServerSession,
+  type NextAuthOptions,
+  type Session,
+} from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { jwtDecode } from "jwt-decode";
 
@@ -13,9 +17,8 @@ export const options: NextAuthOptions = {
       async authorize(credentials, _req) {
         try {
           console.log("credentials", credentials);
-          // const response = await PostRequest("auth/jwt/create/",);
           const response = await fetch(
-            `${process.env.NEXT_PUBLIC_API_URL}auth/jwt/create`,
+            `${process.env.NEXT_PUBLIC_API_URL}auth/jwt/create/`,
             {
               method: "POST",
               body: JSON.stringify(credentials),
@@ -62,6 +65,7 @@ export const options: NextAuthOptions = {
     },
 
     async jwt({ token, user, trigger, session, account }) {
+      console.log(token);
       if (user) {
         return { ...token, ...user };
       }
@@ -97,4 +101,8 @@ export const options: NextAuthOptions = {
       return token;
     },
   },
+};
+
+export const getSession = (): Promise<Session | null> => {
+  return getServerSession(options);
 };

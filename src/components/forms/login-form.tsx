@@ -38,7 +38,7 @@ export default function LoginForm() {
 
   console.log(session);
   return (
-    <>
+    <div>
       <Form {...form}>
         <form onSubmit={handleSubmit(loginUser)} className="space-y-4">
           <RHFInput<LoginSchemaType>
@@ -61,6 +61,6 @@ export default function LoginForm() {
           </Button>
         </form>
       </Form>
-    </>
+    </div>
   );
 }

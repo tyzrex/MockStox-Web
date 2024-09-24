@@ -20,9 +20,11 @@ const config = {
 
     extend: {
       colors: {
-        filter: {
-          "blur-20": "blur(20px)",
-          "blur-25": "blur(25px)",
+        mockstox: {
+          primary: "#1d1d1d",
+          secondary: "#d5e14e",
+          foreground: "#e5ebeb",
+          icon: "#a3a2a3",
         },
         "primary-accent": "#84a4fc",
         border: "hsl(var(--border))",
@@ -31,7 +33,7 @@ const config = {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: {
-          DEFAULT: "#10a4fc",
+          DEFAULT: "#d5e14e",
           foreground: "hsl(var(--primary-foreground))",
         },
         secondary: {
@@ -59,9 +61,6 @@ const config = {
           foreground: "hsl(var(--card-foreground))",
         },
       },
-      animation: {
-        "pop-blob": "pop-blob 5s infinite",
-      },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
@@ -75,12 +74,6 @@ const config = {
         "accordion-up": {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
-        },
-        "pop-blob": {
-          "0%": { transform: "scale(1)" },
-          "33%": { transform: "scale(1.2)" },
-          "66%": { transform: "scale(0.8)" },
-          "100%": { transform: "scale(1)" },
         },
       },
     },

@@ -1,153 +1,176 @@
+import { makeKeyCleaner } from "@/lib/utils";
 import { Session } from "next-auth";
 
-type DefaultRequestBody = Record<string, unknown> | FormData;
+type HttpMethod = "GET" | "POST" | "PUT" | "DELETE" | "PATCH";
+export type CacheOption =
+  | "no-store"
+  | "default"
+  | "reload"
+  | "no-cache"
+  | "force-cache";
 
-export type RequestBody<T = DefaultRequestBody> = T;
-
-export function makeKeyCleaner(key: string): string {
-  return key.replace(/_/g, " ").replace(/\b\w/g, (char) => char.toUpperCase());
+interface RequestOptions<TRequestBody> {
+  method: HttpMethod;
+  session?: Session | null;
+  body?: TRequestBody;
+  headers?: Record<string, string>;
+  tags?: string[];
+  cache?: CacheOption;
+  timeout?: number;
+  retries?: number;
+  retryDelay?: number;
+  validateStatus: (status: number) => boolean;
 }
 
-class AppError extends Error {
-  status: number;
-  errorData: object;
-  constructor(message: string, status: number, errorData: any) {
-    super(message);
-    this.status = status;
-    this.errorData = errorData;
-  }
+interface RequestResponse<TResponse> {
+  success: boolean;
+  data?: TResponse;
+  status?: number;
+  headers?: Headers;
+  error?: Error;
 }
-export async function ErrorHandler(response: any) {
-  switch (response.status) {
-    case 400:
-      throw new AppError(
-        response.detail || "Bad request",
-        response.status,
-        response.data
-      );
-    case 401:
-      throw new AppError(
-        response.detail || "You are not authorized to perform this action",
-        response.status,
-        response.data
-      );
-    case 403:
-      throw new AppError(
-        response.detail || "You are not authorized to perform this action",
-        response.status,
-        response.data
-      );
-    case 409:
-      throw new AppError(
-        response.detail || "Entity already exists",
-        response.status,
-        response.data
-      );
-    case 404:
-      throw new AppError(
-        response.detail || "Resource not found",
-        response.status,
-        response.data
-      );
-    default:
-      const statusRegex = /^[4|5]\d{2}$/;
-      if (statusRegex.test(response.status)) {
-        throw new AppError(
-          response.detail || "Something went wrong (bad request/server error)",
-          response.status,
-          response.data
-        );
-      } else {
-        throw new AppError(
-          "Something went wrong",
-          response.status,
-          response.data
-        );
-      }
 
-    // throw new Error("Something went wrong");
+class HTTPError extends Error {
+  public status: number;
+  constructor(
+    public readonly response: Response,
+    public readonly errorData: any,
+    message?: string
+  ) {
+    super(message || `HTTP error! status: ${response.status}`);
+    this.name = "HTTPError";
+    this.status = response.status;
   }
 }
 
-export async function requestHandler<
-  TResponse = unknown,
-  TRequestBody = DefaultRequestBody
->(
+const defaultOptions: Partial<RequestOptions<any>> = {
+  method: "GET",
+  cache: "no-store",
+  timeout: 10000,
+  retries: 3,
+  retryDelay: 1000,
+  validateStatus: (status: number) => status >= 200 && status < 300,
+};
+
+async function sleep(ms: number = 1000): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+export async function fetchWrapper<TResponse = unknown, TRequestBody = unknown>(
   url: string,
-  method: "GET" | "POST" | "PUT" | "DELETE" | "PATCH",
-  session: Session | null,
-  body?: RequestBody<TRequestBody>,
-  tags?: string[],
-  cache?: "no-store" | "default" | "reload" | "no-cache" | "force-cache",
-  errorHandler: (error: Error) => void = ErrorHandler
-): Promise<{ success: boolean; data?: TResponse; status?: number }> {
-  try {
-    const headers = new Headers();
-    if (body && !(body instanceof FormData)) {
-      headers.append("Content-Type", "application/json");
-    }
+  options: RequestOptions<TRequestBody>
+): Promise<RequestResponse<TResponse>> {
+  const fullOptions = { ...defaultOptions, ...options };
+  const {
+    method,
+    session,
+    body,
+    headers: customHeaders,
+    tags,
+    cache,
+    timeout,
+    retries,
+    retryDelay,
+    validateStatus,
+  } = fullOptions;
 
-    if (session?.user?.access) {
-      headers.append("Authorization", `Bearer ${session.user.access}`);
-    }
+  const headers = new Headers(customHeaders);
+  if (body && !(body instanceof FormData) && !headers.has("Content-Type")) {
+    headers.set("Content-Type", "application/json");
+  }
 
-    const apiUrl = process.env.API_URL || "http://localhost:8000/api/";
-    const response = await fetch(`${apiUrl}${url}`, {
-      method: method,
-      headers: headers,
-      body: body instanceof FormData ? body : JSON.stringify(body),
-      cache: cache || "no-store",
-      next: {
-        tags: tags,
-      },
-    });
+  if (session?.user?.access) {
+    headers.set("Authorization", `Bearer ${session.user.access}`);
+  }
 
-    if (response.ok) {
+  const apiUrl =
+    process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api/";
+  const fullUrl = new URL(url, apiUrl);
+
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), timeout);
+
+  const fetchWithRetry = async (
+    attemptsLeft: number
+  ): Promise<RequestResponse<TResponse>> => {
+    try {
+      const response = await fetch(fullUrl.toString(), {
+        method,
+        headers,
+        body: body
+          ? body instanceof FormData
+            ? body
+            : JSON.stringify(body)
+          : undefined,
+        cache: cache,
+        next: { tags },
+        signal: controller.signal,
+      });
+
+      if (!validateStatus(response.status)) {
+        const errorData = await response.json().catch(() => ({}));
+
+        const formattedError = formatErrorMessage(errorData);
+
+        throw new HTTPError(response, formattedError);
+      }
+
       if (response.status === 204) {
-        return { success: true, status: response.status };
+        return {
+          success: true,
+          status: response.status,
+          headers: response.headers,
+        };
       }
-      let data: TResponse | {} = {};
-      try {
-        data = await response.json();
-      } catch (err) {
-        data = {};
-      }
+
+      const contentType = response.headers.get("Content-Type");
+      const data = contentType?.includes("application/json")
+        ? await response.json().catch(() => ({}))
+        : await response.text();
+
       return {
         success: true,
         data: data as TResponse,
         status: response.status,
+        headers: response.headers,
       };
-    } else {
-      let data: any;
-      try {
-        data = await response.json();
-      } catch (err) {
-        // console.error(err);
-        throw new AppError(
-          response.statusText || "Something went wrong",
-          response.status,
-          response.statusText
+    } catch (error: any) {
+      // Do not retry on 4xx errors or AbortError (timeouts)
+      if (
+        attemptsLeft > 0 &&
+        !(
+          error instanceof HTTPError &&
+          error.status >= 400 &&
+          error.status <= 500
+        ) &&
+        error.name !== "AbortError"
+      ) {
+        console.warn(
+          `Request failed, retrying... (${attemptsLeft} attempts left)`
         );
+        await sleep(retryDelay ?? defaultOptions.retryDelay);
+        return fetchWithRetry(attemptsLeft - 1);
       }
 
-      // Construct error message
-      let errorMessage = formatErrorMessage(data);
-
-      throw new AppError(response.statusText, response.status, errorMessage);
+      throw error;
+    } finally {
+      clearTimeout(timeoutId);
     }
+  };
+
+  try {
+    return await fetchWithRetry(retries ?? defaultOptions.retries ?? 0);
   } catch (error) {
-    if (error instanceof AppError) {
+    if (error instanceof HTTPError) {
+      console.error("HTTP Error:", error.message, error.errorData);
       throw error;
     } else {
-      console.error(error);
-      errorHandler(error instanceof Error ? error : new Error(String(error)));
+      console.error("Fetch Error:", error);
+      throw error;
     }
   }
-  // This return statement is unlikely to be reached
-  return { success: false };
 }
 
-// Adjusted error message formatter to fit TypeScript
 function formatErrorMessage(data: any): string {
   let errorMessage = "";
 
