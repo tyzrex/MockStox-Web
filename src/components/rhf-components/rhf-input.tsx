@@ -32,7 +32,12 @@ export default function RHFInput<T extends FieldValues>({
           <FormItem>
             <FormLabel>{formLabel}</FormLabel>
             <FormControl>
-              <Input placeholder={placeHolder} {...field} {...props} />
+              <Input
+                placeholder={placeHolder}
+                className="bg-zinc-800 border-zinc-700"
+                {...field}
+                {...props}
+              />
             </FormControl>
 
             <FormMessage />

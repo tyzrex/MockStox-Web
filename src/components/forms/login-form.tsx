@@ -7,6 +7,8 @@ import { Form } from "../ui/form";
 import RHFInput from "../rhf-components/rhf-input";
 import { Button } from "../ui/button";
 import ButtonLoader from "../ui/button-loader";
+import { toast } from "sonner";
+import { getSession, signIn } from "next-auth/react";
 export default function LoginForm() {
   const form = useForm<LoginSchemaType>({
     resolver: zodResolver(loginSchema),
@@ -16,11 +18,29 @@ export default function LoginForm() {
     formState: { isSubmitting },
   } = form;
 
-  async function loginUser() {}
+  async function loginUser(data: LoginSchemaType) {
+    const response = await signIn("credentials", {
+      username: data.username,
+      password: data.password,
+      redirect: false,
+      callbackUrl: "/",
+    });
+
+    if (response?.error === null) {
+      toast.success("Login Success");
+      // router.replace("/");
+    } else {
+      toast.error("Invalid Credentials");
+    }
+  }
+
+  const session = getSession();
+
+  console.log(session);
   return (
-    <>
+    <div>
       <Form {...form}>
-        <form onSubmit={handleSubmit(loginUser)} className="space-y-4 p-10">
+        <form onSubmit={handleSubmit(loginUser)} className="space-y-4">
           <RHFInput<LoginSchemaType>
             name="username"
             type="text"
@@ -35,12 +55,16 @@ export default function LoginForm() {
             formLabel="Password"
           />
 
-          <Button disabled={isSubmitting} type="submit" className="w-full">
+          <Button
+            disabled={isSubmitting}
+            type="submit"
+            className="w-full text-black hover:text-white hover:border hover:border-primary"
+          >
             {isSubmitting && <ButtonLoader />}
             {isSubmitting ? "Logging in..." : "Login"}
           </Button>
         </form>
       </Form>
-    </>
+    </div>
   );
 }

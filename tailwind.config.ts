@@ -14,24 +14,27 @@ const config = {
       center: true,
       padding: "2rem",
       screens: {
-        "2xl": "1400px",
+        "2xl": "1500px",
       },
     },
 
     extend: {
       colors: {
-        filter: {
-          "blur-20": "blur(20px)",
-          "blur-25": "blur(25px)",
+        mockstox: {
+          primary: "#1d1d1d",
+          secondary: "#d5e14e",
+          foreground: "#e5ebeb",
+          icon: "#a3a2a3",
+          accent: "#f5f5f5",
         },
-        "primary-accent": "#d7c7a2",
+        "primary-accent": "#84a4fc",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: {
-          DEFAULT: "hsl(var(--primary))",
+          DEFAULT: "#d5e14e",
           foreground: "hsl(var(--primary-foreground))",
         },
         secondary: {
@@ -59,9 +62,6 @@ const config = {
           foreground: "hsl(var(--card-foreground))",
         },
       },
-      animation: {
-        "pop-blob": "pop-blob 5s infinite",
-      },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
@@ -75,12 +75,6 @@ const config = {
         "accordion-up": {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
-        },
-        "pop-blob": {
-          "0%": { transform: "scale(1)" },
-          "33%": { transform: "scale(1.2)" },
-          "66%": { transform: "scale(0.8)" },
-          "100%": { transform: "scale(1)" },
         },
       },
     },
