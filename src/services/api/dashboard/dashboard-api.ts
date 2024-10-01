@@ -14,4 +14,12 @@ export class DashboardApi extends BaseApi {
       isProtected: true,
     });
   }
+
+  async getStockDetail({ slug, query }: { slug: string; query?: string }) {
+    return this.handleServerQuery<any>({
+      query: `stocks/detail/${slug}?${query}`,
+      cache: "no-store",
+      isProtected: true,
+    });
+  }
 }
