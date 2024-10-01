@@ -7,7 +7,7 @@ export class DashboardApi extends BaseApi {
   }
 
   async getStocksList({ page }: { page: number }) {
-    return this.handleServerQuery<PaginatedResponse<StockListItem>>({
+    return this.handleServerQuery<StockListItem[]>({
       query: "stocks/list",
       param: buildPageParam(page),
       cache: "no-store",
@@ -18,6 +18,14 @@ export class DashboardApi extends BaseApi {
   async getStockDetail({ slug, query }: { slug: string; query?: string }) {
     return this.handleServerQuery<any>({
       query: `stocks/detail/${slug}?${query}`,
+      cache: "no-store",
+      isProtected: true,
+    });
+  }
+
+  async getStocksBySector({ sector }: { sector: string }) {
+    return this.handleServerQuery<any>({
+      query: `stocks/list?sector=${sector}`,
       cache: "no-store",
       isProtected: true,
     });

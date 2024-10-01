@@ -60,14 +60,14 @@ export function getMenuList(pathname: string): Group[] {
               active: pathname.includes("/dashboard/live-market/stock"),
             },
             {
-              href: "/dashboard/live-market/charts",
+              href: "/dashboard/stocks-list",
               label: "Stock Details",
-              active: pathname.includes("/dashboard/live-market/charts"),
+              active: pathname.includes("/dashboard/stocks-list"),
             },
             {
-              href: "/dashboard/market/sector",
+              href: "/dashboard/stocks-by-category",
               label: "Stocks by Sector",
-              active: pathname.includes("/dashboard/live-market/charts"),
+              active: pathname.includes("/dashboard/stocks-by-category"),
             },
           ],
         },
