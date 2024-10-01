@@ -25,6 +25,7 @@ const config = {
           secondary: "#d5e14e",
           foreground: "#e5ebeb",
           icon: "#a3a2a3",
+          accent: "#f5f5f5",
         },
         "primary-accent": "#84a4fc",
         border: "hsl(var(--border))",

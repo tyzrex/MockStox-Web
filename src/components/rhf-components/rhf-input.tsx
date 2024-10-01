@@ -34,7 +34,7 @@ export default function RHFInput<T extends FieldValues>({
             <FormControl>
               <Input
                 placeholder={placeHolder}
-                className="bg-gray-900 border-gray-800"
+                className="bg-zinc-800 border-zinc-700"
                 {...field}
                 {...props}
               />

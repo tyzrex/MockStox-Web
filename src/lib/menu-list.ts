@@ -64,6 +64,11 @@ export function getMenuList(pathname: string): Group[] {
               label: "Stock Details",
               active: pathname.includes("/dashboard/live-market/charts"),
             },
+            {
+              href: "/dashboard/market/sector",
+              label: "Stocks by Sector",
+              active: pathname.includes("/dashboard/live-market/charts"),
+            },
           ],
         },
         {

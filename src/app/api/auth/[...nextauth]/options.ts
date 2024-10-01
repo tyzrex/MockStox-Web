@@ -81,19 +81,21 @@ export const options: NextAuthOptions = {
           headers: {
             Authorization: `Bearer ${token.access}`,
           },
-          cache: "default",
+          cache: "no-store",
           next: {
             tags: ["user-info"],
           },
         }
       );
 
+      console.log(userInfo.status);
+
       const info = await userInfo.json();
       console.log("info", info);
       // console.log(info);
       const decodedJWT = jwtDecode(token.access as string);
       // console.log(decodedJWT);
-      token.name = info.name;
+      token.name = info.username;
       token.email = info.email;
       token.accessExpireTime = decodedJWT.exp;
       token.acces;

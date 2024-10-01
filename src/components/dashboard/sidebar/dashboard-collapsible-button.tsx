@@ -63,7 +63,7 @@ export function CollapseMenuButton({
       >
         <Button
           variant={active ? "active" : "ghost"}
-          className="w-full justify-start h-10 py-8"
+          className="w-full justify-start h-10 py-8 focus:ring-0"
         >
           <div className="w-full items-center flex justify-between">
             <div className="flex items-center">

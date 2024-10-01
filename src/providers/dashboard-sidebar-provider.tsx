@@ -21,8 +21,8 @@ export default function AdminLayoutProvider({
       <DashboardSidebar isOpen={sidebar.isOpen} setIsOpen={sidebar.setIsOpen} />
       <main
         className={cn(
-          "p-4 lg:p-12 mt-16 min-h-[calc(100vh_-_56px)] bg-white transition-[margin-left] ease-in-out duration-300",
-          sidebar?.isOpen === false ? "ml-[90px]" : "lg:ml-72"
+          "p-4 lg:p-12 min-h-[calc(100vh_-_56px)] transition-[margin-left] ease-in-out duration-300",
+          sidebar?.isOpen === false ? "ml-[72px]" : "lg:ml-72"
         )}
       >
         {children}

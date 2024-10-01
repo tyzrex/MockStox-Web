@@ -55,7 +55,11 @@ export default function LoginForm() {
             formLabel="Password"
           />
 
-          <Button disabled={isSubmitting} type="submit" className="w-full">
+          <Button
+            disabled={isSubmitting}
+            type="submit"
+            className="w-full text-black hover:text-white hover:border hover:border-primary"
+          >
             {isSubmitting && <ButtonLoader />}
             {isSubmitting ? "Logging in..." : "Login"}
           </Button>
