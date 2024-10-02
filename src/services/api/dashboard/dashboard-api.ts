@@ -20,6 +20,7 @@ export class DashboardApi extends BaseApi {
       query: `stocks/detail/${slug}?${query}`,
       cache: "no-store",
       isProtected: true,
+      tags: ["stock-detail"],
     });
   }
 

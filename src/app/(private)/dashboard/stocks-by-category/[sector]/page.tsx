@@ -1,5 +1,4 @@
 import { DataTable } from "@/components/dashboard/stock-table";
-import Pagination from "@/components/shared/pagination";
 import { stockListColumns } from "@/schema/columns/stock-list-column";
 import { dashboardApi } from "@/services/api/mockstox-api";
 import { StockListItem } from "@/types/dashboard-api-types";

@@ -10,20 +10,40 @@ import {
   registerSchema,
   type RegisterSchemaType,
 } from "@/schema/register-schema";
+import { fetchWrapper } from "@/services/request-handler";
+import { toast } from "sonner";
 export default function RegisterForm() {
   const form = useForm<RegisterSchemaType>({
     resolver: zodResolver(registerSchema),
   });
   const {
     handleSubmit,
-    formState: { isSubmitting },
+    formState: { errors, isSubmitting },
   } = form;
 
-  async function registerUser() {}
+  async function registerUser(data: RegisterSchemaType) {
+    try {
+      const response = await fetchWrapper("/api/auth/register", {
+        method: "POST",
+        body: data,
+        validateStatus: (status) => status === 201,
+        retries: 0,
+      });
+      if (response.success) {
+        toast.success("Registration Success");
+      } else {
+        toast.error("Registration Failed");
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  console.log(errors);
   return (
     <>
       <Form {...form}>
-        <form onSubmit={handleSubmit(registerUser)} className="space-y-4 p-10">
+        <form onSubmit={handleSubmit(registerUser)} className="space-y-4">
           <RHFInput<RegisterSchemaType>
             name="username"
             type="text"

@@ -15,6 +15,7 @@ import {
   TooltipProvider,
 } from "@/components/ui/tooltip";
 import { CollapseMenuButton } from "./dashboard-collapsible-button";
+import { signOut } from "next-auth/react";
 
 interface MenuProps {
   isOpen: boolean | undefined;
@@ -87,6 +88,19 @@ export function Menu({ isOpen }: MenuProps) {
               )}
             </li>
           ))}
+
+          <li>
+            <Button
+              variant="ghost"
+              className="w-full ml-2 py-8 justify-start h-10 mb-1 focus:ring-0"
+              onClick={() => {
+                signOut();
+              }}
+            >
+              <LogOut size={24} />
+              <span className="ml-2">Logout</span>
+            </Button>
+          </li>
         </ul>
       </nav>
     </ScrollArea>

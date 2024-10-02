@@ -9,6 +9,15 @@ import {
 } from "lucide-react";
 import dynamic from "next/dynamic";
 import PriceRangeChart from "./charts/volume-chart";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  buyStock,
+  sellStock,
+} from "@/services/api/transaction/transaction-actions";
+import { toast } from "sonner";
+import { showErrorToasts } from "@/lib/utils";
+import DateSelector from "./date-picker";
 
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
@@ -28,7 +37,13 @@ const formatHistoryData = (history: any) => {
   });
 };
 
-export default function Component({ mockData }: { mockData: any }) {
+export default function Component({
+  mockData,
+  slug,
+}: {
+  mockData: any;
+  slug: string;
+}) {
   console.log(mockData);
   const [activeTimeframe, setActiveTimeframe] = useState("Month");
 
@@ -67,15 +82,40 @@ export default function Component({ mockData }: { mockData: any }) {
       data: formattedHistory,
     },
   ];
+
+  const [buyQuantity, setBuyQuantity] = useState(0);
+  const [sellQuantity, setSellQuantity] = useState(0);
+
+  const handleTrade = async (type: "buy" | "sell") => {
+    let response;
+    if (type === "buy") {
+      response = await buyStock({
+        stockSymbol: slug,
+        quantity: buyQuantity,
+      });
+    } else {
+      response = await sellStock({
+        stockSymbol: slug,
+        quantity: sellQuantity,
+      });
+    }
+    if (response.success) {
+      toast.success(response.message);
+      setBuyQuantity(0);
+      setSellQuantity(0);
+    } else {
+      showErrorToasts(response.errorData);
+    }
+  };
+
   return (
-    <div className="flex bg-gray-100">
-      <div className="flex-1 ">
+    <div className="grid grid-cols-3 gap-20">
+      <div className="col-span-2">
         <div className="bg-white ">
           {/* Header */}
           <div className="flex justify-between items-center mb-6">
             <div>
               <h1 className="text-3xl font-bold">{mockData.symbol}</h1>
-              <p className="text-gray-500">Information Technologies</p>
             </div>
             <button className="text-gray-400">
               <Heart />
@@ -104,19 +144,7 @@ export default function Component({ mockData }: { mockData: any }) {
 
           {/* Timeframe selector */}
           <div className="flex space-x-4 mb-6">
-            {["Day", "Week", "Month", "Year", "All time"].map((timeframe) => (
-              <button
-                key={timeframe}
-                className={`px-3 py-1 rounded ${
-                  activeTimeframe === timeframe
-                    ? "bg-gray-200 font-semibold"
-                    : "text-gray-500"
-                }`}
-                onClick={() => setActiveTimeframe(timeframe)}
-              >
-                {timeframe}
-              </button>
-            ))}
+            <DateSelector />
           </div>
 
           {/* Chart */}
@@ -134,40 +162,54 @@ export default function Component({ mockData }: { mockData: any }) {
           </div>
 
           {/* Stock info */}
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <h2 className="text-xl font-semibold mb-2">Overview</h2>
-              <p>Number of stocks: {mockData.number_of_stocks}</p>
-            </div>
-            <div>
-              <h2 className="text-xl font-semibold mb-2">Your History</h2>
-              <p>Bought 10 Stocks on 2024-01-01</p>
-            </div>
-          </div>
         </div>
       </div>
 
       {/* Right sidebar */}
-      <div className="w-64 bg-white p-6">
+      <div className="col-span-1 bg-gray-100 p-6">
         <div className="mb-6">
           <h2 className="text-xl font-semibold mb-2">Trade</h2>
+
+          <div className="my-5">
+            <div>
+              <h2 className="text-xl font-semibold mb-2">Overview</h2>
+              <p>My Stocks: {mockData.number_of_stocks}</p>
+            </div>
+          </div>
+
           <div className="flex justify-between mb-2">
-            <span>Buy for</span>
+            <span>Buy</span>
             {/* <span className="font-semibold">${latestPrice.toFixed(2)}</span> */}
           </div>
-          <button className="w-full bg-green-500 text-white py-2 rounded font-semibold">
+          <Input
+            type="number"
+            value={buyQuantity}
+            onChange={(e) => setBuyQuantity(+e.target.value)}
+          />
+          <Button
+            onClick={() => handleTrade("buy")}
+            className="w-full mt-5 text-black py-2 rounded font-semibold"
+          >
             Buy
-          </button>
+          </Button>
         </div>
         <div>
           <h2 className="text-xl font-semibold mb-2">Sell for</h2>
           <div className="flex justify-between mb-2">
-            <span>Sell for</span>
+            <span>Sell</span>
             {/* <span className="font-semibold">${latestPrice.toFixed(2)}</span> */}
           </div>
-          <button className="w-full bg-gray-200 text-gray-800 py-2 rounded font-semibold">
+          <Input
+            value={sellQuantity}
+            type="number"
+            onChange={(e) => setSellQuantity(+e.target.value)}
+          />
+          <Button
+            onClick={() => handleTrade("sell")}
+            className="w-full mt-5 bg-gray-200 hover:text-white text-gray-800 py-2 rounded font-semibold"
+          >
             Sell
-          </button>
+          </Button>
         </div>
       </div>
     </div>

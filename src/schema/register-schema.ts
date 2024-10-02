@@ -14,16 +14,7 @@ export const registerSchema = z.object({
     .email({
       message: "Invalid email",
     }),
-  password: z
-    .string({
-      required_error: "Password is required",
-    })
-    .regex(
-      //one number one special char one uppercase and more than 8 char
-      /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/,
-      "Password must contain atleast one number, one special character, one uppercase letter and must be atleast 8 characters"
-    ),
-  re_password: z.string({
+  password: z.string({
     required_error: "Password is required",
   }),
 });

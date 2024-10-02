@@ -12,6 +12,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { StockListItem } from "@/types/dashboard-api-types";
+import Link from "next/link";
 
 export const stockListColumns: ColumnDef<StockListItem>[] = [
   {
@@ -102,7 +103,11 @@ export const stockListColumns: ColumnDef<StockListItem>[] = [
               Copy stock symbol
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>View stock details</DropdownMenuItem>
+            <DropdownMenuItem>
+              <Link href={`/dashboard/stock-detail/${stock.symbol}`}>
+                View details
+              </Link>
+            </DropdownMenuItem>
             <DropdownMenuItem>Add to watchlist</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

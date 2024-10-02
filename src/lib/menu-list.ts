@@ -41,13 +41,13 @@ export function getMenuList(pathname: string): Group[] {
   return [
     {
       menus: [
-        {
-          href: "/dashboard",
-          label: "Dashboard",
-          active: pathname.includes("/dashboard"),
-          icon: LayoutDashboard,
-          submenus: [],
-        },
+        // {
+        //   href: "/dashboard",
+        //   label: "Dashboard",
+        //   active: pathname.includes("/dashboard/home"),
+        //   icon: LayoutDashboard,
+        //   submenus: [],
+        // },
         {
           href: "/dashboard/live-market",
           label: "Share Market",
@@ -55,13 +55,8 @@ export function getMenuList(pathname: string): Group[] {
           icon: Bookmark,
           submenus: [
             {
-              href: "/dashboard/live-market/stock",
-              label: "Market Live",
-              active: pathname.includes("/dashboard/live-market/stock"),
-            },
-            {
               href: "/dashboard/stocks-list",
-              label: "Stock Details",
+              label: "Stocks List",
               active: pathname.includes("/dashboard/stocks-list"),
             },
             {
@@ -71,27 +66,27 @@ export function getMenuList(pathname: string): Group[] {
             },
           ],
         },
-        {
-          href: "/dashboard/paper-trading",
-          label: "Paper Trading",
-          active: pathname.includes("/dashboard/paper-trading"),
-          icon: Bookmark,
-          submenus: [],
-        },
-        {
-          href: "/dashboard/price-prediction",
-          label: "Price Prediction",
-          active: pathname.includes("/dashboard/price-prediction"),
-          icon: Bookmark,
-          submenus: [],
-        },
-        {
-          href: "/dashboard/portfolio",
-          label: "My Portfolio",
-          active: pathname.includes("/dashboard/my-portfolio"),
-          icon: Bookmark,
-          submenus: [],
-        },
+        // {
+        //   href: "/dashboard/paper-trading",
+        //   label: "Paper Trading",
+        //   active: pathname.includes("/dashboard/paper-trading"),
+        //   icon: Bookmark,
+        //   submenus: [],
+        // },
+        // {
+        //   href: "/dashboard/price-prediction",
+        //   label: "Price Prediction",
+        //   active: pathname.includes("/dashboard/price-prediction"),
+        //   icon: Bookmark,
+        //   submenus: [],
+        // },
+        // {
+        //   href: "/dashboard/portfolio",
+        //   label: "My Portfolio",
+        //   active: pathname.includes("/dashboard/my-portfolio"),
+        //   icon: Bookmark,
+        //   submenus: [],
+        // },
       ],
     },
 

@@ -6,6 +6,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import Link from "next/link";
 
 const stockData = {
   Capital: [],
@@ -44,7 +45,11 @@ export default function StockCategories() {
           {categories.map((category, index) => (
             <TableRow key={category}>
               <TableCell className="font-medium">{index + 1}</TableCell>
-              <TableCell>{category}</TableCell>
+              <TableCell>
+                <Link href={`/dashboard/stocks-by-category/${category}`}>
+                  {category}
+                </Link>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

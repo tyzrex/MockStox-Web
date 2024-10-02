@@ -9,6 +9,7 @@ import { Button } from "../ui/button";
 import ButtonLoader from "../ui/button-loader";
 import { toast } from "sonner";
 import { getSession, signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 export default function LoginForm() {
   const form = useForm<LoginSchemaType>({
     resolver: zodResolver(loginSchema),
@@ -17,6 +18,8 @@ export default function LoginForm() {
     handleSubmit,
     formState: { isSubmitting },
   } = form;
+
+  const router = useRouter();
 
   async function loginUser(data: LoginSchemaType) {
     const response = await signIn("credentials", {
@@ -28,7 +31,7 @@ export default function LoginForm() {
 
     if (response?.error === null) {
       toast.success("Login Success");
-      // router.replace("/");
+      router.replace("/dashboard/stocks-list");
     } else {
       toast.error("Invalid Credentials");
     }
