@@ -12,6 +12,7 @@ import {
 } from "@/schema/register-schema";
 import { fetchWrapper } from "@/services/request-handler";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 export default function RegisterForm() {
   const form = useForm<RegisterSchemaType>({
     resolver: zodResolver(registerSchema),
@@ -21,9 +22,11 @@ export default function RegisterForm() {
     formState: { errors, isSubmitting },
   } = form;
 
+  const router = useRouter();
+
   async function registerUser(data: RegisterSchemaType) {
     try {
-      const response = await fetchWrapper("/api/auth/register", {
+      const response = await fetchWrapper("auth/users/", {
         method: "POST",
         body: data,
         validateStatus: (status) => status === 201,
@@ -31,6 +34,7 @@ export default function RegisterForm() {
       });
       if (response.success) {
         toast.success("Registration Success");
+        router.replace("/login");
       } else {
         toast.error("Registration Failed");
       }
