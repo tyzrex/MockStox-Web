@@ -38,7 +38,7 @@ const config = {
           foreground: "hsl(var(--primary-foreground))",
         },
         secondary: {
-          DEFAULT: "hsl(var(--secondary))",
+          DEFAULT: "#f5f5f5",
           foreground: "hsl(var(--secondary-foreground))",
         },
         destructive: {
@@ -59,7 +59,7 @@ const config = {
         },
         card: {
           DEFAULT: "hsl(var(--card))",
-          foreground: "hsl(var(--card-foreground))",
+          foreground: "#f5f5f5",
         },
       },
       borderRadius: {

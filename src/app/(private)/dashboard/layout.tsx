@@ -6,7 +6,7 @@ export default async function DashLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div>
+    <div className="bg-mockstox-primary min-h-screen text-mockstox-foreground">
       <AdminLayoutProvider>{children}</AdminLayoutProvider>
     </div>
   );

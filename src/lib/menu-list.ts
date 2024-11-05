@@ -66,13 +66,13 @@ export function getMenuList(pathname: string): Group[] {
             },
           ],
         },
-        // {
-        //   href: "/dashboard/paper-trading",
-        //   label: "Paper Trading",
-        //   active: pathname.includes("/dashboard/paper-trading"),
-        //   icon: Bookmark,
-        //   submenus: [],
-        // },
+        {
+          href: "/dashboard/trades",
+          label: "My Trades",
+          active: pathname.includes("/dashboard/trades"),
+          icon: Bookmark,
+          submenus: [],
+        },
         // {
         //   href: "/dashboard/price-prediction",
         //   label: "Price Prediction",
@@ -93,9 +93,9 @@ export function getMenuList(pathname: string): Group[] {
     {
       menus: [
         {
-          href: "/admin/users/roles",
+          href: "/dashboard/profile/settings",
           label: "Profile Management",
-          active: pathname.includes("/admin/users/roles"),
+          active: pathname.includes("/dashboard/profile/settings"),
           icon: Settings,
           submenus: [],
         },

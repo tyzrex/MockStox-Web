@@ -1,8 +1,30 @@
 import { BaseApi, buildPageParam, ISessionService } from "../base-api";
 
+interface Trade {
+  id: number;
+  created_at: string;
+  updated_at: string | null;
+  deleted_at: string | null;
+  quantity: number;
+  symbol: string;
+  unit_price: string;
+  date: string;
+  action: "BUY" | "SELL";
+  user: number;
+}
+
 export class TransactionApi extends BaseApi {
   constructor(sessionService: ISessionService) {
     super(sessionService);
+  }
+
+  async getAllTransactions() {
+    return this.handleServerQuery<PaginatedResponse<Trade>>({
+      query: "user/transactions",
+      isProtected: true,
+      cache: "no-store",
+      tags: ["my-trades"],
+    });
   }
 
   async buyStock({

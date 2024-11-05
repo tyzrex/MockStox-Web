@@ -28,7 +28,12 @@ export default function RegisterForm() {
     try {
       const response = await fetchWrapper("auth/users/", {
         method: "POST",
-        body: data,
+        body: {
+          username: data.username,
+          email: data.email,
+          password: data.password,
+          re_password: data.password,
+        },
         validateStatus: (status) => status === 201,
         retries: 0,
       });
