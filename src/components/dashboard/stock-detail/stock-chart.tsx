@@ -66,14 +66,30 @@ export default function Component({
     title: {
       text: "CandleStick Chart",
       align: "left",
+      style: {
+        color: "#FFFFFF", // Set title color to white
+      },
     },
     xaxis: {
       type: "datetime",
+      labels: {
+        style: {
+          colors: "#FFFFFF", // Set x-axis label color to white
+        },
+      },
     },
     yaxis: {
+      labels: {
+        style: {
+          colors: "#FFFFFF", // Set y-axis label color to white
+        },
+      },
       tooltip: {
         enabled: true,
       },
+    },
+    tooltip: {
+      theme: "dark",
     },
   };
 
@@ -111,7 +127,7 @@ export default function Component({
   return (
     <div className="grid grid-cols-3 gap-20">
       <div className="col-span-2">
-        <div className="bg-white ">
+        <div className=" ">
           {/* Header */}
           <div className="flex justify-between items-center mb-6">
             <div>
@@ -166,7 +182,7 @@ export default function Component({
       </div>
 
       {/* Right sidebar */}
-      <div className="col-span-1 bg-gray-100 p-6">
+      <div className="col-span-1 border border-gray-600 rounded-2xl p-6">
         <div className="mb-6">
           <h2 className="text-xl font-semibold mb-2">Trade</h2>
 
@@ -178,7 +194,7 @@ export default function Component({
           </div>
 
           <div className="flex justify-between mb-2">
-            <span>Buy</span>
+            <span className="text-black">Buy</span>
             {/* <span className="font-semibold">${latestPrice.toFixed(2)}</span> */}
           </div>
           <Input
@@ -188,7 +204,7 @@ export default function Component({
           />
           <Button
             onClick={() => handleTrade("buy")}
-            className="w-full mt-5 text-black py-2 rounded font-semibold"
+            className="w-full mt-5 text-white py-2 rounded font-semibold"
           >
             Buy
           </Button>
