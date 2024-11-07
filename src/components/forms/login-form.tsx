@@ -30,6 +30,7 @@ export default function LoginForm() {
     });
 
     if (response?.error === null) {
+      console.log("here");
       toast.success("Login Success");
       router.replace("/dashboard/stocks-list");
     } else {
@@ -37,9 +38,6 @@ export default function LoginForm() {
     }
   }
 
-  const session = getSession();
-
-  console.log(session);
   return (
     <div>
       <Form {...form}>

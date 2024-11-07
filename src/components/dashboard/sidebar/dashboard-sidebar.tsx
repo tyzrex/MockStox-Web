@@ -17,7 +17,6 @@ export function DashboardSidebar({
   setIsOpen?: () => void;
 }) {
   const session = useSession();
-  console.log(session);
   return (
     <aside
       className={cn(
@@ -52,7 +51,10 @@ export function DashboardSidebar({
 
           <div className="pl-2 py-3 flex items-center gap-3">
             <Avatar>
-              <AvatarImage src="https://github.com/shadcn." alt="@shadcn" />
+              <AvatarImage
+                src={`https://api.dicebear.com/6.x/avataaars/svg?seed=${session?.data?.user.name}`}
+                alt="@shadcn"
+              />
               <AvatarFallback className="bg-mockstox-primary border-mockstox-secondary border-2 text-white">
                 {session?.data?.user?.name?.charAt(0).toUpperCase()}
               </AvatarFallback>

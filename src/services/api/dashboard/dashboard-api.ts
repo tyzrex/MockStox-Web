@@ -31,4 +31,23 @@ export class DashboardApi extends BaseApi {
       isProtected: true,
     });
   }
+
+  async getUserFunds() {
+    return this.handleServerQuery<any>({
+      query: "user/get-funds",
+      cache: "no-store",
+      isProtected: true,
+      tags: ["user-funds"],
+    });
+  }
+
+  async loadUserFund({ amount }: { amount: number }) {
+    return this.handleServerAction<any, any>({
+      endpoint: "user/load-funds/",
+      method: "POST",
+      data: { amount },
+      revalidateTagName: "user-funds",
+      successMessage: "Funds loaded successfully.",
+    });
+  }
 }

@@ -41,49 +41,49 @@ export function getMenuList(pathname: string): Group[] {
   return [
     {
       menus: [
-        // {
-        //   href: "/dashboard",
-        //   label: "Dashboard",
-        //   active: pathname.includes("/dashboard/home"),
-        //   icon: LayoutDashboard,
-        //   submenus: [],
-        // },
+        {
+          href: "/dashboard",
+          label: "Dashboard",
+          active: pathname === "/dashboard",
+          icon: LayoutDashboard,
+          submenus: [],
+        },
         {
           href: "/dashboard/live-market",
           label: "Share Market",
-          active: pathname.includes("/dashboard/live-market"),
+          active: pathname === "/dashboard/live-market",
           icon: Bookmark,
           submenus: [
             {
               href: "/dashboard/stocks-list",
               label: "Stocks List",
-              active: pathname.includes("/dashboard/stocks-list"),
+              active: pathname === "/dashboard/stocks-list",
             },
             {
               href: "/dashboard/stocks-by-category",
               label: "Stocks by Sector",
-              active: pathname.includes("/dashboard/stocks-by-category"),
+              active: pathname === "/dashboard/stocks-by-category",
             },
           ],
         },
         {
           href: "/dashboard/trades",
           label: "My Trades",
-          active: pathname.includes("/dashboard/trades"),
+          active: pathname === "/dashboard/trades",
           icon: Bookmark,
           submenus: [],
         },
         // {
         //   href: "/dashboard/price-prediction",
         //   label: "Price Prediction",
-        //   active: pathname.includes("/dashboard/price-prediction"),
+        //   active: pathname === "/dashboard/price-prediction"),
         //   icon: Bookmark,
         //   submenus: [],
         // },
         // {
         //   href: "/dashboard/portfolio",
         //   label: "My Portfolio",
-        //   active: pathname.includes("/dashboard/my-portfolio"),
+        //   active: pathname === "/dashboard/my-portfolio"),
         //   icon: Bookmark,
         //   submenus: [],
         // },
@@ -95,7 +95,7 @@ export function getMenuList(pathname: string): Group[] {
         {
           href: "/dashboard/profile/settings",
           label: "Profile Management",
-          active: pathname.includes("/dashboard/profile/settings"),
+          active: pathname === "/dashboard/profile/settings",
           icon: Settings,
           submenus: [],
         },

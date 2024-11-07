@@ -65,7 +65,6 @@ export const options: NextAuthOptions = {
     },
 
     async jwt({ token, user, trigger, session, account }) {
-      console.log(token);
       if (user) {
         return { ...token, ...user };
       }
@@ -88,13 +87,8 @@ export const options: NextAuthOptions = {
         }
       );
 
-      console.log(userInfo.status);
-
       const info = await userInfo.json();
-      console.log("info", info);
-      // console.log(info);
       const decodedJWT = jwtDecode(token.access as string);
-      // console.log(decodedJWT);
       token.name = info.username;
       token.email = info.email;
       token.accessExpireTime = decodedJWT.exp;
