@@ -17,6 +17,7 @@ import {
   PercentCircle,
   Gift,
   LayoutDashboard,
+  ChartCandlestick,
 } from "lucide-react";
 
 type Submenu = {
@@ -71,6 +72,13 @@ export function getMenuList(pathname: string): Group[] {
           label: "My Trades",
           active: pathname === "/dashboard/trades",
           icon: Bookmark,
+          submenus: [],
+        },
+        {
+          href: "/dashboard/trade-execution",
+          label: "Trade Execution",
+          active: pathname === "/dashboard/trade-execution",
+          icon: ChartCandlestick,
           submenus: [],
         },
         // {

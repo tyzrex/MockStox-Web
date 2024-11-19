@@ -125,11 +125,11 @@ export default async function TradesPage() {
               <Card
                 key={trade.id}
                 className={`${
-                  trade.action === "BUY" ? "bg-green-100" : "bg-red-100"
-                } transition-colors duration-200 hover:shadow-lg`}
+                  trade.action === "BUY" ? "bg-green-300" : "bg-red-300"
+                } transition-colors border border-mockstox-secondary duration-200 hover:shadow-lg`}
               >
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-2xl font-bold">
+                  <CardTitle className="text-2xl font-bold text-black">
                     {trade.symbol}
                   </CardTitle>
                   <div
@@ -151,27 +151,27 @@ export default async function TradesPage() {
                   </div>
                   <div className="grid grid-cols-2 gap-2">
                     <div>
-                      <div className="text-sm font-medium text-gray-500">
+                      <div className="text-sm font-medium text-gray-800">
                         Quantity
                       </div>
-                      <div className="text-lg font-semibold">
+                      <div className="text-lg font-semibold text-black">
                         {trade.quantity}
                       </div>
                     </div>
                     <div>
-                      <div className="text-sm font-medium text-gray-500">
+                      <div className="text-sm font-medium text-gray-800">
                         Unit Price
                       </div>
-                      <div className="text-lg font-semibold">
+                      <div className="text-lg font-semibold text-black">
                         Rs. {parseFloat(trade.unit_price).toFixed(2)}
                       </div>
                     </div>
                   </div>
                   <div className="mt-2">
-                    <div className="text-sm font-medium text-gray-500">
+                    <div className="text-sm font-medium text-gray-800">
                       Total Value
                     </div>
-                    <div className="text-xl font-bold">
+                    <div className="text-xl font-bold text-black">
                       Rs.{" "}
                       {(trade.quantity * parseFloat(trade.unit_price)).toFixed(
                         2
