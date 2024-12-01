@@ -18,6 +18,7 @@ import {
   Gift,
   LayoutDashboard,
   ChartCandlestick,
+  LucideIcon,
 } from "lucide-react";
 
 type Submenu = {
@@ -38,76 +39,66 @@ type Group = {
   menus: Menu[];
 };
 
-export function getMenuList(pathname: string): Group[] {
-  return [
-    {
-      menus: [
-        {
-          href: "/dashboard",
-          label: "Dashboard",
-          active: pathname === "/dashboard",
-          icon: LayoutDashboard,
-          submenus: [],
-        },
-        {
-          href: "/dashboard/live-market",
-          label: "Share Market",
-          active: pathname === "/dashboard/live-market",
-          icon: Bookmark,
-          submenus: [
-            {
-              href: "/dashboard/stocks-list",
-              label: "Stocks List",
-              active: pathname === "/dashboard/stocks-list",
-            },
-            {
-              href: "/dashboard/stocks-by-category",
-              label: "Stocks by Sector",
-              active: pathname === "/dashboard/stocks-by-category",
-            },
-          ],
-        },
-        {
-          href: "/dashboard/trades",
-          label: "My Trades",
-          active: pathname === "/dashboard/trades",
-          icon: Bookmark,
-          submenus: [],
-        },
-        {
-          href: "/dashboard/trade-execution",
-          label: "Trade Execution",
-          active: pathname === "/dashboard/trade-execution",
-          icon: ChartCandlestick,
-          submenus: [],
-        },
-        // {
-        //   href: "/dashboard/price-prediction",
-        //   label: "Price Prediction",
-        //   active: pathname === "/dashboard/price-prediction"),
-        //   icon: Bookmark,
-        //   submenus: [],
-        // },
-        // {
-        //   href: "/dashboard/portfolio",
-        //   label: "My Portfolio",
-        //   active: pathname === "/dashboard/my-portfolio"),
-        //   icon: Bookmark,
-        //   submenus: [],
-        // },
-      ],
-    },
+interface NavItem {
+  title: string;
+  url: string;
+  icon: LucideIcon;
+  isActive?: boolean;
+  items: SubNavItem[];
+}
 
-    {
-      menus: [
-        {
-          href: "/dashboard/profile/settings",
-          label: "Profile Management",
-          active: pathname === "/dashboard/profile/settings",
-          icon: Settings,
-          submenus: [],
-        },
-      ],
-    },
-  ];
+interface SubNavItem {
+  title: string;
+  url: string;
+}
+
+export function getMenuList(pathname: string): { navMain: NavItem[] } {
+  return {
+    navMain: [
+      {
+        title: "Dashboard",
+        url: "/dashboard",
+        icon: LayoutDashboard,
+        isActive: pathname === "/dashboard",
+        items: [],
+      },
+      {
+        title: "Share Market",
+        url: "#",
+        icon: Bookmark,
+        isActive: pathname === "/dashboard/live-market",
+        items: [
+          {
+            title: "Stocks List",
+            url: "/dashboard/stocks-list",
+          },
+          {
+            title: "Stocks by Sector",
+            url: "/dashboard/stocks-by-category",
+          },
+        ],
+      },
+      {
+        title: "My Trades",
+        url: "/dashboard/trades",
+        icon: Bookmark,
+        isActive: pathname === "/dashboard/trades",
+        items: [],
+      },
+      {
+        title: "Trade Execution",
+        url: "/dashboard/trade-execution",
+        icon: ChartCandlestick,
+        isActive: pathname === "/dashboard/trade-execution",
+        items: [],
+      },
+      {
+        title: "Profile Management",
+        url: "/dashboard/profile/settings",
+        icon: Settings,
+        isActive: pathname === "/dashboard/profile/settings",
+        items: [],
+      },
+    ],
+  };
 }

@@ -38,7 +38,7 @@ export default async function UserProfilePage() {
   console.log(funds);
 
   return (
-    <div className="bg-[#1d1d1d] text-[#e5ebeb] ">
+    <div className="text-[#e5ebeb] ">
       <div className="mx-auto">
         <h1 className="text-4xl font-bold mb-8">User Profile</h1>
 
@@ -46,7 +46,7 @@ export default async function UserProfilePage() {
 
         {/* Trading Stats Section */}
         <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-8">
-          <Card className="bg-[#2d2d2d] border-none">
+          <Card className="bg-neutral-950 border border-zinc-800">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
                 Total Profit/Loss
@@ -59,7 +59,7 @@ export default async function UserProfilePage() {
               <Progress value={68} className="mt-2" />
             </CardContent>
           </Card>
-          <Card className="bg-[#2d2d2d] border-none">
+          <Card className="bg-neutral-950 border border-zinc-800">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
                 Best Performing Stock
@@ -71,7 +71,7 @@ export default async function UserProfilePage() {
               <p className="text-xs text-[#a3a2a3]">+27.5% return</p>
             </CardContent>
           </Card>
-          <Card className="bg-[#2d2d2d] border-none">
+          <Card className="bg-neutral-950 border border-zinc-800">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
                 Trading Streak
@@ -86,7 +86,7 @@ export default async function UserProfilePage() {
         </div>
 
         {/* Guided Paragraphs */}
-        <div className="mt-8 bg-[#2d2d2d] p-6 rounded-lg">
+        <div className="mt-8 bg-neutral-950 p-4 border border-zinc-800 rounded-lg">
           <h3 className="text-2xl font-bold mb-4">Your Trading Journey</h3>
           <p className="mb-4">
             Welcome to your personalized trading dashboard, {session?.user.name}

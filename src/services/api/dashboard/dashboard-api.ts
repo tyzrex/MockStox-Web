@@ -6,6 +6,14 @@ export class DashboardApi extends BaseApi {
     super(sessionService);
   }
 
+  async getUserDashboardData() {
+    return this.handleServerQuery<any>({
+      query: "user/dashboard",
+      cache: "no-store",
+      isProtected: true,
+    });
+  }
+
   async getStocksList({ page }: { page: number }) {
     return this.handleServerQuery<StockListItem[]>({
       query: "stocks/list",

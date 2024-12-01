@@ -24,7 +24,7 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Session } from "next-auth";
 import { loadUserFunds } from "@/services/api/dashboard/dashboard-actions";
-import { showErrorToasts } from "@/lib/utils";
+import { formatNepaliCurrency, showErrorToasts } from "@/lib/utils";
 import { toast } from "sonner";
 
 // Define the form schema
@@ -117,7 +117,7 @@ export default function UserProfileInformation({
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
       {/* User Info Section */}
-      <Card className="md:col-span-2 bg-[#2d2d2d] border-none">
+      <Card className="md:col-span-2 bg-neutral-950 border border-zinc-800">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-2xl font-bold">
             Profile Information
@@ -239,13 +239,13 @@ export default function UserProfileInformation({
       </Card>
 
       {/* Funds Section */}
-      <Card className="bg-[#2d2d2d] border-none">
+      <Card className="bg-neutral-950 border border-zinc-800">
         <CardHeader>
           <CardTitle className="text-2xl font-bold">Your Funds</CardTitle>
         </CardHeader>
         <CardContent>
           <p className="text-3xl font-bold text-[#d5e14e] mb-4">
-            Rs. {funds.funds.toLocaleString()}
+            {formatNepaliCurrency(funds.funds)}
           </p>
           <Form {...fundsForm}>
             <form
