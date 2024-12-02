@@ -60,12 +60,12 @@ export default function TradeExecutionPage() {
   };
 
   return (
-    <div className="bg-[#1d1d1d] text-[#e5ebeb]">
+    <div className="text-[#e5ebeb]">
       <div className="mx-auto">
         <h1 className="text-3xl font-bold mb-8">Trade Execution</h1>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <Card className="bg-[#2d2d2d] border-none">
+          <Card>
             <CardHeader>
               <CardTitle>Place Order</CardTitle>
             </CardHeader>
@@ -78,7 +78,7 @@ export default function TradeExecutionPage() {
                     placeholder="e.g. AAPL"
                     value={symbol}
                     onChange={(e) => setSymbol(e.target.value)}
-                    className="bg-[#1d1d1d] mt-2 border-[#3d3d3d]"
+                    className="mt-2 border-[#3d3d3d]"
                   />
                 </div>
 
@@ -108,7 +108,7 @@ export default function TradeExecutionPage() {
                     placeholder="Enter quantity"
                     value={quantity}
                     onChange={(e) => setQuantity(e.target.value)}
-                    className="bg-[#1d1d1d] mt-2 border-[#3d3d3d]"
+                    className="mt-2 border-[#3d3d3d]"
                   />
                 </div>
 
@@ -119,7 +119,7 @@ export default function TradeExecutionPage() {
             </CardContent>
           </Card>
 
-          <Card className="bg-[#2d2d2d] border-none">
+          <Card>
             <CardHeader>
               <CardTitle>Order Book</CardTitle>
             </CardHeader>
@@ -173,7 +173,7 @@ export default function TradeExecutionPage() {
         </div>
 
         <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
-          <Card className="bg-[#2d2d2d] border-none">
+          <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Last Trade</CardTitle>
               <ArrowUpDown className="h-4 w-4 text-muted-foreground" />
@@ -185,7 +185,7 @@ export default function TradeExecutionPage() {
               </p>
             </CardContent>
           </Card>
-          <Card className="bg-[#2d2d2d] border-none">
+          <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">24h Volume</CardTitle>
               <DollarSign className="h-4 w-4 text-muted-foreground" />
@@ -197,7 +197,7 @@ export default function TradeExecutionPage() {
               </p>
             </CardContent>
           </Card>
-          <Card className="bg-[#2d2d2d] border-none">
+          <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
                 Market Status
@@ -205,8 +205,21 @@ export default function TradeExecutionPage() {
               <Clock className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-green-500">Open</div>
-              <p className="text-xs text-muted-foreground">Closes in 3h 24m</p>
+              <div className="text-2xl font-bold">
+                {new Date().getHours() >= 11 && new Date().getHours() < 15 ? (
+                  <span className="text-green-500">Open</span>
+                ) : (
+                  <span className="text-red-500">Closed</span>
+                )}
+              </div>
+              <p className="text-xs text-muted-foreground">
+                {new Date().getHours() >= 11 && new Date().getHours() < 15
+                  ? // get the time until the market closes
+                    `Closes in ${15 - new Date().getHours() - 1} hours and ${
+                      60 - new Date().getMinutes()
+                    } minutes`
+                  : `Opens in ${11 - new Date().getHours() - 1} hours`}
+              </p>
             </CardContent>
           </Card>
         </div>

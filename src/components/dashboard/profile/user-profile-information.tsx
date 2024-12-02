@@ -244,7 +244,7 @@ export default function UserProfileInformation({
           <CardTitle className="text-2xl font-bold">Your Funds</CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-3xl font-bold text-[#d5e14e] mb-4">
+          <p className="text-3xl font-bold text-green-500 mb-4">
             {formatNepaliCurrency(funds.funds)}
           </p>
           <Form {...fundsForm}>
@@ -274,7 +274,7 @@ export default function UserProfileInformation({
               />
               <Button
                 type="submit"
-                className="w-full bg-[#d5e14e] text-[#1d1d1d] hover:bg-[#c5d13e]"
+                className="w-full bg-green-500 text-[#1d1d1d] hover:bg-green-600"
               >
                 <DollarSign className="mr-2 h-4 w-4" />
                 Load Funds

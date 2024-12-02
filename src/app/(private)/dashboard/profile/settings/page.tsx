@@ -110,9 +110,9 @@ export default async function UserProfilePage() {
             </li>
           </ul>
           <p>
-            Remember, the "Load Funds" feature allows you to add virtual
-            currency to your account for paper trading. This is a great way to
-            test new strategies without risking real money. Happy trading!
+            Remember, the Load Funds feature allows you to add virtual currency
+            to your account for paper trading. This is a great way to test new
+            strategies without risking real money. Happy trading!
           </p>
         </div>
       </div>
