@@ -118,19 +118,6 @@ export default function Dashboard({
       <div className="mx-auto">
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-3xl font-bold">Trading Dashboard</h1>
-          <Select defaultValue="1D">
-            <SelectTrigger className="w-[100px] bg-neutral-950 border border-zinc-800">
-              <SelectValue placeholder="Timeframe" />
-            </SelectTrigger>
-            <SelectContent className="bg-neutral-950 border border-zinc-800">
-              <SelectItem value="1D">1D</SelectItem>
-              <SelectItem value="1W">1W</SelectItem>
-              <SelectItem value="1M">1M</SelectItem>
-              <SelectItem value="3M">3M</SelectItem>
-              <SelectItem value="1Y">1Y</SelectItem>
-              <SelectItem value="ALL">ALL</SelectItem>
-            </SelectContent>
-          </Select>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
@@ -307,7 +294,7 @@ export default function Dashboard({
           <Card className="bg-neutral-950 border border-zinc-800">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
-                Day's Gain/Loss
+                Day&apos;s Gain/Loss
               </CardTitle>
               <TrendingUp className="h-6 w-6 text-green-500" />
             </CardHeader>

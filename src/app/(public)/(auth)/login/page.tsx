@@ -26,7 +26,7 @@ export default function FUILoginWithListedProvider() {
               Log in to your account
             </h3>
             <p className="text-gray-400">
-              Don't have an account?{" "}
+              Don&apos;t have an account?{" "}
               <Link
                 href="login"
                 className="font-medium text-pink-600 hover:text-pink-500"
