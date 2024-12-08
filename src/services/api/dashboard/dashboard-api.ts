@@ -1,5 +1,5 @@
 import { BaseApi, buildPageParam, ISessionService } from "../base-api";
-import { StockListItem } from "@/types/dashboard-api-types";
+import { StockData, StockListItem } from "@/types/dashboard-api-types";
 
 export class DashboardApi extends BaseApi {
   constructor(sessionService: ISessionService) {
@@ -24,7 +24,7 @@ export class DashboardApi extends BaseApi {
   }
 
   async getStockDetail({ slug, query }: { slug: string; query?: string }) {
-    return this.handleServerQuery<any>({
+    return this.handleServerQuery<StockData>({
       query: `stocks/detail/${slug}?${query}`,
       cache: "no-store",
       isProtected: true,
@@ -56,6 +56,7 @@ export class DashboardApi extends BaseApi {
       data: { amount },
       revalidateTagName: "user-funds",
       successMessage: "Funds loaded successfully.",
+      isProtected: true,
     });
   }
 }

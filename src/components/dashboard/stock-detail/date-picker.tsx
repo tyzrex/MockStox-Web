@@ -90,7 +90,7 @@ export default function DateSelector() {
         </Select>
       </div>
 
-      <div className="flex items-center justify-center gap-3">
+      <div className="flex items-center justify-center gap-3 ml-5">
         <Button
           onClick={() => {
             handleClear();
@@ -105,9 +105,9 @@ export default function DateSelector() {
           onClick={() => {
             handleApply();
           }}
-          className="w-full text-black"
+          className="w-full text-black bg-purple-300"
         >
-          Set to max
+          Apply
         </Button>
       </div>
     </div>

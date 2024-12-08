@@ -2,8 +2,10 @@ import React from "react";
 import { ChevronRight } from "lucide-react";
 import RetroGrid from "../ui/grid";
 import Link from "next/link";
+import { getSession } from "@/app/api/auth/[...nextauth]/options";
 
-export default function HeroSection() {
+export default async function HeroSection() {
+  const session = await getSession();
   return (
     <div className="relative">
       <div className="absolute top-0 z-[0] h-screen w-screen bg-purple-950/10 bg-[radial-gradient(ellipse_20%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))]"></div>
@@ -32,7 +34,7 @@ export default function HeroSection() {
                 <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
                 <div className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-gray-950  text-xs font-medium text-gray-50 backdrop-blur-3xl">
                   <Link
-                    href="register"
+                    href={session?.user ? "/dashboard" : "/login"}
                     className="inline-flex rounded-full text-center group items-center w-full justify-center   bg-gradient-to-tr from-zinc-300/5 via-purple-400/20 to-transparent text-white border-input border-[1px] hover:bg-transparent/90 transition-colors sm:w-auto py-4 px-10"
                   >
                     Get Started

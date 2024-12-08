@@ -51,7 +51,7 @@ export default async function UserProfilePage() {
               <CardTitle className="text-sm font-medium">
                 Total Profit/Loss
               </CardTitle>
-              <TrendingUp className="h-4 w-4 text-[#d5e14e]" />
+              <TrendingUp className="h-4 w-4 text-green-500" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">+$1,234.56</div>
@@ -64,7 +64,7 @@ export default async function UserProfilePage() {
               <CardTitle className="text-sm font-medium">
                 Best Performing Stock
               </CardTitle>
-              <Award className="h-4 w-4 text-[#d5e14e]" />
+              <Award className="h-4 w-4 text-blue-500" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">AAPL</div>
@@ -76,7 +76,7 @@ export default async function UserProfilePage() {
               <CardTitle className="text-sm font-medium">
                 Trading Streak
               </CardTitle>
-              <BookOpen className="h-4 w-4 text-[#d5e14e]" />
+              <BookOpen className="h-4 w-4 text-yellow-500" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">15 Days</div>

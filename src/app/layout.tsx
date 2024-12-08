@@ -3,6 +3,7 @@ import { Inter, Outfit, Poppins } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "sonner";
 import NextAuthProvider from "@/providers/next-auth-provider";
+import { ThemeProvider } from "@/providers/theme-provider";
 
 const inter = Poppins({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
@@ -23,8 +24,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <NextAuthProvider>{children}</NextAuthProvider>
-        <Toaster richColors />
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <NextAuthProvider>{children}</NextAuthProvider>
+          <Toaster richColors />
+        </ThemeProvider>
       </body>
     </html>
   );

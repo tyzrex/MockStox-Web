@@ -1,6 +1,9 @@
+import { CompanyInfoCard } from "@/components/dashboard/stock-detail/company-detail";
 import StockChart from "@/components/dashboard/stock-detail/stock-chart";
 import { dashboardApi } from "@/services/api/mockstox-api";
+import { FormattedHistory } from "@/types/dashboard-api-types";
 import { Suspense } from "react";
+import Stocks from "@/../stocks_data.json";
 
 interface StockDetailPageProps {
   params: {
@@ -16,6 +19,10 @@ async function StockDetailContainer(props: StockDetailPageProps) {
   console.log(props.params.slug);
   const year = props.searchParams?.year ?? "2024";
   const month = props.searchParams?.month ?? "07";
+  const stockDetail = Stocks.filter(
+    (stock) => stock.symbol === props.params.slug
+  );
+
   const { response, error } = await dashboardApi.getStockDetail({
     slug: props.params.slug,
     query: `year=${year}&month=${month}`,
@@ -32,10 +39,26 @@ async function StockDetailContainer(props: StockDetailPageProps) {
     );
   }
 
+  const formattedHistory: FormattedHistory[] = Object.entries(
+    response.history
+  ).map(([date, values]) => ({
+    date,
+    open: parseFloat(values.open),
+    close: parseFloat(values.close),
+    low: parseFloat(values.low),
+    high: parseFloat(values.high),
+  }));
+
   return (
-    <>
-      <StockChart mockData={response} slug={props.params.slug} />
-    </>
+    <div className="py-5 space-y-6">
+      <StockChart
+        number_of_stocks={response.number_of_stocks}
+        history={formattedHistory}
+        symbol={response.symbol}
+      />
+
+      <CompanyInfoCard company={stockDetail[0]} />
+    </div>
   );
 }
 

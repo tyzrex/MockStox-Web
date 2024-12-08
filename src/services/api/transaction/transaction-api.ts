@@ -43,6 +43,7 @@ export class TransactionApi extends BaseApi {
       },
       successMessage: "Stock bought successfully",
       revalidateTagName: "stock-detail",
+      isProtected: true,
     });
   }
 
@@ -62,6 +63,7 @@ export class TransactionApi extends BaseApi {
       },
       successMessage: "Stock sold successfully",
       revalidateTagName: "stock-detail",
+      isProtected: true,
     });
   }
 }

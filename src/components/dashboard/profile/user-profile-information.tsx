@@ -46,8 +46,8 @@ const fundsSchema = z.object({
     .min(10, {
       message: "Minimum amount is Rs. 10.",
     })
-    .max(100000, {
-      message: "Maximum amount is Rs. 100,000.",
+    .max(100000000000, {
+      message: "Maximum amount is Rs. 100000000000.",
     }),
 });
 
@@ -274,7 +274,7 @@ export default function UserProfileInformation({
               />
               <Button
                 type="submit"
-                className="w-full bg-green-500 text-[#1d1d1d] hover:bg-green-600"
+                className="w-full bg-purple-300 text-[#1d1d1d] hover:bg-green-600"
               >
                 <DollarSign className="mr-2 h-4 w-4" />
                 Load Funds
