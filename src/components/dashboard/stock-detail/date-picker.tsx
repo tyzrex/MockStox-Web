@@ -105,7 +105,7 @@ export default function DateSelector() {
           onClick={() => {
             handleApply();
           }}
-          className="w-full text-black bg-purple-300"
+          className="w-full text-black bg-gradient-to-r from-purple-300 to-orange-200"
         >
           Apply
         </Button>

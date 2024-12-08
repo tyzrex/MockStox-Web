@@ -25,11 +25,15 @@ export function CompanyInfoCard({ company }: { company: any }) {
 
         <div>
           <p className="text-gray-400">Listed Date</p>
-          <p className="font-semibold text-white">{company.listed_date}</p>
+          <p className="font-semibold text-white">
+            {company.listed_date === "" ? "-" : company.listed_date}
+          </p>
         </div>
         <div>
           <p className="text-gray-400">Expired Date</p>
-          <p className="font-semibold text-white">{company.expired_date}</p>
+          <p className="font-semibold text-white">
+            {company.expired_date === "" ? "-" : company.expired_date}
+          </p>
         </div>
         <div>
           <p className="text-gray-400">Share Registrar</p>

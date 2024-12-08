@@ -201,31 +201,6 @@ export default function StockDashboard({
     ]);
   }
 
-  const volumeChartOptions: ApexCharts.ApexOptions = {
-    ...chartOptions,
-    chart: {
-      ...chartOptions.chart,
-      type: "bar",
-      height: 150,
-    },
-    yaxis: {
-      labels: {
-        show: false,
-      },
-    },
-    colors: ["#8884d8"],
-  };
-
-  const volumeSeries = [
-    {
-      name: "Volume",
-      data: formattedHistory.map((item) => [
-        item.date,
-        Math.floor(Math.random() * 1000000),
-      ]),
-    },
-  ];
-
   return (
     <div>
       <div className="mx-auto space-y-6">
@@ -295,61 +270,24 @@ export default function StockDashboard({
           <div className="col-span-3 space-y-6">
             <Card className="">
               <CardContent className="p-6">
+                <h3 className="text-lg font-semibold">Stock Charts</h3>
                 <div className="flex justify-between items-center mb-4">
                   <Tabs value={selectedChart} onValueChange={setSelectedChart}>
-                    <TabsList className="bg-gray-800">
+                    <TabsList className="bg-transparent">
                       <TabsTrigger
                         value="area"
-                        className="data-[state=active]:bg-green-500"
+                        className="data-[state=active]:bg-blue-500"
                       >
                         Area
                       </TabsTrigger>
                       <TabsTrigger
                         value="candlestick"
-                        className="data-[state=active]:bg-green-500"
+                        className="data-[state=active]:bg-blue-500"
                       >
                         Candlestick
                       </TabsTrigger>
                     </TabsList>
                   </Tabs>
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <Button
-                        variant="outline"
-                        className="border-gray-700 hover:border-gray-600"
-                      >
-                        Indicators <ChevronDown className="ml-2 h-4 w-4" />
-                      </Button>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-56 bg-gray-900 border-gray-700">
-                      <div className="space-y-2">
-                        <Button
-                          className="w-full justify-start"
-                          variant="ghost"
-                        >
-                          Moving Average
-                        </Button>
-                        <Button
-                          className="w-full justify-start"
-                          variant="ghost"
-                        >
-                          Bollinger Bands
-                        </Button>
-                        <Button
-                          className="w-full justify-start"
-                          variant="ghost"
-                        >
-                          RSI
-                        </Button>
-                        <Button
-                          className="w-full justify-start"
-                          variant="ghost"
-                        >
-                          MACD
-                        </Button>
-                      </div>
-                    </PopoverContent>
-                  </Popover>
                 </div>
                 <Chart
                   options={chartOptions}
@@ -361,18 +299,6 @@ export default function StockDashboard({
                 />
               </CardContent>
             </Card>
-
-            <Card className="">
-              <CardContent className="p-6">
-                <h3 className="text-lg font-semibold mb-4">Volume</h3>
-                <Chart
-                  options={volumeChartOptions}
-                  series={volumeSeries}
-                  type="bar"
-                  height={150}
-                />
-              </CardContent>
-            </Card>
           </div>
 
           <div className="space-y-6">
@@ -380,6 +306,13 @@ export default function StockDashboard({
               <CardContent className="p-4">
                 <div className="text-gray-400 text-sm">Stocks Owned</div>
                 <div className="text-lg font-semibold">{number_of_stocks}</div>
+                {/* make a sell all button */}
+                <Button
+                  className="w-full mt-4 bg-blue-500 text-white py-2 rounded font-semibold hover:bg-red-600"
+                  onClick={() => setSellQuantity(number_of_stocks)}
+                >
+                  Sell All
+                </Button>
               </CardContent>
             </Card>
             <Card className="">
@@ -397,7 +330,7 @@ export default function StockDashboard({
                   />
                   <Button
                     onClick={() => handleTrade("buy")}
-                    className="w-full mt-5 bg-green-500 text-black py-2 rounded font-semibold"
+                    className="w-full mt-5 bg-green-500 hover:bg-green-700 text-white py-2 rounded font-semibold"
                   >
                     Buy
                   </Button>
@@ -418,42 +351,6 @@ export default function StockDashboard({
                   >
                     Sell
                   </Button>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="">
-              <CardContent className="p-6">
-                <h3 className="text-lg font-semibold mb-4">Performance</h3>
-                <div className="space-y-2">
-                  <div className="flex justify-between">
-                    <span className="text-gray-400">Day&apos;s Range</span>
-                    <span>
-                      {formatNepaliCurrency(
-                        formattedHistory[formattedHistory.length - 1].low
-                      )}{" "}
-                      -{" "}
-                      {formatNepaliCurrency(
-                        formattedHistory[formattedHistory.length - 1].high
-                      )}
-                    </span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-400">52 Week Range</span>
-                    <span>
-                      {formatNepaliCurrency(
-                        Math.min(...formattedHistory.map((h) => h.low))
-                      )}{" "}
-                      -{" "}
-                      {formatNepaliCurrency(
-                        Math.max(...formattedHistory.map((h) => h.high))
-                      )}
-                    </span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-400">Avg. Volume</span>
-                    <span>{(Math.random() * 1000000).toFixed(0)}</span>
-                  </div>
                 </div>
               </CardContent>
             </Card>
