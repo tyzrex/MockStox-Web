@@ -78,7 +78,7 @@ export default function TradeExecutionPage() {
                     placeholder="e.g. AAPL"
                     value={symbol}
                     onChange={(e) => setSymbol(e.target.value)}
-                    className="mt-2 border-[#3d3d3d]"
+                    className="mt-2 "
                   />
                 </div>
 

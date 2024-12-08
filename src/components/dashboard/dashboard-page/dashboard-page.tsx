@@ -251,7 +251,7 @@ export default function Dashboard({
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  {worstPerformers.map((stock) => (
+                  {worstPerformers.slice(0, 3).map((stock) => (
                     <div key={stock.id} className="flex items-center">
                       <div className="w-16 font-medium">{stock.symbol}</div>
                       <div className="w-full bg-[#1d1d1d] rounded-full h-2.5">
@@ -279,7 +279,7 @@ export default function Dashboard({
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  {bestPerformers.map((stock) => (
+                  {bestPerformers.slice(0, 3).map((stock) => (
                     <div key={stock.id} className="flex items-center">
                       <div className="w-16 font-medium">{stock.symbol}</div>
                       <div className="w-full bg-[#1d1d1d] rounded-full h-2.5">

@@ -67,7 +67,7 @@ export function DataTable<K>({ columns, data }: DataTableProps<K>) {
   });
 
   return (
-    <div className="w-full text-white font-bold p-4">
+    <div className="w-full text-white p-4">
       <div className="flex items-center py-4">
         <Input
           placeholder="Filter symbols..."
@@ -75,20 +75,20 @@ export function DataTable<K>({ columns, data }: DataTableProps<K>) {
           onChange={(event) =>
             table.getColumn("symbol")?.setFilterValue(event.target.value)
           }
-          className="max-w-sm bg-mockstox-primary text-white font-bold !placeholder-white border-gray-600"
+          className="max-w-sm bg-mockstox-primary text-white !placeholder-white border-gray-900"
         />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button
               variant="outline"
-              className="ml-auto bg-mockstox-primary text-white font-bold hover:bg-[#3a3a3a]"
+              className="ml-auto bg-mockstox-primary text-white hover:bg-[#3a3a3a]"
             >
               Columns <ChevronDown className="ml-2 h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent
             align="end"
-            className="bg-mockstox-secondary text-white font-bold border border-gray-600"
+            className="bg-black text-white border border-gray-900"
           >
             {table
               .getAllColumns()
@@ -110,16 +110,16 @@ export function DataTable<K>({ columns, data }: DataTableProps<K>) {
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-      <div className="rounded-md border border-gray-600 overflow-hidden">
+      <div className="rounded-md border border-gray-900 overflow-hidden">
         <Table>
-          <TableHeader className="bg-mockstox-secondary ">
+          <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
                     <TableHead
                       key={header.id}
-                      className="text-black border-b border-gray-600 text-sm lg:text-[16px] font-bold "
+                      className="border-b border-gray-800 text-sm lg:text-[16px] "
                     >
                       {header.isPlaceholder
                         ? null
@@ -139,7 +139,7 @@ export function DataTable<K>({ columns, data }: DataTableProps<K>) {
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
-                  className="border-b border-gray-600 hover:bg-mockstox-secondary/10"
+                  className="border-b border-gray-900 hover:bg-mockstox-secondary/10"
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>

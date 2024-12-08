@@ -1,28 +1,43 @@
-import Image from "next/image";
-import Link from "next/link";
-
+"use client";
 import LoginForm from "@/components/forms/login-form";
+import { Input } from "@/components/ui/input";
+import { ChevronRight } from "lucide-react";
+import Link from "next/link";
+import React from "react";
 
-export default function Page() {
+export default function FUILoginWithListedProvider() {
   return (
-    <div className="flex container items-center text-white justify-center py-12 h-full min-h-screen">
-      <div className="mx-auto grid md:w-[450px] gap-6 bg-mockstox-primary p-5 md:p-10 rounded-3xl">
-        <div className="grid gap-2 text-center">
-          <h1 className="text-3xl font-bold">
-            Welcome back to <span className="text-primary">MockStox</span>
-          </h1>
-          <p className="text-balance text-muted-foreground">
-            Enter your email below to login to your account
-          </p>
+    <main
+      style={{
+        background:
+          "linear-gradient(143.6deg, rgba(192, 132, 252, 0) 20.79%, rgba(232, 121, 249, 0.26) 40.92%, rgba(204, 171, 238, 0) 70.35%)",
+      }}
+      className="w-full min-h-screen flex flex-col items-center justify-center sm:px-4 relative"
+    >
+      <div className="max-w-sm w-full text-gray-600 space-y-8">
+        <div className="text-left">
+          <img
+            src="https://farmui.com/logo.svg"
+            width={100}
+            className="mr-auto rounded-full"
+          />
+          <div className="mt-5 space-y-2 mr-auto">
+            <h3 className="text-gray-200 text-2xl font-normal sm:text-3xl tracking-tighter font-geist">
+              Log in to your account
+            </h3>
+            <p className="text-gray-400">
+              Don't have an account?{" "}
+              <Link
+                href="login"
+                className="font-medium text-pink-600 hover:text-pink-500"
+              >
+                Sign up
+              </Link>
+            </p>
+          </div>
         </div>
         <LoginForm />
-        <div className="mt-4 text-center text-sm">
-          Don&apos;t have an account?{" "}
-          <Link href="/register" className="underline">
-            Sign up
-          </Link>
-        </div>
       </div>
-    </div>
+    </main>
   );
 }

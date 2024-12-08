@@ -30,6 +30,7 @@ import {
 import { usePathname } from "next/navigation";
 import { getMenuList } from "@/lib/menu-list";
 import { useSession } from "next-auth/react";
+import Link from "next/link";
 
 const data = {
   user: {
@@ -85,23 +86,19 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild>
-              <a href="#">
-                <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
-                  <Command className="size-4" />
-                </div>
-                <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-semibold">MockStox</span>
-                  <span className="truncate text-xs">Trading View</span>
-                </div>
-              </a>
+              <Link href="/dashboard">
+                <h1 className="text-transparent text-3xl font-bold bg-clip-text bg-gradient-to-r from-purple-300 to-orange-200">
+                  Mock Stox
+                </h1>
+              </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={menuItems.navMain} />
-        <NavProjects projects={data.projects} />
-        <NavSecondary items={data.navSecondary} className="mt-auto" />
+        {/* <NavProjects projects={data.projects} /> */}
+        {/* <NavSecondary items={data.navSecondary} className="mt-auto" /> */}
       </SidebarContent>
       <SidebarFooter>
         {session.status === "authenticated" && <NavUser user={user} />}
