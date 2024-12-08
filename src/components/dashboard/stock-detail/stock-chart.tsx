@@ -427,7 +427,7 @@ export default function StockDashboard({
                 <h3 className="text-lg font-semibold mb-4">Performance</h3>
                 <div className="space-y-2">
                   <div className="flex justify-between">
-                    <span className="text-gray-400">Day's Range</span>
+                    <span className="text-gray-400">Day&apos;s Range</span>
                     <span>
                       {formatNepaliCurrency(
                         formattedHistory[formattedHistory.length - 1].low
