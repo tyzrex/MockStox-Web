@@ -15,6 +15,8 @@ export function showErrorToasts(errors: string) {
     return;
   }
 
+  console.log(errors);
+
   const errorMessages = errors.split("|").map((error) => error.trim());
   errorMessages.forEach((error) => {
     toast.error(error);

@@ -1,7 +1,4 @@
-"use client";
 import LoginForm from "@/components/forms/login-form";
-import { Input } from "@/components/ui/input";
-import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 
@@ -28,8 +25,8 @@ export default function FUILoginWithListedProvider() {
             <p className="text-gray-400">
               Don&apos;t have an account?{" "}
               <Link
-                href="login"
-                className="font-medium text-pink-600 hover:text-pink-500"
+                href="register"
+                className="font-medium text-purple-300 hover:text-purple-500"
               >
                 Sign up
               </Link>

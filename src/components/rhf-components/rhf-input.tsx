@@ -30,7 +30,7 @@ export default function RHFInput<T extends FieldValues>({
         name={name}
         render={({ field }) => (
           <FormItem>
-            <FormLabel>{formLabel}</FormLabel>
+            <FormLabel className="text-gray-400">{formLabel}</FormLabel>
             <FormControl>
               <Input
                 placeholder={placeHolder}

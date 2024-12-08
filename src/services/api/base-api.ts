@@ -18,6 +18,7 @@ interface HandleServerActionOptions<ResponseType, RequestType> {
   revalidateUrl?: string;
   data?: RequestType;
   revalidateTagName?: string;
+  isProtected?: boolean;
 }
 
 // Utility function
@@ -113,13 +114,18 @@ export class BaseApi {
       revalidateUrl,
       data,
       revalidateTagName,
+      isProtected,
     } = options;
 
     try {
-      const session = await getSession();
-      if (!session) {
-        return handleCustomErrorResponse(401, "Session Expired");
+      let session: Session | null = null;
+      if (isProtected) {
+        session = await this.getAuthenticatedSession();
+        if (!session) {
+          throw new SessionError("Session not found");
+        }
       }
+
       const res = await fetchWrapper<ResponseType, RequestType>(endpoint, {
         method: method,
         session: session,

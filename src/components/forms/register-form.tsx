@@ -13,6 +13,8 @@ import {
 import { fetchWrapper } from "@/services/request-handler";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { RegisterNewUser } from "@/services/api/auth/auth-actions";
+import { showErrorToasts } from "@/lib/utils";
 export default function RegisterForm() {
   const form = useForm<RegisterSchemaType>({
     resolver: zodResolver(registerSchema),
@@ -25,26 +27,13 @@ export default function RegisterForm() {
   const router = useRouter();
 
   async function registerUser(data: RegisterSchemaType) {
-    try {
-      const response = await fetchWrapper("auth/users/", {
-        method: "POST",
-        body: {
-          username: data.username,
-          email: data.email,
-          password: data.password,
-          re_password: data.password,
-        },
-        validateStatus: (status) => status === 201,
-        retries: 0,
-      });
-      if (response.success) {
-        toast.success("Registration Success");
-        router.replace("/login");
-      } else {
-        toast.error("Registration Failed");
-      }
-    } catch (err) {
-      console.log(err);
+    const response = await RegisterNewUser(data);
+    if (response.success) {
+      toast.success(response.message);
+      router.replace("/login");
+    } else {
+      console.log(response);
+      showErrorToasts(response.errorData);
     }
   }
 
@@ -58,19 +47,19 @@ export default function RegisterForm() {
             type="text"
             placeHolder="Enter your username"
             formLabel="Username"
-            className="w-full mt-2 px-3 py-5 text-gray-500 bg-transparent outline-none border focus:border-purple-600 shadow-sm rounded-lg"
+            className="w-full mt-2 px-3 py-5 text-white border-neutral-800 bg-transparent outline-none border focus:border-purple-600 shadow-sm rounded-lg"
           />
 
           <RHFInput<RegisterSchemaType>
             name="email"
-            className="w-full mt-2 px-3 py-5 text-gray-500 bg-transparent outline-none border focus:border-purple-600 shadow-sm rounded-lg"
+            className="w-full mt-2 px-3 py-5 text-white border-neutral-800 bg-transparent outline-none border focus:border-purple-600 shadow-sm rounded-lg"
             type="email"
             placeHolder="Enter your email"
             formLabel="Email"
           />
 
           <RHFInput<RegisterSchemaType>
-            className="w-full mt-2 px-3 py-5 text-gray-500 bg-transparent outline-none border focus:border-purple-600 shadow-sm rounded-lg"
+            className="w-full mt-2 px-3 py-5 text-white border-neutral-800 bg-transparent outline-none border focus:border-purple-600 shadow-sm rounded-lg"
             name="password"
             type="password"
             placeHolder="Enter your password"

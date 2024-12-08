@@ -178,9 +178,9 @@ function formatErrorMessage(data: any): string {
     errorMessage = Object.entries(data)
       .map(([key, value]) => {
         if (typeof value === "string") {
-          return `${makeKeyCleaner(key)}: ${value}`;
+          return `${value}`;
         } else if (value && typeof value === "object") {
-          return `${makeKeyCleaner(key)}: ${formatErrorMessage(value)}`;
+          return `${formatErrorMessage(value)}`;
         }
         return "";
       })
