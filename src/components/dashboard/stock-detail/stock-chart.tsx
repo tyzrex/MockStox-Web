@@ -205,7 +205,7 @@ export default function StockDashboard({
     <div>
       <div className="mx-auto space-y-6">
         {/* Header */}
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between">
           <div>
             <h1 className="text-3xl font-bold">{symbol}</h1>
             <div className="flex items-center space-x-2">
@@ -232,7 +232,7 @@ export default function StockDashboard({
         </div>
 
         {/* Key Statistics */}
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <Card className="">
             <CardContent className="p-4 border-l-4 border-blue-500 rounded-lg">
               <div className="text-gray-400 text-lg font-bold">Open</div>
@@ -266,7 +266,7 @@ export default function StockDashboard({
         </div>
 
         {/* Main Content */}
-        <div className="grid grid-cols-4 gap-6">
+        <div className="grid xl:grid-cols-4 gap-6">
           <div className="col-span-3 space-y-6">
             <Card className="">
               <CardContent className="p-6">
@@ -301,7 +301,7 @@ export default function StockDashboard({
             </Card>
           </div>
 
-          <div className="space-y-6">
+          <div className="space-y-6 col-span-3 xl:col-span-1">
             <Card className="">
               <CardContent className="p-4">
                 <div className="text-gray-400 text-sm">Stocks Owned</div>

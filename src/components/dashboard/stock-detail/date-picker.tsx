@@ -58,10 +58,10 @@ export default function DateSelector() {
   };
 
   return (
-    <div className="flex w-full justify-between">
+    <div className="flex flex-col lg:flex-row gap- w-full justify-between">
       <div className="flex flex-col sm:flex-row gap-4 py-4">
         <Select value={selectedYear} onValueChange={handleYearChange}>
-          <SelectTrigger className="w-[180px]">
+          <SelectTrigger className="w-full">
             <SelectValue placeholder="Select year" />
           </SelectTrigger>
           <SelectContent>
@@ -74,7 +74,7 @@ export default function DateSelector() {
         </Select>
 
         <Select value={selectedMonth} onValueChange={handleMonthChange}>
-          <SelectTrigger className="w-[180px]">
+          <SelectTrigger className="w-full">
             <SelectValue placeholder="Select month" />
           </SelectTrigger>
           <SelectContent>
@@ -90,7 +90,7 @@ export default function DateSelector() {
         </Select>
       </div>
 
-      <div className="flex items-center justify-center gap-3 ml-5">
+      <div className="flex items-center justify-center gap-3 ">
         <Button
           onClick={() => {
             handleClear();
