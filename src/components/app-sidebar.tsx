@@ -87,7 +87,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild>
               <Link href="/dashboard">
-                <h1 className="text-transparent text-3xl font-bold bg-clip-text bg-gradient-to-r from-purple-300 to-orange-200">
+                <h1 className="text-purple-300 text-3xl font-bold ">
                   Mock Stox
                 </h1>
               </Link>

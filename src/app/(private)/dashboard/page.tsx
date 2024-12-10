@@ -13,7 +13,7 @@ export default async function Page() {
     <Dashboard
       funds={response.funds}
       portfolioValue={response.portfolio_value}
-      profitLoss={response.profitLoss}
+      profitLoss={response.profit_or_loss}
       worstPerformers={response.worst_performers}
       bestPerformers={response.top_performers}
       recentTrades={response.recent_transactions}

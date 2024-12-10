@@ -238,24 +238,41 @@ export default function Dashboard({
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  {worstPerformers.slice(0, 3).map((stock) => (
-                    <div key={stock.id} className="flex items-center">
-                      <div className="w-16 font-medium">{stock.symbol}</div>
-                      <div className="w-full bg-[#1d1d1d] rounded-full h-2.5">
-                        <div
-                          className="bg-red-500 h-2.5 rounded-full"
-                          style={{
-                            width: `${Math.abs(
-                              parseFloat(stock.percentage_change)
-                            )}%`,
-                          }}
-                        ></div>
+                  <div className="space-y-4">
+                    {worstPerformers.every(
+                      (stock) => parseFloat(stock.percentage_change) > 0
+                    ) ? (
+                      <div className="text-center text-green-500 font-medium">
+                        All stocks are in profit
                       </div>
-                      <span className="w-12 text-right text-red-500 ml-2">
-                        -{stock.percentage_change}%
-                      </span>
-                    </div>
-                  ))}
+                    ) : (
+                      worstPerformers.slice(0, 3).map((stock) => {
+                        if (parseFloat(stock.percentage_change) > 0) {
+                          return null;
+                        }
+                        return (
+                          <div key={stock.id} className="flex items-center">
+                            <div className="w-16 font-medium">
+                              {stock.symbol}
+                            </div>
+                            <div className="w-full bg-[#1d1d1d] rounded-full h-2.5">
+                              <div
+                                className="bg-red-500 h-2.5 rounded-full"
+                                style={{
+                                  width: `${Math.abs(
+                                    parseFloat(stock.percentage_change)
+                                  )}%`,
+                                }}
+                              ></div>
+                            </div>
+                            <span className="w-12 text-right text-red-500 ml-2">
+                              {stock.percentage_change}%
+                            </span>
+                          </div>
+                        );
+                      })
+                    )}
+                  </div>
                 </div>
               </CardContent>
             </Card>
@@ -266,24 +283,37 @@ export default function Dashboard({
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  {bestPerformers.slice(0, 3).map((stock) => (
-                    <div key={stock.id} className="flex items-center">
-                      <div className="w-16 font-medium">{stock.symbol}</div>
-                      <div className="w-full bg-[#1d1d1d] rounded-full h-2.5">
-                        <div
-                          className="bg-green-500 h-2.5 rounded-full"
-                          style={{
-                            width: `${Math.abs(
-                              parseFloat(stock.percentage_change)
-                            )}%`,
-                          }}
-                        ></div>
-                      </div>
-                      <span className="w-12 text-right text-green-500 ml-2">
-                        +{stock.percentage_change}%
-                      </span>
+                  {bestPerformers.every(
+                    (stock) => parseFloat(stock.percentage_change) < 0
+                  ) ? (
+                    <div className="text-center my-8 text-red-500 font-medium">
+                      All stocks are in loss
                     </div>
-                  ))}
+                  ) : (
+                    bestPerformers.slice(0, 3).map((stock) => {
+                      if (parseFloat(stock.percentage_change) < 0) {
+                        return null;
+                      }
+                      return (
+                        <div key={stock.id} className="flex items-center">
+                          <div className="w-16 font-medium">{stock.symbol}</div>
+                          <div className="w-full bg-[#1d1d1d] rounded-full h-2.5">
+                            <div
+                              className="bg-green-500 h-2.5 rounded-full"
+                              style={{
+                                width: `${Math.abs(
+                                  parseFloat(stock.percentage_change)
+                                )}%`,
+                              }}
+                            ></div>
+                          </div>
+                          <span className="w-12 text-right text-green-500 ml-2">
+                            {stock.percentage_change}%
+                          </span>
+                        </div>
+                      );
+                    })
+                  )}
                 </div>
               </CardContent>
             </Card>
@@ -294,13 +324,17 @@ export default function Dashboard({
           <Card className="bg-neutral-950 border border-zinc-800">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
-                Day&apos;s Gain/Loss
+                Strading Streak
               </CardTitle>
               <TrendingUp className="h-6 w-6 text-green-500" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-green-500">+$345.67</div>
-              <p className="text-xs text-[#a3a2a3]">+2.34% today</p>
+              <div className="text-2xl font-bold text-primary-accent">
+                5 days
+              </div>
+              <p className="text-xs text-[#a3a2a3]">
+                Days traded consecutively
+              </p>
             </CardContent>
           </Card>
           <Card className="bg-neutral-950 border border-zinc-800">

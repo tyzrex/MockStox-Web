@@ -65,7 +65,7 @@ export function NavMain({
                       w-full justify-between
                       ${
                         checkIsActive(item.url)
-                          ? "bg-purple-300 text-black"
+                          ? "bg-gray-200/20 text-white"
                           : ""
                       }
                       text-base transition-all duration-200 ease-in-out
@@ -94,7 +94,7 @@ export function NavMain({
                             ml-5 py-5 text-lg
                             ${
                               checkIsActive(subItem.url)
-                                ? "bg-purple-300 text-black font-medium"
+                                ? "bg-gray-200/20 text-white font-medium"
                                 : ""
                             }
                             text-sm transition-all duration-200 ease-in-out rounded-md
@@ -116,7 +116,7 @@ export function NavMain({
                 size={state === "collapsed" ? "sm" : "lg"}
                 className={`
                   w-full
-                  ${checkIsActive(item.url) ? "bg-purple-300 text-black" : ""}
+                  ${checkIsActive(item.url) ? "bg-gray-200/20 text-white" : ""}
                   text-base transition-all duration-200 ease-in-out
                   flex items-center px-4 py-3 rounded-md
                 `}
