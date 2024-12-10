@@ -37,14 +37,7 @@ import {
   Area,
   AreaChart,
 } from "recharts";
-
-const formatNepaliCurrency = (value: number | string) => {
-  const numValue = typeof value === "string" ? parseFloat(value) : value;
-  return new Intl.NumberFormat("ne-NP", {
-    style: "currency",
-    currency: "NPR",
-  }).format(numValue);
-};
+import { formatNepaliCurrency } from "@/lib/utils";
 
 interface Transaction {
   id: number;
@@ -301,6 +294,9 @@ export default function MyPortfolio() {
               >
                 {formatNepaliCurrency(data.profit_or_loss)}
               </div>
+              <p className="text-xs">
+                {parseFloat(data.profit_or_loss) >= 0 ? "Profit" : "Loss"}
+              </p>
             </CardContent>
           </Card>
           <Card className="">

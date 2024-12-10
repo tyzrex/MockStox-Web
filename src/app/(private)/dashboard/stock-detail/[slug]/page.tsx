@@ -18,7 +18,7 @@ interface StockDetailPageProps {
 async function StockDetailContainer(props: StockDetailPageProps) {
   console.log(props.params.slug);
   const year = props.searchParams?.year ?? "2024";
-  const month = props.searchParams?.month ?? "07";
+  const month = props.searchParams?.month ?? "12";
   const stockDetail = Stocks.filter(
     (stock) => stock.symbol === props.params.slug
   );
@@ -27,6 +27,8 @@ async function StockDetailContainer(props: StockDetailPageProps) {
     slug: props.params.slug,
     query: `year=${year}&month=${month}`,
   });
+
+  console.log(response);
 
   if (error || !response) {
     return (
