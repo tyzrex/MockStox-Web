@@ -19,6 +19,9 @@ import {
   LayoutDashboard,
   ChartCandlestick,
   LucideIcon,
+  Radio,
+  HandCoins,
+  Vault,
 } from "lucide-react";
 
 type Submenu = {
@@ -79,6 +82,13 @@ export function getMenuList(pathname: string): { navMain: NavItem[] } {
         ],
       },
       {
+        title: "Live Market",
+        url: "/dashboard/live-market",
+        icon: Radio,
+        isActive: pathname === "/dashboard/live-market",
+        items: [],
+      },
+      {
         title: "My Trades",
         url: "/dashboard/trades",
         icon: Bookmark,
@@ -90,6 +100,20 @@ export function getMenuList(pathname: string): { navMain: NavItem[] } {
         url: "/dashboard/trade-execution",
         icon: ChartCandlestick,
         isActive: pathname === "/dashboard/trade-execution",
+        items: [],
+      },
+      {
+        title: "My Portfolio",
+        url: "/dashboard/my-portfolio",
+        icon: Vault,
+        isActive: pathname === "/dashboard/my-portfolio",
+        items: [],
+      },
+      {
+        title: "Price Prediction",
+        url: "/dashboard/price-prediction",
+        icon: HandCoins,
+        isActive: pathname === "/dashboard/price-prediction",
         items: [],
       },
       {

@@ -16,7 +16,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Flame } from "lucide-react";
+import { Flame, TrendingDown, TrendingUp } from "lucide-react";
 import {
   ChartContainer,
   ChartTooltip,
@@ -76,7 +76,7 @@ interface PortfolioData {
   top_performers: StockPerformance[];
   worst_performers: StockPerformance[];
   profit_or_loss: string;
-  holdings: { symbol: string; value: number; sector: string }[];
+  holdings: any[];
 }
 
 const portfolioData: PortfolioData = {
@@ -205,10 +205,61 @@ const portfolioData: PortfolioData = {
   ],
   profit_or_loss: "-1110.00",
   holdings: [
-    { symbol: "NABIL", value: 51450, sector: "COMMERCIAL BANKS" },
-    { symbol: "ADBL", value: 34120, sector: "COMMERCIAL BANKS" },
-    { symbol: "NTC", value: 25000, sector: "TELECOMMUNICATIONS" },
-    { symbol: "UPPER", value: 18000, sector: "HYDROPOWER" },
+    {
+      symbol: "NABIL",
+      name: "Nabil Bank Limited",
+      quantity: 100,
+      averageCost: 1000,
+      currentPrice: 1100,
+      value: 110000,
+      gainLoss: 10000,
+      gainLossPercentage: 10,
+      sector: "Banking",
+    },
+    {
+      symbol: "DHPL",
+      name: "Dibyashwori Hydropower Ltd.",
+      quantity: 500,
+      averageCost: 200,
+      currentPrice: 220,
+      value: 110000,
+      gainLoss: 10000,
+      gainLossPercentage: 10,
+      sector: "Hydropower",
+    },
+    {
+      symbol: "NRIC",
+      name: "Nepal Reinsurance Company Ltd.",
+      quantity: 200,
+      averageCost: 500,
+      currentPrice: 480,
+      value: 96000,
+      gainLoss: -4000,
+      gainLossPercentage: -4,
+      sector: "Insurance",
+    },
+    {
+      symbol: "NTC",
+      name: "Nepal Telecom",
+      quantity: 150,
+      averageCost: 600,
+      currentPrice: 650,
+      value: 97500,
+      gainLoss: 7500,
+      gainLossPercentage: 8.33,
+      sector: "Telecommunications",
+    },
+    {
+      symbol: "UPPER",
+      name: "Upper Tamakoshi Hydropower Ltd.",
+      quantity: 300,
+      averageCost: 300,
+      currentPrice: 320,
+      value: 96000,
+      gainLoss: 6000,
+      gainLossPercentage: 6.67,
+      sector: "Hydropower",
+    },
   ],
 };
 
@@ -240,20 +291,6 @@ export default function MyPortfolio() {
     (sum, holding) => sum + holding.value,
     0
   );
-
-  const radialChartData = [
-    {
-      name: "Profit/Loss",
-      value:
-        (Math.abs(parseFloat(data.profit_or_loss)) / totalPortfolioValue) * 100,
-    },
-    {
-      name: "Remaining",
-      value:
-        100 -
-        (Math.abs(parseFloat(data.profit_or_loss)) / totalPortfolioValue) * 100,
-    },
-  ];
 
   const tradeHistoryData = data.recent_transactions.map((transaction) => ({
     date: new Date(transaction.created_at).toLocaleDateString(),
@@ -349,6 +386,48 @@ export default function MyPortfolio() {
               </p>
             </CardContent>
           </Card>
+
+          <Card className="col-span-4">
+            <CardHeader>
+              <CardTitle>Recent Transactions</CardTitle>
+              <CardDescription>Showing the last 5 transactions</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Date</TableHead>
+                    <TableHead>Symbol</TableHead>
+                    <TableHead>Action</TableHead>
+                    <TableHead className="text-right">Quantity</TableHead>
+                    <TableHead className="text-right">Unit Price</TableHead>
+                    <TableHead className="text-right">Value</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {data.recent_transactions.slice(0, 5).map((transaction) => (
+                    <TableRow key={transaction.id}>
+                      <TableCell>{transaction.date}</TableCell>
+                      <TableCell>{transaction.symbol}</TableCell>
+                      <TableCell>{transaction.action}</TableCell>
+                      <TableCell className="text-right">
+                        {transaction.quantity}
+                      </TableCell>
+                      <TableCell className="text-right">
+                        {formatNepaliCurrency(transaction.unit_price)}
+                      </TableCell>
+                      <TableCell className="text-right">
+                        {formatNepaliCurrency(
+                          parseFloat(transaction.unit_price) *
+                            transaction.quantity
+                        )}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </CardContent>
+          </Card>
         </div>
 
         {/* Main Content Grid */}
@@ -399,69 +478,6 @@ export default function MyPortfolio() {
             </CardContent>
           </Card>
 
-          {/* Radial Chart */}
-          <Card className="col-span-2">
-            <CardHeader>
-              <CardTitle>Profit/Loss Ratio</CardTitle>
-              <CardDescription>
-                Radial chart showing profit/loss as a percentage of total
-                portfolio value
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <ChartContainer
-                config={{
-                  value: {
-                    label: "Value",
-                    color: "hsl(var(--chart-1))",
-                  },
-                }}
-                className="h-[300px]"
-              >
-                <ResponsiveContainer width="100%" height="100%">
-                  <PieChart>
-                    <Pie
-                      data={radialChartData}
-                      dataKey="value"
-                      nameKey="name"
-                      cx="50%"
-                      cy="50%"
-                      innerRadius={60}
-                      outerRadius={80}
-                      startAngle={90}
-                      endAngle={-270}
-                    >
-                      {radialChartData.map((entry, index) => (
-                        <Cell
-                          key={`cell-${index}`}
-                          fill={
-                            index === 0
-                              ? parseFloat(data.profit_or_loss) >= 0
-                                ? "#4ade80"
-                                : "#ef4444"
-                              : "#6b7280"
-                          }
-                        />
-                      ))}
-                    </Pie>
-                    <ChartTooltip content={<ChartTooltipContent />} />
-                  </PieChart>
-                </ResponsiveContainer>
-              </ChartContainer>
-              <div className="mt-4 text-center">
-                <p className="text-lg font-semibold">
-                  {parseFloat(data.profit_or_loss) >= 0 ? "Profit" : "Loss"}:{" "}
-                  {Math.abs(
-                    (parseFloat(data.profit_or_loss) / totalPortfolioValue) *
-                      100
-                  ).toFixed(2)}
-                  %
-                </p>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Trade History Chart */}
           <Card className="col-span-2">
             <CardHeader>
               <CardTitle>Trade History</CardTitle>
@@ -477,7 +493,7 @@ export default function MyPortfolio() {
                     color: "hsl(var(--chart-1))",
                   },
                 }}
-                className="h-[300px]"
+                className="h-[300px] w-full"
               >
                 <ResponsiveContainer width="100%" height="100%">
                   <LineChart data={tradeHistoryData}>
@@ -490,79 +506,64 @@ export default function MyPortfolio() {
               </ChartContainer>
             </CardContent>
           </Card>
-
-          {/* Additional Calculations */}
-          <Card className="col-span-2">
-            <CardHeader>
-              <CardTitle>Trade Statistics</CardTitle>
-              <CardDescription>
-                Additional calculations based on trade history
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                <div>
-                  <p className="text-sm text-gray-400">Total Trades</p>
-                  <p className="text-2xl font-bold">{calculateTotalTrades()}</p>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-400">Average Trade Value</p>
-                  <p className="text-2xl font-bold">
-                    {formatNepaliCurrency(calculateAverageTradeValue())}
-                  </p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
         </div>
 
-        {/* Recent Transactions */}
-        <Card className="">
+        <Card>
           <CardHeader>
-            <CardTitle>Recent Transactions</CardTitle>
+            <CardTitle>Holdings</CardTitle>
             <CardDescription>
-              Your latest stock purchases and sales
+              Detailed breakdown of your portfolio
             </CardDescription>
           </CardHeader>
           <CardContent>
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Date</TableHead>
                   <TableHead>Symbol</TableHead>
-                  <TableHead>Action</TableHead>
-                  <TableHead>Quantity</TableHead>
-                  <TableHead>Unit Price</TableHead>
-                  <TableHead>Total</TableHead>
+                  <TableHead>Name</TableHead>
+                  <TableHead className="text-right">Quantity</TableHead>
+                  <TableHead className="text-right">Avg. Cost</TableHead>
+                  <TableHead className="text-right">Current Price</TableHead>
+                  <TableHead className="text-right">Value</TableHead>
+                  <TableHead className="text-right">Gain/Loss</TableHead>
+                  <TableHead className="text-right">Gain/Loss %</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {data.recent_transactions.map((transaction) => (
-                  <TableRow key={transaction.id}>
-                    <TableCell>
-                      {new Date(transaction.date).toLocaleDateString()}
+                {portfolioData.holdings.map((holding) => (
+                  <TableRow key={holding.symbol}>
+                    <TableCell className="font-medium">
+                      {holding.symbol || "N/A"}
                     </TableCell>
-                    <TableCell>{transaction.symbol}</TableCell>
-                    <TableCell>
-                      <Badge
-                        variant={
-                          transaction.action === "BUY"
-                            ? "default"
-                            : "destructive"
-                        }
-                      >
-                        {transaction.action}
-                      </Badge>
+                    <TableCell>{holding.name || "N/A"}</TableCell>
+                    <TableCell className="text-right">
+                      {holding.quantity || 0}
                     </TableCell>
-                    <TableCell>{transaction.quantity}</TableCell>
-                    <TableCell>
-                      {formatNepaliCurrency(transaction.unit_price)}
+                    <TableCell className="text-right">
+                      {formatNepaliCurrency(holding.averageCost || 0)}
                     </TableCell>
-                    <TableCell>
-                      {formatNepaliCurrency(
-                        parseFloat(transaction.unit_price) *
-                          transaction.quantity
+                    <TableCell className="text-right">
+                      {formatNepaliCurrency(holding.currentPrice || 0)}
+                    </TableCell>
+                    <TableCell className="text-right">
+                      {formatNepaliCurrency(holding.value || 0)}
+                    </TableCell>
+                    <TableCell className="text-right">
+                      {formatNepaliCurrency(holding.gainLoss || 0)}
+                    </TableCell>
+                    <TableCell
+                      className={`text-right ${
+                        (holding.gainLossPercentage || 0) >= 0
+                          ? "text-green-500"
+                          : "text-red-500"
+                      }`}
+                    >
+                      {(holding.gainLossPercentage || 0) >= 0 ? (
+                        <TrendingUp className="inline h-4 w-4 mr-1" />
+                      ) : (
+                        <TrendingDown className="inline h-4 w-4 mr-1" />
                       )}
+                      {(holding.gainLossPercentage || 0).toFixed(2)}%
                     </TableCell>
                   </TableRow>
                 ))}
@@ -589,7 +590,7 @@ export default function MyPortfolio() {
                 .
                 {parseFloat(data.profit_or_loss) >= 0
                   ? " Keep up the good work and consider reinvesting your profits."
-                  : " Don't be discouraged. Review your strategy and consider diversifying your investments."}
+                  : " Dont be discouraged. Review your strategy and consider diversifying your investments."}
               </p>
             </div>
             <div>
