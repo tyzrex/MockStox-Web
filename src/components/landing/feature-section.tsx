@@ -129,13 +129,13 @@ export default function FeaturesSection() {
         src="https://tailwindcss.com/_next/static/media/docs@30.8b9a76a2.avif"
         className="absolute z-2 -top-0 left-10"
       />
-      <div className="max-w-screen-xl mx-auto px-4 text-gray-400 md:px-8">
+      <div className="max-w-screen-xl mx-auto px-4  md:px-8">
         <div className="relative max-w-2xl mx-auto sm:text-center">
           <div className="relative z-10">
-            <h3 className="text-gray-200 mt-4 text-3xl font-normal font-geist tracking-tighter md:text-5xl sm:text-4xl">
+            <h3 className=" mt-4 text-3xl font-normal font-geist tracking-tighter md:text-5xl sm:text-4xl">
               Let’s help power your SaaS
             </h3>
-            <p className="mt-3 font-geist text-gray-200">
+            <p className="mt-3 font-geist ">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
               congue, nisl eget molestie varius, enim ex faucibus purus.
             </p>
@@ -159,10 +159,10 @@ export default function FeaturesSection() {
                 <div className="text-purple-600 rounded-full p-4 transform-gpu dark:[border:1px_solid_rgba(255,255,255,.1)] dark:[box-shadow:0_-20px_80px_-20px_#8686f01f_inset] w-fit">
                   {item.icon}
                 </div>
-                <h4 className="text-lg text-gray-300 font-bold font-geist tracking-tighter">
+                <h4 className="text-lg  font-bold font-geist tracking-tighter">
                   {item.title}
                 </h4>
-                <p className="text-gray-500">{item.desc}</p>
+                <p className="">{item.desc}</p>
               </li>
             ))}
           </ul>

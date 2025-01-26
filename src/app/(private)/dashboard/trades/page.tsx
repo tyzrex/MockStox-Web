@@ -111,7 +111,7 @@ export default async function TradesPage() {
   }
 
   return (
-    <div className="container mx-auto py-8">
+    <div>
       <h1 className="text-3xl font-bold mb-6">Your Trades</h1>
 
       {response.results.length === 0 ? (
@@ -146,31 +146,25 @@ export default async function TradesPage() {
                   </div>
                 </CardHeader>
                 <CardContent>
-                  <div className="text-sm text-gray-600 mb-2">
+                  <div className="text-sm  mb-2">
                     {format(new Date(trade.date), "MMMM d, yyyy")}
                   </div>
                   <div className="grid grid-cols-2 gap-2">
                     <div>
-                      <div className="text-sm font-medium text-gray-800">
-                        Quantity
-                      </div>
+                      <div className="text-sm font-medium ">Quantity</div>
                       <div className="text-lg font-semibold text-black">
                         {trade.quantity}
                       </div>
                     </div>
                     <div>
-                      <div className="text-sm font-medium text-gray-800">
-                        Unit Price
-                      </div>
+                      <div className="text-sm font-medium ">Unit Price</div>
                       <div className="text-lg font-semibold text-black">
                         Rs. {parseFloat(trade.unit_price).toFixed(2)}
                       </div>
                     </div>
                   </div>
                   <div className="mt-2">
-                    <div className="text-sm font-medium text-gray-800">
-                      Total Value
-                    </div>
+                    <div className="text-sm font-medium ">Total Value</div>
                     <div className="text-xl font-bold text-black">
                       Rs.{" "}
                       {(trade.quantity * parseFloat(trade.unit_price)).toFixed(

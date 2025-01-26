@@ -121,7 +121,7 @@ export default function Dashboard({
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <Card className="bg-neutral-950 border border-zinc-800">
+          <Card className="">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
                 Available Funds
@@ -132,12 +132,10 @@ export default function Dashboard({
               <div className="text-2xl font-bold">
                 {formatNepaliCurrency(funds)}
               </div>
-              <p className="text-xs text-[#a3a2a3]">
-                Total funds available for trading
-              </p>
+              <p className="text-xs">Total funds available for trading</p>
             </CardContent>
           </Card>
-          <Card className="bg-neutral-950 border border-zinc-800">
+          <Card className="">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
                 Portfolio Value
@@ -148,12 +146,12 @@ export default function Dashboard({
               <div className="text-2xl font-bold">
                 {formatNepaliCurrency(portfolioValue)}
               </div>
-              <p className="text-xs text-[#a3a2a3]">
+              <p className="text-xs">
                 Total value of all stocks in the portfolio
               </p>
             </CardContent>
           </Card>
-          <Card className="bg-neutral-950 border border-zinc-800">
+          <Card className="">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
                 Total Profit/Loss
@@ -164,15 +162,13 @@ export default function Dashboard({
               <div className="text-2xl font-bold">
                 {formatNepaliCurrency(profitLoss)}
               </div>
-              <p className="text-xs text-[#a3a2a3]">
-                Total profit/loss from all trades
-              </p>
+              <p className="text-xs">Total profit/loss from all trades</p>
             </CardContent>
           </Card>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <Card className="md:col-span-2 bg-neutral-950 border border-zinc-800">
+          <Card className="md:col-span-2 ">
             <CardHeader>
               <CardTitle>Recent Trades</CardTitle>
             </CardHeader>
@@ -232,7 +228,7 @@ export default function Dashboard({
             </CardContent>
           </Card>
           <div className="flex flex-col gap-5">
-            <Card className="bg-neutral-950 border border-zinc-800">
+            <Card className="">
               <CardHeader>
                 <CardTitle>Worst Performers</CardTitle>
               </CardHeader>
@@ -277,7 +273,7 @@ export default function Dashboard({
               </CardContent>
             </Card>
 
-            <Card className="bg-neutral-950 border border-zinc-800">
+            <Card className="">
               <CardHeader>
                 <CardTitle>Top Performers</CardTitle>
               </CardHeader>
@@ -321,7 +317,7 @@ export default function Dashboard({
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-          <Card className="bg-neutral-950 border border-zinc-800">
+          <Card className="">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
                 Strading Streak
@@ -332,12 +328,10 @@ export default function Dashboard({
               <div className="text-2xl font-bold text-primary-accent">
                 5 days
               </div>
-              <p className="text-xs text-[#a3a2a3]">
-                Days traded consecutively
-              </p>
+              <p className="text-xs">Days traded consecutively</p>
             </CardContent>
           </Card>
-          <Card className="bg-neutral-950 border border-zinc-800">
+          <Card className="">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
                 Most Active Stock
@@ -346,12 +340,10 @@ export default function Dashboard({
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">{mostActiveStock}</div>
-              <p className="text-xs text-[#a3a2a3]">
-                {activeStockQuantity} shares traded
-              </p>
+              <p className="text-xs">{activeStockQuantity} shares traded</p>
             </CardContent>
           </Card>
-          <Card className="bg-neutral-950 border border-zinc-800">
+          <Card className="">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
                 Biggest Loss
@@ -362,12 +354,12 @@ export default function Dashboard({
               <div className="text-2xl font-bold text-red-500">
                 {getWorstPerformer()[0].symbol}
               </div>
-              <p className="text-xs text-[#a3a2a3]">
+              <p className="text-xs">
                 {getWorstPerformer()[0].percentage_change}% loss
               </p>
             </CardContent>
           </Card>
-          <Card className="bg-neutral-950 border border-zinc-800">
+          <Card className="">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
                 Market Close
@@ -376,7 +368,7 @@ export default function Dashboard({
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">2:59:59 PM</div>
-              <p className="text-xs text-[#a3a2a3]">15 seconds remaining</p>
+              <p className="text-xs">15 seconds remaining</p>
             </CardContent>
           </Card>
         </div>

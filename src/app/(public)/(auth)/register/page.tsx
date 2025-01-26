@@ -24,7 +24,7 @@ export default function FUISignUpWithLeftBackground() {
             </h2>
 
             <Separator className="h-px bg-white/20 w-[100px] mr-auto" />
-            <p className="text-gray-300 text-md md:text-xl tracking-tight">
+            <p className=" text-md md:text-xl tracking-tight">
               Create an account and start trading with confidence with the help
               of our powerful tools.
             </p>
@@ -60,7 +60,7 @@ export default function FUISignUpWithLeftBackground() {
           height={1000}
           alt="back bg"
         />
-        <div className="w-full max-w-md md:max-w-lg space-y-8 px-4  text-gray-600 sm:px-0 z-20">
+        <div className="w-full max-w-md md:max-w-lg space-y-8 px-4   sm:px-0 z-20">
           <div className="relative">
             <img
               src="https://farmui.com/logo.svg"
@@ -68,10 +68,10 @@ export default function FUISignUpWithLeftBackground() {
               className="lg:hidden rounded-full"
             />
             <div className="mt-5 space-y-2">
-              <h3 className="text-gray-200 text-3xl  font-semibold tracking-tighter sm:text-4xl">
+              <h3 className=" text-3xl  font-semibold tracking-tighter sm:text-4xl">
                 Sign up - Start Your Journey
               </h3>
-              <p className="text-gray-400">
+              <p className="">
                 Already have an account?{" "}
                 <Link
                   href="/login"

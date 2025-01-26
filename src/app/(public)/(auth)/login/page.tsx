@@ -11,7 +11,7 @@ export default function FUILoginWithListedProvider() {
       }}
       className="w-full min-h-screen flex flex-col items-center justify-center sm:px-4 relative"
     >
-      <div className="max-w-sm w-full text-gray-600 space-y-8">
+      <div className="max-w-sm w-full  space-y-8">
         <div className="text-left">
           <img
             src="https://farmui.com/logo.svg"
@@ -19,10 +19,10 @@ export default function FUILoginWithListedProvider() {
             className="mr-auto rounded-full"
           />
           <div className="mt-5 space-y-2 mr-auto">
-            <h3 className="text-gray-200 text-2xl font-normal sm:text-3xl tracking-tighter font-geist">
+            <h3 className=" text-2xl font-normal sm:text-3xl tracking-tighter font-geist">
               Log in to your account
             </h3>
-            <p className="text-gray-400">
+            <p className="">
               Don&apos;t have an account?{" "}
               <Link
                 href="register"

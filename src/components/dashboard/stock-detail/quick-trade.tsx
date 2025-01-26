@@ -78,22 +78,22 @@ export default function EnhancedTradingComponent({
           <h3 className="text-lg mt-3 font-semibold mb-4">Stock Details</h3>
           <div className="flex flex-col justify-between items-start gap-5">
             <div>
-              <div className="text-gray-400 text-sm">Symbol</div>
+              <div className=" text-sm">Symbol</div>
               <div className="font-semibold">{symbol}</div>
             </div>
             <div>
-              <div className="text-gray-400 text-sm">Stocks Owned</div>
+              <div className=" text-sm">Stocks Owned</div>
               <div className="font-semibold">{number_of_stocks}</div>
             </div>
 
             <div>
-              <div className="text-gray-400 text-sm">Current Price</div>
+              <div className=" text-sm">Current Price</div>
               <div className="font-semibold">
                 {formatNepaliCurrency(latestPrice)}
               </div>
             </div>
             <div>
-              <div className="text-gray-400 text-sm">Total Value</div>
+              <div className=" text-sm">Total Value</div>
               <div className="font-semibold">
                 {formatNepaliCurrency(latestPrice * number_of_stocks)}
               </div>
@@ -109,7 +109,7 @@ export default function EnhancedTradingComponent({
             {mockPredictions.map((prediction, index) => (
               <div key={index} className="flex justify-between items-center">
                 <div>
-                  <div className="text-sm text-gray-500">{prediction.date}</div>
+                  <div className="text-sm ">{prediction.date}</div>
                   <div className="font-semibold">
                     {formatNepaliCurrency(prediction.predictedPrice)}
                   </div>
@@ -177,7 +177,7 @@ export default function EnhancedTradingComponent({
 
               <div className="mt-5 flex justify-between items-center">
                 <div>
-                  <div className="text-gray-400 text-sm">Stocks Owned</div>
+                  <div className=" text-sm">Stocks Owned</div>
                   <div className="text-lg font-semibold">
                     {number_of_stocks}
                   </div>

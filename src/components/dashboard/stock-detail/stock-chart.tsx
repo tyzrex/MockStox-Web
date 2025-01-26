@@ -57,7 +57,7 @@ export default function StockDashboard({
     <div>
       <div className="mx-auto space-y-6">
         {/* Header */}
-        <div className="flex flex-col text-black dark:text-gray-200 lg:flex-row lg:items-center justify-between">
+        <div className="flex flex-col text-black dark: lg:flex-row lg:items-center justify-between">
           <div>
             <h1 className="text-3xl font-bold">{symbol}</h1>
             <div className="flex items-center space-x-2">
@@ -87,7 +87,7 @@ export default function StockDashboard({
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
           <Card>
             <CardContent className="p-4 border-l-4 border-blue-500 rounded-lg">
-              <div className="text-gray-400 text-lg font-bold">Open</div>
+              <div className=" text-lg font-bold">Open</div>
               <div className="text-2xl font-semibold">
                 {formatNepaliCurrency(
                   formattedHistory[formattedHistory.length - 1].open
@@ -97,7 +97,7 @@ export default function StockDashboard({
           </Card>
           <Card>
             <CardContent className="p-4 border-l-4 border-green-500 rounded-lg">
-              <div className="text-gray-400 text-lg font-bold">High</div>
+              <div className=" text-lg font-bold">High</div>
               <div className="text-2xl font-semibold">
                 {formatNepaliCurrency(
                   formattedHistory[formattedHistory.length - 1].high
@@ -107,7 +107,7 @@ export default function StockDashboard({
           </Card>
           <Card>
             <CardContent className="p-4 border-l-4 border-red-500 rounded-lg">
-              <div className="text-gray-400 text-lg font-bold">Low</div>
+              <div className=" text-lg font-bold">Low</div>
               <div className="text-2xl font-semibold">
                 {formatNepaliCurrency(
                   formattedHistory[formattedHistory.length - 1].low
@@ -117,7 +117,7 @@ export default function StockDashboard({
           </Card>
           <Card>
             <CardContent className="p-4 border-l-4 border-yellow-500 rounded-lg">
-              <div className="text-gray-400 text-lg font-bold">Close</div>
+              <div className=" text-lg font-bold">Close</div>
               <div className="text-2xl font-semibold">
                 {formatNepaliCurrency(
                   formattedHistory[formattedHistory.length - 1].close

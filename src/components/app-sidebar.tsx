@@ -81,15 +81,13 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     }`,
   };
   return (
-    <Sidebar variant="inset" {...props}>
+    <Sidebar variant="sidebar" {...props}>
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild>
               <Link href="/dashboard">
-                <h1 className="text-purple-300 text-3xl font-bold ">
-                  Mock Stox
-                </h1>
+                <h1 className="text-white text-3xl font-bold ">MockStox</h1>
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>

@@ -17,42 +17,42 @@ export function CompanyInfoCard({ company }: { company: any }) {
       </CardHeader>
       <CardContent className="grid grid-cols-2 gap-4 text-sm">
         <div>
-          <p className="text-gray-400">Core Capital</p>
+          <p className="">Core Capital</p>
           <p className="font-semibold text-white">
             {company.core_capital.toLocaleString()} NPR
           </p>
         </div>
 
         <div>
-          <p className="text-gray-400">Listed Date</p>
+          <p className="">Listed Date</p>
           <p className="font-semibold text-white">
             {company.listed_date === "" ? "-" : company.listed_date}
           </p>
         </div>
         <div>
-          <p className="text-gray-400">Expired Date</p>
+          <p className="">Expired Date</p>
           <p className="font-semibold text-white">
             {company.expired_date === "" ? "-" : company.expired_date}
           </p>
         </div>
         <div>
-          <p className="text-gray-400">Share Registrar</p>
+          <p className="">Share Registrar</p>
           <p className="font-semibold text-white">{company.share_registar}</p>
         </div>
         <div>
-          <p className="text-gray-400">Sector</p>
+          <p className="">Sector</p>
           <p className="font-semibold text-white">Hydropower</p>
         </div>
         <div>
-          <p className="text-gray-400">Promoter Shares</p>
+          <p className="">Promoter Shares</p>
           <p className="font-semibold text-white">{company.promoter_shares}%</p>
         </div>
         <div>
-          <p className="text-gray-400">Public Shares</p>
+          <p className="">Public Shares</p>
           <p className="font-semibold text-white">{company.public_shares}%</p>
         </div>
         <div className="col-span-2">
-          <p className="text-gray-400">Status</p>
+          <p className="">Status</p>
           <div className="flex space-x-2 mt-1">
             <Badge
               variant={company.is_merged === "true" ? "default" : "secondary"}
