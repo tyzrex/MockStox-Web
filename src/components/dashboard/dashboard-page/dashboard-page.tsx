@@ -251,7 +251,7 @@ export default function Dashboard({
                             <div className="w-16 font-medium">
                               {stock.symbol}
                             </div>
-                            <div className="w-full bg-[#1d1d1d] rounded-full h-2.5">
+                            <div className="w-full border rounded-full h-2.5">
                               <div
                                 className="bg-red-500 h-2.5 rounded-full"
                                 style={{
@@ -273,7 +273,7 @@ export default function Dashboard({
               </CardContent>
             </Card>
 
-            <Card className="">
+            <Card className="h-full">
               <CardHeader>
                 <CardTitle>Top Performers</CardTitle>
               </CardHeader>
@@ -293,7 +293,7 @@ export default function Dashboard({
                       return (
                         <div key={stock.id} className="flex items-center">
                           <div className="w-16 font-medium">{stock.symbol}</div>
-                          <div className="w-full bg-[#1d1d1d] rounded-full h-2.5">
+                          <div className="w-full border rounded-full h-2.5">
                             <div
                               className="bg-green-500 h-2.5 rounded-full"
                               style={{
@@ -336,7 +336,7 @@ export default function Dashboard({
               <CardTitle className="text-sm font-medium">
                 Most Active Stock
               </CardTitle>
-              <ArrowUpRight className="h-6 w-6 text-[#d5e14e]" />
+              <ArrowUpRight className="h-6 w-6 text-primary" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">{mostActiveStock}</div>
@@ -362,13 +362,33 @@ export default function Dashboard({
           <Card className="">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
-                Market Close
+                Market Status
               </CardTitle>
               <Clock className="h-6 w-6 text-purple-400" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">2:59:59 PM</div>
-              <p className="text-xs">15 seconds remaining</p>
+              <div className="text-2xl font-bold">
+                {new Date().toLocaleTimeString("en-US", {
+                  hour: "numeric",
+                  minute: "numeric",
+                })}
+              </div>
+              <p
+                className={
+                  new Date().getHours() < 11
+                    ? `text-green-500 text-xs`
+                    : new Date().getHours() > 15
+                    ? `text-red-500 text-xs`
+                    : `text-primary-accent`
+                }
+              >
+                {/* closes at 3pm opens at 11am*/}
+                {new Date().getHours() < 11
+                  ? `Opens in ${11 - new Date().getHours()} hours`
+                  : new Date().getHours() > 15
+                  ? `Closed`
+                  : `Closes in ${15 - new Date().getHours()} hours`}
+              </p>
             </CardContent>
           </Card>
         </div>

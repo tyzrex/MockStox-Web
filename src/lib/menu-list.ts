@@ -22,6 +22,7 @@ import {
   Radio,
   HandCoins,
   Vault,
+  View,
 } from "lucide-react";
 
 type Submenu = {
@@ -107,6 +108,13 @@ export function getMenuList(pathname: string): { navMain: NavItem[] } {
         url: "/dashboard/my-portfolio",
         icon: Vault,
         isActive: pathname === "/dashboard/my-portfolio",
+        items: [],
+      },
+      {
+        title: "Watch List",
+        url: "/dashboard/watch-list",
+        icon: View,
+        isActive: pathname === "/dashboard/watch-list",
         items: [],
       },
       {

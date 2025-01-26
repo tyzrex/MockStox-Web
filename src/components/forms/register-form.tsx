@@ -15,6 +15,7 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { RegisterNewUser } from "@/services/api/auth/auth-actions";
 import { showErrorToasts } from "@/lib/utils";
+import { ChevronRight } from "lucide-react";
 export default function RegisterForm() {
   const form = useForm<RegisterSchemaType>({
     resolver: zodResolver(registerSchema),
@@ -37,7 +38,6 @@ export default function RegisterForm() {
     }
   }
 
-  console.log(errors);
   return (
     <>
       <Form {...form}>
@@ -47,19 +47,19 @@ export default function RegisterForm() {
             type="text"
             placeHolder="Enter your username"
             formLabel="Username"
-            className="w-full mt-2 px-3 py-5 text-white border-neutral-800 bg-transparent outline-none border focus:border-purple-600 shadow-sm rounded-lg"
+            className="w-full mt-2"
           />
 
           <RHFInput<RegisterSchemaType>
             name="email"
-            className="w-full mt-2 px-3 py-5 text-white border-neutral-800 bg-transparent outline-none border focus:border-purple-600 shadow-sm rounded-lg"
+            className="w-full mt-2"
             type="email"
             placeHolder="Enter your email"
             formLabel="Email"
           />
 
           <RHFInput<RegisterSchemaType>
-            className="w-full mt-2 px-3 py-5 text-white border-neutral-800 bg-transparent outline-none border focus:border-purple-600 shadow-sm rounded-lg"
+            className="w-full mt-2"
             name="password"
             type="password"
             placeHolder="Enter your password"
@@ -67,12 +67,18 @@ export default function RegisterForm() {
           />
 
           <Button
-            disabled={isSubmitting}
             type="submit"
-            className="w-full font-geist tracking-tighter text-center rounded-md bg-gradient-to-br from-blue-400 to-blue-700 px-4 py-2 text-lg text-zinc-50 ring-2 ring-blue-500/50 ring-offset-2 ring-offset-zinc-950 transition-all hover:scale-[1.02] hover:ring-transparent active:scale-[0.98] active:ring-blue-500/70 flex items-center justify-center gap-2"
+            disabled={isSubmitting}
+            className="w-full mt-2 group px-4 tracking-tighter text-white bg-brand-primary"
           >
-            {isSubmitting && <ButtonLoader />}
-            {isSubmitting ? "Registering..." : "Register"}
+            {isSubmitting ? (
+              <ButtonLoader />
+            ) : (
+              <>
+                Sign Up
+                <ChevronRight className="inline-flex justify-center items-center w-4 h-4 ml-2 group-hover:translate-x-1 duration-300" />
+              </>
+            )}
           </Button>
         </form>
       </Form>

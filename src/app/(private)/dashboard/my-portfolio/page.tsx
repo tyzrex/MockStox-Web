@@ -311,7 +311,7 @@ export default function MyPortfolio() {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white py-6">
+    <div className="min-h-screen">
       <div className="mx-auto space-y-6">
         <h1 className="text-3xl font-bold">My Portfolio</h1>
 
@@ -569,64 +569,6 @@ export default function MyPortfolio() {
                 ))}
               </TableBody>
             </Table>
-          </CardContent>
-        </Card>
-
-        {/* Portfolio Insights */}
-        <Card className="">
-          <CardHeader>
-            <CardTitle>Portfolio Insights</CardTitle>
-            <CardDescription>Key metrics and recommendations</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div>
-              <h4 className="font-semibold mb-2">Performance Analysis</h4>
-              <p className="text-sm">
-                Your portfolio is currently showing a{" "}
-                {parseFloat(data.profit_or_loss) >= 0 ? "profit" : "loss"} of{" "}
-                {formatNepaliCurrency(
-                  Math.abs(parseFloat(data.profit_or_loss))
-                )}
-                .
-                {parseFloat(data.profit_or_loss) >= 0
-                  ? " Keep up the good work and consider reinvesting your profits."
-                  : " Dont be discouraged. Review your strategy and consider diversifying your investments."}
-              </p>
-            </div>
-            <div>
-              <h4 className="font-semibold mb-2">Streak</h4>
-              <p className="text-sm">
-                You're on a {data.streak} day streak of positive performance.
-                {data.streak > 5
-                  ? " Impressive! Your consistent strategy seems to be paying off."
-                  : " Keep monitoring your investments and stick to your strategy to extend your streak."}
-              </p>
-            </div>
-            <div>
-              <h4 className="font-semibold mb-2">Top and Worst Performers</h4>
-              <p className="text-sm">
-                Your top performer is {data.top_performers[0].symbol} with a{" "}
-                {parseFloat(data.top_performers[0].percentage_change).toFixed(
-                  2
-                )}
-                % gain, while your worst performer is{" "}
-                {data.worst_performers[0].symbol} with a{" "}
-                {parseFloat(data.worst_performers[0].percentage_change).toFixed(
-                  2
-                )}
-                % loss. Consider rebalancing your portfolio if these trends
-                continue.
-              </p>
-            </div>
-            <div>
-              <h4 className="font-semibold mb-2">Recent Activity</h4>
-              <p className="text-sm">
-                You've made {data.recent_transactions.length} transactions
-                recently, focusing on {data.recent_transactions[0].symbol} and{" "}
-                {data.recent_transactions[1].symbol}. Keep an eye on these
-                stocks and set stop-loss orders to protect your investments.
-              </p>
-            </div>
           </CardContent>
         </Card>
       </div>

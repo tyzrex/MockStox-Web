@@ -117,7 +117,7 @@ export default function UserProfileInformation({
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
       {/* User Info Section */}
-      <Card className="md:col-span-2 bg-neutral-950 border border-zinc-800">
+      <Card className="md:col-span-2">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-2xl font-bold">
             Profile Information
@@ -125,10 +125,10 @@ export default function UserProfileInformation({
           <Dialog open={isOpen} onOpenChange={setIsOpen}>
             <DialogTrigger asChild>
               <Button variant="ghost" size="icon">
-                <Pencil className="h-4 w-4 text-[#a3a2a3]" />
+                <Pencil className="h-4 w-4 " />
               </Button>
             </DialogTrigger>
-            <DialogContent className="bg-mockstox-primary text-[#e5ebeb] border-gray-700">
+            <DialogContent className="bg-mockstox-primary">
               <DialogHeader>
                 <DialogTitle>Edit Profile</DialogTitle>
               </DialogHeader>
@@ -144,10 +144,7 @@ export default function UserProfileInformation({
                       <FormItem>
                         <FormLabel>Name</FormLabel>
                         <FormControl>
-                          <Input
-                            {...field}
-                            className="bg-[#1d1d1d] border-[#a3a2a3]"
-                          />
+                          <Input {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -160,10 +157,7 @@ export default function UserProfileInformation({
                       <FormItem>
                         <FormLabel>Email</FormLabel>
                         <FormControl>
-                          <Input
-                            {...field}
-                            className="bg-[#1d1d1d] border-[#a3a2a3]"
-                          />
+                          <Input {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -176,20 +170,13 @@ export default function UserProfileInformation({
                       <FormItem>
                         <FormLabel>Bio</FormLabel>
                         <FormControl>
-                          <Input
-                            {...field}
-                            className="bg-[#1d1d1d] border-[#a3a2a3]"
-                          />
+                          <Input {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
                     )}
                   />
-                  <Button
-                    type="submit"
-                    className="bg-[#d5e14e] text-[#1d1d1d] hover:bg-[#c5d13e]"
-                    disabled={isLoading}
-                  >
+                  <Button type="submit" disabled={isLoading}>
                     {isLoading ? (
                       <>
                         <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -213,25 +200,25 @@ export default function UserProfileInformation({
             />
             <div>
               <h2 className="text-2xl font-semibold">{user.name}</h2>
-              <p className="text-[#a3a2a3]">{user.email}</p>
+              <p className="">{user.email}</p>
             </div>
           </div>
           <p className="text-sm mb-4">{user.bio}</p>
           <div className="grid grid-cols-2 gap-4 text-sm">
             <div>
-              <p className="text-[#a3a2a3]">Member since</p>
+              <p className="">Member since</p>
               <p>{user.joinDate}</p>
             </div>
             <div>
-              <p className="text-[#a3a2a3]">Total trades</p>
+              <p className="">Total trades</p>
               <p>{user.totalTrades}</p>
             </div>
             <div>
-              <p className="text-[#a3a2a3]">Success rate</p>
+              <p className="">Success rate</p>
               <p>{user.successRate}%</p>
             </div>
             <div>
-              <p className="text-[#a3a2a3]">Favorite stock</p>
+              <p className="">Favorite stock</p>
               <p>{user.favoriteStock}</p>
             </div>
           </div>
@@ -239,7 +226,7 @@ export default function UserProfileInformation({
       </Card>
 
       {/* Funds Section */}
-      <Card className="bg-neutral-950 border border-zinc-800">
+      <Card>
         <CardHeader>
           <CardTitle className="text-2xl font-bold">Your Funds</CardTitle>
         </CardHeader>
@@ -265,17 +252,13 @@ export default function UserProfileInformation({
                         onChange={(e) =>
                           field.onChange(parseFloat(e.target.value))
                         }
-                        className="bg-[#1d1d1d] border-[#a3a2a3]"
                       />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-              <Button
-                type="submit"
-                className="w-full bg-purple-300 text-[#1d1d1d] hover:bg-green-600"
-              >
+              <Button type="submit" className="w-full">
                 <DollarSign className="mr-2 h-4 w-4" />
                 Load Funds
               </Button>
