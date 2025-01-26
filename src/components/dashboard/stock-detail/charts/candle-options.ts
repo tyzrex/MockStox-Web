@@ -6,7 +6,7 @@ export const candlestickChartOptions: ApexOptions = {
     type: "candlestick",
     height: 400,
     background: "transparent",
-    foreColor: "#ffffff",
+    foreColor: "#000",
     toolbar: {
       show: true,
       tools: {
@@ -33,21 +33,18 @@ export const candlestickChartOptions: ApexOptions = {
       },
     },
   },
-  grid: {
-    borderColor: "#1a1a1a",
-  },
   xaxis: {
     type: "datetime",
     labels: {
       style: {
-        colors: "#ffffff",
+        colors: "#000",
       },
     },
   },
   yaxis: {
     labels: {
       style: {
-        colors: "#ffffff",
+        colors: "#000",
       },
       formatter: function (value: number) {
         return formatNepaliCurrency(value);

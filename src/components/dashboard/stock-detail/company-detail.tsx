@@ -5,9 +5,7 @@ export function CompanyInfoCard({ company }: { company: any }) {
   return (
     <Card className="col-span-3">
       <CardHeader>
-        <CardTitle className="text-2xl font-bold text-white">
-          {company.name}
-        </CardTitle>
+        <CardTitle className="text-2xl font-bold">{company.name}</CardTitle>
         <Badge
           variant="outline"
           className="text-green-400 border-green-400 w-fit"
@@ -18,38 +16,38 @@ export function CompanyInfoCard({ company }: { company: any }) {
       <CardContent className="grid grid-cols-2 gap-4 text-sm">
         <div>
           <p className="">Core Capital</p>
-          <p className="font-semibold text-white">
+          <p className="font-semibold">
             {company.core_capital.toLocaleString()} NPR
           </p>
         </div>
 
         <div>
           <p className="">Listed Date</p>
-          <p className="font-semibold text-white">
+          <p className="font-semibold">
             {company.listed_date === "" ? "-" : company.listed_date}
           </p>
         </div>
         <div>
           <p className="">Expired Date</p>
-          <p className="font-semibold text-white">
+          <p className="font-semibold">
             {company.expired_date === "" ? "-" : company.expired_date}
           </p>
         </div>
         <div>
           <p className="">Share Registrar</p>
-          <p className="font-semibold text-white">{company.share_registar}</p>
+          <p className="font-semibold">{company.share_registar}</p>
         </div>
         <div>
           <p className="">Sector</p>
-          <p className="font-semibold text-white">Hydropower</p>
+          <p className="font-semibold">Hydropower</p>
         </div>
         <div>
           <p className="">Promoter Shares</p>
-          <p className="font-semibold text-white">{company.promoter_shares}%</p>
+          <p className="font-semibold">{company.promoter_shares}%</p>
         </div>
         <div>
           <p className="">Public Shares</p>
-          <p className="font-semibold text-white">{company.public_shares}%</p>
+          <p className="font-semibold">{company.public_shares}%</p>
         </div>
         <div className="col-span-2">
           <p className="">Status</p>
