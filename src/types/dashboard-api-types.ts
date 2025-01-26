@@ -55,3 +55,14 @@ export interface CompanyDetail {
   local: string; // Local holding percentage
   sector: string; // Sector the company belongs to
 }
+
+export interface StockPrediction {
+  predictions: Record<string, number>;
+  potential_gain: number;
+  potential_loss: number;
+  risk_reward_ratio: number;
+  volatility: number;
+  buy_probability: number;
+  sell_probability: number;
+  hold_probability: number;
+}

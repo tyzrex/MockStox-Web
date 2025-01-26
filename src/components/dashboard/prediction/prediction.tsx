@@ -19,15 +19,18 @@ import {
 } from "lucide-react";
 import dynamic from "next/dynamic";
 import type { ApexOptions } from "apexcharts";
+import { StockPrediction } from "@/types/dashboard-api-types";
+import { formatNepaliCurrency } from "@/lib/utils";
+import { PredictionMetrics } from "./prediction-metrics";
 
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
-const candlestickChartOptions: ApexOptions = {
+export const lineChartOptions: ApexOptions = {
   chart: {
-    type: "candlestick",
+    type: "area",
     height: 400,
     background: "transparent",
-    foreColor: "#ffffff",
+    foreColor: "#000",
     toolbar: {
       show: true,
       tools: {
@@ -54,23 +57,23 @@ const candlestickChartOptions: ApexOptions = {
       },
     },
   },
-  grid: {
-    borderColor: "#1a1a1a",
-  },
+
   xaxis: {
     type: "datetime",
     labels: {
       style: {
-        colors: "#ffffff",
+        colors: "#000",
       },
     },
   },
   yaxis: {
     labels: {
       style: {
-        colors: "#ffffff",
+        colors: "#000",
       },
-      formatter: (value: number) => `Rs. ${value.toLocaleString()}`,
+      formatter: function (value: number) {
+        return formatNepaliCurrency(value);
+      },
     },
   },
   tooltip: {
@@ -78,19 +81,33 @@ const candlestickChartOptions: ApexOptions = {
     x: {
       format: "dd MMM yyyy",
     },
-  },
-  plotOptions: {
-    candlestick: {
-      colors: {
-        upward: "#00ff00",
-        downward: "#ff0000",
+    y: {
+      formatter: function (value: number) {
+        return formatNepaliCurrency(value);
       },
+    },
+  },
+  stroke: {
+    curve: "smooth",
+    width: 2,
+  },
+  dataLabels: {
+    enabled: false,
+  },
+  colors: ["#00ff00"],
+  fill: {
+    type: "gradient",
+    gradient: {
+      shadeIntensity: 1,
+      opacityFrom: 0.7,
+      opacityTo: 0.2,
+      stops: [0, 100],
     },
   },
 };
 
 interface StockPredictionClientProps {
-  data: any;
+  data: StockPrediction;
   symbol: string;
 }
 
@@ -98,12 +115,15 @@ export default function StockPredictionClient({
   data,
   symbol,
 }: StockPredictionClientProps) {
-  const formatCandlestickData = (predictions: any) => {
-    return Object.entries(predictions).map(([date, data]: [string, any]) => ({
-      x: new Date(date).getTime(),
-      y: [data.open, data.high, data.low, data.close],
-    }));
-  };
+  const chartData = [
+    {
+      name: "Price",
+      data: Object.entries(data.predictions).map(([date, prediction]) => ({
+        x: new Date(date).getTime(),
+        y: prediction,
+      })),
+    },
+  ];
 
   const getConfidenceColor = (confidence: number) => {
     if (confidence >= 80) return "bg-green-500";
@@ -113,6 +133,15 @@ export default function StockPredictionClient({
 
   return (
     <div className="space-y-6">
+      <PredictionMetrics
+        buy_probability={data.buy_probability}
+        hold_probability={data.hold_probability}
+        sell_probability={data.sell_probability}
+        potential_gain={data.potential_gain}
+        potential_loss={data.potential_loss}
+        risk_reward_ratio={data.risk_reward_ratio}
+        volatility={data.volatility}
+      />
       <Card>
         <CardHeader>
           <CardTitle>Price Prediction Chart</CardTitle>
@@ -120,142 +149,13 @@ export default function StockPredictionClient({
         </CardHeader>
         <CardContent>
           <Chart
-            options={candlestickChartOptions}
-            series={[{ data: formatCandlestickData(data.predictions) }]}
-            type="candlestick"
+            options={lineChartOptions}
+            series={chartData}
+            type="area"
             height={400}
           />
         </CardContent>
       </Card>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <TrendingUp className="h-5 w-5" />
-              Prediction Metrics
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="flex justify-between items-center">
-              <span className="">Potential Gain</span>
-              <span className="text-green-500 font-bold">
-                Rs. {data.analysis.potential_gain.toLocaleString()}
-              </span>
-            </div>
-            <div className="flex justify-between items-center">
-              <span className="">Potential Loss</span>
-              <span className="text-red-500 font-bold">
-                Rs. {data.analysis.potential_loss.toLocaleString()}
-              </span>
-            </div>
-            <div className="flex justify-between items-center">
-              <span className="">Risk/Reward Ratio</span>
-              <span className="font-bold">
-                {data.analysis.risk_reward_ratio.toFixed(2)}
-              </span>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Gauge className="h-5 w-5" />
-              Technical Indicators
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="flex justify-between items-center">
-              <span className="">RSI</span>
-              <span className="font-bold">
-                {data.analysis.technical_indicators.rsi}
-              </span>
-            </div>
-            <div className="flex justify-between items-center">
-              <span className="">MACD</span>
-              <span className="font-bold">
-                {data.analysis.technical_indicators.macd}
-              </span>
-            </div>
-            <div className="flex justify-between items-center">
-              <span className="">50-day MA</span>
-              <span className="font-bold">
-                Rs.{" "}
-                {data.analysis.technical_indicators.moving_average_50.toLocaleString()}
-              </span>
-            </div>
-            <div className="flex justify-between items-center">
-              <span className="">200-day MA</span>
-              <span className="font-bold">
-                Rs.{" "}
-                {data.analysis.technical_indicators.moving_average_200.toLocaleString()}
-              </span>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <BarChart2 className="h-5 w-5" />
-              Recommendation
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="flex items-center justify-between">
-              <Badge variant="outline" className="text-lg">
-                {data.analysis.recommendation.action}
-              </Badge>
-              <div className="flex items-center gap-2">
-                <div className="text-sm">Confidence</div>
-                <div
-                  className={`h-3 w-3 rounded-full ${getConfidenceColor(
-                    data.analysis.recommendation.confidence
-                  )}`}
-                />
-                <div className="font-bold">
-                  {data.analysis.recommendation.confidence}%
-                </div>
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <div className="text-sm font-medium ">Supporting Factors</div>
-              <div className="space-y-1">
-                {data.analysis.recommendation.reasons.map(
-                  (reason: string, index: number) => (
-                    <div
-                      key={index}
-                      className="flex items-center gap-2 text-sm"
-                    >
-                      <ArrowUpRight className="h-4 w-4 text-green-500" />
-                      {reason}
-                    </div>
-                  )
-                )}
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <div className="text-sm font-medium ">Risk Factors</div>
-              <div className="space-y-1">
-                {data.analysis.recommendation.risks.map(
-                  (risk: string, index: number) => (
-                    <div
-                      key={index}
-                      className="flex items-center gap-2 text-sm"
-                    >
-                      <AlertTriangle className="h-4 w-4 text-yellow-500" />
-                      {risk}
-                    </div>
-                  )
-                )}
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
     </div>
   );
 }

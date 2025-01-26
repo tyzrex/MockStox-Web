@@ -1,5 +1,9 @@
 import { BaseApi, buildPageParam, ISessionService } from "../base-api";
-import { StockData, StockListItem } from "@/types/dashboard-api-types";
+import {
+  StockData,
+  StockListItem,
+  StockPrediction,
+} from "@/types/dashboard-api-types";
 
 export class DashboardApi extends BaseApi {
   constructor(sessionService: ISessionService) {
@@ -33,7 +37,7 @@ export class DashboardApi extends BaseApi {
   }
 
   async getStocksBySector({ sector }: { sector: string }) {
-    return this.handleServerQuery<any>({
+    return this.handleServerQuery<any[]>({
       query: `stocks/list?sector=${sector}`,
       cache: "no-store",
       isProtected: true,
@@ -56,6 +60,14 @@ export class DashboardApi extends BaseApi {
       data: { amount },
       revalidateTagName: "user-funds",
       successMessage: "Funds loaded successfully.",
+      isProtected: true,
+    });
+  }
+
+  async getPredictionBySymbol({ symbol }: { symbol: string }) {
+    return this.handleServerQuery<StockPrediction>({
+      query: `ml/predict?symbol=${symbol}`,
+      cache: "no-store",
       isProtected: true,
     });
   }
