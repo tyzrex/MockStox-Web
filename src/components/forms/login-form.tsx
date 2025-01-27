@@ -47,7 +47,7 @@ export default function LoginForm() {
             type="text"
             placeHolder="Enter your username"
             formLabel="Username"
-            className="w-full mt-2 px-3 py-4 text-white bg-transparent outline-none  focus:border-pink-600/50 shadow-sm rounded-lg border-white/20 border-[1px]"
+            className="w-full mt-2 px-3 py-4 bg-transparent outline-none  focus:border-pink-600/50 shadow-sm rounded-lg border-white/20 border-[1px]"
           />
 
           <RHFInput<LoginSchemaType>
@@ -55,7 +55,7 @@ export default function LoginForm() {
             type="password"
             placeHolder="Enter your password"
             formLabel="Password"
-            className="w-full mt-2 px-3 py-4 text-white bg-transparent outline-none  focus:border-pink-600/50 shadow-sm rounded-lg border-white/20 border-[1px]"
+            className="w-full mt-2 px-3 py-4 bg-transparent outline-none  focus:border-pink-600/50 shadow-sm rounded-lg border-white/20 border-[1px]"
           />
 
           <Button

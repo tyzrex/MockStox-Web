@@ -87,6 +87,14 @@ export default function Dashboard({
   bestPerformers: StockPerformers[];
   recentTrades: Trade[];
 }) {
+  console.log(
+    funds,
+    portfolioValue,
+    profitLoss,
+    worstPerformers,
+    bestPerformers,
+    recentTrades
+  );
   const getMostActiveStock = () => {
     const stockMap = new Map<string, number>();
     recentTrades.forEach((trade) => {
@@ -99,9 +107,10 @@ export default function Dashboard({
         stockMap.set(trade.symbol, trade.quantity);
       }
     });
-    const mostActiveStock = Array.from(stockMap).reduce((a, b) =>
-      a[1] > b[1] ? a : b
-    );
+    const mostActiveStock =
+      stockMap.size > 0
+        ? Array.from(stockMap).reduce((a, b) => (a[1] > b[1] ? a : b))
+        : ["", 0];
     return mostActiveStock;
   };
 

@@ -18,10 +18,10 @@ export class DashboardApi extends BaseApi {
     });
   }
 
-  async getStocksList({ page }: { page: number }) {
+  async getStocksList(page?: number) {
     return this.handleServerQuery<StockListItem[]>({
       query: "stocks/list",
-      param: buildPageParam(page),
+      param: page ? buildPageParam(page) : "",
       cache: "no-store",
       isProtected: true,
     });

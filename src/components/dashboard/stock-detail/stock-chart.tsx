@@ -57,7 +57,7 @@ export default function StockDashboard({
     <div>
       <div className="mx-auto space-y-6">
         {/* Header */}
-        <div className="flex flex-col text-black dark: lg:flex-row lg:items-center justify-between">
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between">
           <div>
             <h1 className="text-3xl font-bold">{symbol}</h1>
             <div className="flex items-center space-x-2">
