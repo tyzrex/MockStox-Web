@@ -71,4 +71,35 @@ export class DashboardApi extends BaseApi {
       isProtected: true,
     });
   }
+
+  async addToWatchlist({ symbol }: { symbol: string }) {
+    return this.handleServerAction<any, any>({
+      endpoint: "user/wishlist/add/",
+      method: "POST",
+      data: { symbol },
+      revalidateTagName: "watchlist",
+      successMessage: "Stock added to watchlist.",
+      isProtected: true,
+    });
+  }
+
+  async getUserWatchlist() {
+    return this.handleServerQuery<any>({
+      query: "user/wishlist/list/",
+      cache: "no-store",
+      isProtected: true,
+      tags: ["watchlist"],
+    });
+  }
+
+  async removeFromWatchlist({ symbol }: { symbol: string }) {
+    return this.handleServerAction<any, any>({
+      endpoint: "user/wishlist/remove/",
+      method: "POST",
+      data: { symbol },
+      revalidateTagName: "watchlist",
+      successMessage: "Stock removed from watchlist.",
+      isProtected: true,
+    });
+  }
 }

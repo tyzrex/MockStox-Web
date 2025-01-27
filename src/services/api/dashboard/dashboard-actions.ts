@@ -7,3 +7,15 @@ export async function loadUserFunds({ amount }: { amount: number }) {
     amount,
   });
 }
+
+export async function addToWatchlist({ symbol }: { symbol: string }) {
+  return dashboardApi.addToWatchlist({
+    symbol,
+  });
+}
+
+export async function removeFromWatchlist({ symbol }: { symbol: string }) {
+  return dashboardApi.removeFromWatchlist({
+    symbol,
+  });
+}

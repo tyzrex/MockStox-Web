@@ -13,6 +13,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { StockListItem } from "@/types/dashboard-api-types";
 import Link from "next/link";
+import { addToWatchlist } from "@/services/api/dashboard/dashboard-actions";
+import { toast } from "sonner";
 
 export const stockListColumns: ColumnDef<StockListItem>[] = [
   {
@@ -108,7 +110,20 @@ export const stockListColumns: ColumnDef<StockListItem>[] = [
                 View details
               </Link>
             </DropdownMenuItem>
-            <DropdownMenuItem>Add to watchlist</DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={async () => {
+                const response = await addToWatchlist({
+                  symbol: stock.symbol,
+                });
+                if (response.success) {
+                  toast.success("Stock added to watchlist.");
+                } else {
+                  toast.error("Failed to add stock to watchlist.");
+                }
+              }}
+            >
+              Add to watchlist
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );

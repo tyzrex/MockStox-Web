@@ -30,46 +30,35 @@ import {
 } from "@/services/api/transaction/transaction-actions";
 import { toast } from "sonner";
 
-// Mock data for order book
-const buyOrders = [
-  { price: 150.25, quantity: 100 },
-  { price: 150.2, quantity: 200 },
-  { price: 150.15, quantity: 150 },
-  { price: 150.1, quantity: 300 },
-];
-
-const sellOrders = [
-  { price: 150.3, quantity: 150 },
-  { price: 150.35, quantity: 100 },
-  { price: 150.4, quantity: 200 },
-  { price: 150.45, quantity: 120 },
-];
-
-export default function StockTrade({ stocks }: { stocks: StockListItem[] }) {
+export default function StockTrade({
+  stocks,
+  buyOrders,
+  sellOrders,
+}: {
+  stocks: StockListItem[];
+  buyOrders: any[];
+  sellOrders: any[];
+}) {
   const [side, setSide] = useState("buy");
   const [symbol, setSymbol] = useState("");
   const [quantity, setQuantity] = useState("");
   const [price, setPrice] = useState("");
   const [stocksList, setStocksList] = useState<StockListItem[]>(stocks);
 
-  const handleSubmit = (e: any) => {
+  console.log(buyOrders);
+
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
-    // Here you would typically send the order to your backend
-    console.log("Order submitted:", {
-      side,
-      symbol,
-      quantity,
-      price,
-    });
+
     // Reset form
     if (side === "buy") {
-      buyStock({
+      await buyStock({
         stockSymbol: symbol,
         quantity: parseInt(quantity),
       });
       toast.success("Order placed successfully");
     } else if (side === "sell") {
-      sellStock({
+      await sellStock({
         stockSymbol: symbol,
         quantity: parseInt(quantity),
       });
@@ -164,7 +153,7 @@ export default function StockTrade({ stocks }: { stocks: StockListItem[] }) {
                     <TableBody>
                       {buyOrders.map((order, index) => (
                         <TableRow key={index}>
-                          <TableCell>{order.price.toFixed(2)}</TableCell>
+                          <TableCell>{order.price}</TableCell>
                           <TableCell>{order.quantity}</TableCell>
                         </TableRow>
                       ))}
@@ -185,7 +174,7 @@ export default function StockTrade({ stocks }: { stocks: StockListItem[] }) {
                     <TableBody>
                       {sellOrders.map((order, index) => (
                         <TableRow key={index}>
-                          <TableCell>{order.price.toFixed(2)}</TableCell>
+                          <TableCell>{order.price}</TableCell>
                           <TableCell>{order.quantity}</TableCell>
                         </TableRow>
                       ))}
@@ -204,46 +193,20 @@ export default function StockTrade({ stocks }: { stocks: StockListItem[] }) {
               <ArrowUpDown className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">Rs. 2000</div>
-              <p className="text-xs text-muted-foreground">
-                Updated 5 seconds ago
-              </p>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">24h Volume</CardTitle>
-              <DollarSign className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">5,670,901</div>
-              <p className="text-xs text-muted-foreground">
-                +12.3% from yesterday
-              </p>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">
-                Market Status
-              </CardTitle>
-              <Clock className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
               <div className="text-2xl font-bold">
-                {new Date().getHours() >= 11 && new Date().getHours() < 15 ? (
-                  <span className="text-green-500">Open</span>
-                ) : (
-                  <span className="text-red-500">Closed</span>
-                )}
+                Rs.{" "}
+                {sellOrders.length > 0
+                  ? sellOrders[0].price * sellOrders[0].quantity
+                  : buyOrders.length > 0
+                  ? buyOrders[0].price * buyOrders[0].quantity
+                  : "0"}
               </div>
               <p className="text-xs text-muted-foreground">
-                {new Date().getHours() >= 11 && new Date().getHours() < 15
-                  ? // get the time until the market closes
-                    `Closes in ${15 - new Date().getHours() - 1} hours and ${
-                      60 - new Date().getMinutes()
-                    } minutes`
-                  : `Opens in ${11 - new Date().getHours() - 1} hours`}
+                {sellOrders.length > 0
+                  ? `Sold at Rs. ${sellOrders[0].price}`
+                  : buyOrders.length > 0
+                  ? `Bought at Rs. ${buyOrders[0].price}`
+                  : "No trades yet"}
               </p>
             </CardContent>
           </Card>

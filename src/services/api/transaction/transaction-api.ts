@@ -23,7 +23,7 @@ export class TransactionApi extends BaseApi {
       query: "user/transactions",
       isProtected: true,
       cache: "no-store",
-      tags: ["my-trades"],
+      tags: ["my-trades", "stock-detail"],
     });
   }
 
