@@ -89,10 +89,12 @@ export default function Dashboard({
   };
 
   const getWorstPerformer = () => {
-    return worstPerformers.sort(
-      (a, b) =>
-        parseFloat(b.percentage_change) - parseFloat(a.percentage_change)
-    );
+    return worstPerformers.length > 0
+      ? worstPerformers.sort(
+          (a, b) =>
+            parseFloat(b.percentage_change) - parseFloat(a.percentage_change)
+        )
+      : [{ symbol: "", percentage_change: "" }];
   };
 
   const [mostActiveStock, activeStockQuantity] = getMostActiveStock();
@@ -167,45 +169,53 @@ export default function Dashboard({
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {recentTrades.slice(0, 5).map((trade) => (
-                    <TableRow key={trade.id}>
-                      <TableCell className="font-medium">
-                        {trade.symbol}
+                  {recentTrades.length > 0 ? (
+                    recentTrades.slice(0, 5).map((trade) => (
+                      <TableRow key={trade.id}>
+                        <TableCell className="font-medium">
+                          {trade.symbol}
+                        </TableCell>
+                        <TableCell className="font-medium">
+                          {
+                            <span
+                              className={`${
+                                trade.action === "BUY"
+                                  ? "text-green-500"
+                                  : "text-red-500"
+                              }`}
+                            >
+                              {trade.action}
+                            </span>
+                          }
+                        </TableCell>
+                        <TableCell className="text-blue-500 font-medium">
+                          {trade.quantity <= 10 ? (
+                            <span className="text-orange-500">
+                              {trade.quantity}
+                            </span>
+                          ) : trade.quantity < 50 ? (
+                            <span className="text-yellow-500">
+                              {trade.quantity}
+                            </span>
+                          ) : (
+                            <span className="text-cyan-500">
+                              {trade.quantity}
+                            </span>
+                          )}
+                        </TableCell>
+                        <TableCell>
+                          {formatNepaliCurrency(trade.unit_price)}
+                        </TableCell>
+                        <TableCell>{trade.date}</TableCell>
+                      </TableRow>
+                    ))
+                  ) : (
+                    <TableRow>
+                      <TableCell colSpan={5} className="text-center">
+                        No recent trades
                       </TableCell>
-                      <TableCell className="font-medium">
-                        {
-                          <span
-                            className={`${
-                              trade.action === "BUY"
-                                ? "text-green-500"
-                                : "text-red-500"
-                            }`}
-                          >
-                            {trade.action}
-                          </span>
-                        }
-                      </TableCell>
-                      <TableCell className="text-blue-500 font-medium">
-                        {trade.quantity <= 10 ? (
-                          <span className="text-orange-500">
-                            {trade.quantity}
-                          </span>
-                        ) : trade.quantity < 50 ? (
-                          <span className="text-yellow-500">
-                            {trade.quantity}
-                          </span>
-                        ) : (
-                          <span className="text-cyan-500">
-                            {trade.quantity}
-                          </span>
-                        )}
-                      </TableCell>
-                      <TableCell>
-                        {formatNepaliCurrency(trade.unit_price)}
-                      </TableCell>
-                      <TableCell>{trade.date}</TableCell>
                     </TableRow>
-                  ))}
+                  )}
                 </TableBody>
               </Table>
             </CardContent>
@@ -222,7 +232,15 @@ export default function Dashboard({
                       (stock) => parseFloat(stock.percentage_change) > 0
                     ) ? (
                       <div className="text-center text-green-500 font-medium">
-                        All stocks are in profit
+                        {worstPerformers.length > 0 ? (
+                          <div className="text-center my-8 text-green-500 font-medium">
+                            All stocks are in profit
+                          </div>
+                        ) : (
+                          <div className="text-center my-8 text-green-500 font-medium">
+                            No stocks available
+                          </div>
+                        )}
                       </div>
                     ) : (
                       worstPerformers.slice(0, 3).map((stock) => {
@@ -266,7 +284,15 @@ export default function Dashboard({
                     (stock) => parseFloat(stock.percentage_change) < 0
                   ) ? (
                     <div className="text-center my-8 text-red-500 font-medium">
-                      All stocks are in loss
+                      {bestPerformers.length > 0 ? (
+                        <div className="text-center my-8 text-red-500 font-medium">
+                          All stocks are in loss
+                        </div>
+                      ) : (
+                        <div className="text-center my-8 text-red-500 font-medium">
+                          No stocks available
+                        </div>
+                      )}
                     </div>
                   ) : (
                     bestPerformers.slice(0, 3).map((stock) => {
@@ -302,7 +328,7 @@ export default function Dashboard({
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           <Card className="">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">
+              <CardTitle className="text-lg font-semibold">
                 Strading Streak
               </CardTitle>
               <TrendingUp className="h-6 w-6 text-green-500" />
@@ -316,35 +342,41 @@ export default function Dashboard({
           </Card>
           <Card className="">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">
+              <CardTitle className="text-lg font-semibold">
                 Most Active Stock
               </CardTitle>
               <ArrowUpRight className="h-6 w-6 text-primary" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{mostActiveStock}</div>
+              <div className="text-2xl font-bold">
+                {mostActiveStock === "" ? "No stocks" : mostActiveStock}
+              </div>
               <p className="text-xs">{activeStockQuantity} shares traded</p>
             </CardContent>
           </Card>
           <Card className="">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">
+              <CardTitle className="text-lg font-semibold">
                 Biggest Loss
               </CardTitle>
               <ArrowDownRight className="h-6 w-6 text-red-500" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold text-red-500">
-                {getWorstPerformer()[0].symbol}
+                {getWorstPerformer()[0].symbol === ""
+                  ? "No stocks"
+                  : getWorstPerformer()[0].symbol}
               </div>
               <p className="text-xs">
-                {getWorstPerformer()[0].percentage_change}% loss
+                {getWorstPerformer()[0].percentage_change === ""
+                  ? "No history"
+                  : getWorstPerformer()[0].percentage_change}
               </p>
             </CardContent>
           </Card>
           <Card className="">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">
+              <CardTitle className="text-lg font-semibold">
                 Market Status
               </CardTitle>
               <Clock className="h-6 w-6 text-purple-400" />

@@ -1,4 +1,5 @@
 import { DataTable } from "@/components/dashboard/stock-table";
+import PageHeader from "@/components/shared/page-header";
 import Pagination from "@/components/shared/pagination";
 import { stockListColumns } from "@/schema/columns/stock-list-column";
 import { dashboardApi } from "@/services/api/mockstox-api";
@@ -13,7 +14,7 @@ interface StocksPageProps {
 
 async function Stocks(props: StocksPageProps) {
   const page = props.searchParams?.page ? parseInt(props.searchParams.page) : 1;
-  const { response, error } = await dashboardApi.getStocksList({ page: page });
+  const { response, error } = await dashboardApi.getStocksList();
   if (error || !response) {
     return <>error</>;
   }
@@ -21,9 +22,15 @@ async function Stocks(props: StocksPageProps) {
   console.log(response);
 
   return (
-    <>
+    <div>
+      <PageHeader
+        title="Stocks List"
+        description="
+        List of all stocks available for trading with their current prices.
+      "
+      />
       <DataTable<StockListItem> columns={stockListColumns} data={response} />
-    </>
+    </div>
   );
 }
 

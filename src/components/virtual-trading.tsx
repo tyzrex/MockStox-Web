@@ -1,40 +1,46 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { motion } from "framer-motion"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { DollarSign, CheckCircle, XCircle } from "lucide-react"
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { DollarSign, CheckCircle, XCircle } from "lucide-react";
 
 export default function VirtualTrading() {
-  const [shares, setShares] = useState("")
-  const [tradeResult, setTradeResult] = useState(null)
+  const [shares, setShares] = useState("");
+  const [tradeResult, setTradeResult] = useState<string | null>(null);
 
-  const handleTrade = (e) => {
-    e.preventDefault()
+  const handleTrade = (e: any) => {
+    e.preventDefault();
     // Simulate trade result
-    const result = Math.random() > 0.5 ? "success" : "failure"
-    setTradeResult(result)
-  }
+    const result = Math.random() > 0.5 ? "success" : "failure";
+    setTradeResult(result);
+  };
 
   return (
     <section className="py-12 bg-white" id="virtual-trading">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="lg:text-center mb-10">
-          <h2 className="text-base text-blue-600 font-semibold tracking-wide uppercase">Virtual Trading</h2>
+          <h2 className="text-base text-blue-600 font-semibold tracking-wide uppercase">
+            Virtual Trading
+          </h2>
           <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
             Practice Trading Risk-Free
           </p>
           <p className="mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto">
-            Experience the thrill of trading without the financial risk. Use our virtual currency to make trades and
-            learn from the outcomes.
+            Experience the thrill of trading without the financial risk. Use our
+            virtual currency to make trades and learn from the outcomes.
           </p>
         </div>
 
         <div className="mt-10 grid grid-cols-1 gap-8 md:grid-cols-2">
-          <motion.div initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
             <Card className="h-full">
               <CardHeader>
                 <CardTitle className="flex items-center">
@@ -55,7 +61,10 @@ export default function VirtualTrading() {
                       required
                     />
                   </div>
-                  <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700">
+                  <Button
+                    type="submit"
+                    className="w-full bg-blue-600 hover:bg-blue-700"
+                  >
                     Execute Trade
                   </Button>
                 </form>
@@ -85,9 +94,15 @@ export default function VirtualTrading() {
                 {tradeResult ? (
                   <>
                     <p
-                      className={`text-2xl font-bold ${tradeResult === "success" ? "text-green-600" : "text-red-600"}`}
+                      className={`text-2xl font-bold ${
+                        tradeResult === "success"
+                          ? "text-green-600"
+                          : "text-red-600"
+                      }`}
                     >
-                      {tradeResult === "success" ? "Trade Successful!" : "Trade Failed"}
+                      {tradeResult === "success"
+                        ? "Trade Successful!"
+                        : "Trade Failed"}
                     </p>
                     <p className="mt-2 text-sm text-gray-500">
                       {tradeResult === "success"
@@ -96,7 +111,9 @@ export default function VirtualTrading() {
                     </p>
                   </>
                 ) : (
-                  <p className="text-gray-500">Execute a trade to see the result here.</p>
+                  <p className="text-gray-500">
+                    Execute a trade to see the result here.
+                  </p>
                 )}
               </CardContent>
             </Card>
@@ -104,6 +121,5 @@ export default function VirtualTrading() {
         </div>
       </div>
     </section>
-  )
+  );
 }
-

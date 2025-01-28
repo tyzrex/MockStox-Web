@@ -67,8 +67,8 @@ export function DataTable<K>({ columns, data }: DataTableProps<K>) {
   });
 
   return (
-    <div className="w-full p-4">
-      <div className="flex items-center py-4">
+    <div className="w-full">
+      <div className="flex items-center pb-4">
         <Input
           placeholder="Filter symbols..."
           value={(table.getColumn("symbol")?.getFilterValue() as string) ?? ""}

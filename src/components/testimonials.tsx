@@ -1,8 +1,8 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { motion } from "framer-motion";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const testimonials = [
   {
@@ -10,7 +10,8 @@ const testimonials = [
     role: "Beginner Investor",
     image:
       "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-    quote: "MockStox has been a game-changer for me. I've learned so much about trading without risking my savings.",
+    quote:
+      "MockStox has been a game-changer for me. I've learned so much about trading without risking my savings.",
   },
   {
     name: "Michael R.",
@@ -25,16 +26,19 @@ const testimonials = [
     role: "Professional Trader",
     image:
       "https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-    quote: "Even as a pro, I find MockStox invaluable for testing new strategies without any real-world risk.",
+    quote:
+      "Even as a pro, I find MockStox invaluable for testing new strategies without any real-world risk.",
   },
-]
+];
 
 export default function Testimonials() {
   return (
     <section className="bg-white py-12" id="testimonials">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="lg:text-center mb-10">
-          <h2 className="text-base text-blue-600 font-semibold tracking-wide uppercase">Testimonials</h2>
+          <h2 className="text-base text-blue-600 font-semibold tracking-wide uppercase">
+            Testimonials
+          </h2>
           <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
             Hear from Our Users
           </p>
@@ -52,17 +56,28 @@ export default function Testimonials() {
                   <CardHeader>
                     <CardTitle className="flex items-center">
                       <Avatar className="h-10 w-10 mr-3">
-                        <AvatarImage src={testimonial.image} alt={testimonial.name} />
-                        <AvatarFallback>{testimonial.name.charAt(0)}</AvatarFallback>
+                        <AvatarImage
+                          src={testimonial.image}
+                          alt={testimonial.name}
+                        />
+                        <AvatarFallback>
+                          {testimonial.name.charAt(0)}
+                        </AvatarFallback>
                       </Avatar>
                       <div>
-                        <div className="text-lg font-medium text-gray-900">{testimonial.name}</div>
-                        <div className="text-sm text-gray-500">{testimonial.role}</div>
+                        <div className="text-lg font-medium text-gray-900">
+                          {testimonial.name}
+                        </div>
+                        <div className="text-sm text-gray-500">
+                          {testimonial.role}
+                        </div>
                       </div>
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-base text-gray-500 italic">"{testimonial.quote}"</p>
+                    <p className="text-base text-gray-500 italic">
+                      &apos;{testimonial.quote}&apos;
+                    </p>
                   </CardContent>
                 </Card>
               </motion.div>
@@ -71,6 +86,5 @@ export default function Testimonials() {
         </div>
       </div>
     </section>
-  )
+  );
 }
-

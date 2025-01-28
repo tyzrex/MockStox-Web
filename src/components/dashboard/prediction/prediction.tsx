@@ -45,7 +45,6 @@ export const lineChartOptions: ApexOptions = {
     },
     animations: {
       enabled: true,
-      easing: "easeinout",
       speed: 800,
       animateGradually: {
         enabled: true,

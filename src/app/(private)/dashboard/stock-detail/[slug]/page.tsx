@@ -4,6 +4,7 @@ import { dashboardApi } from "@/services/api/mockstox-api";
 import { FormattedHistory } from "@/types/dashboard-api-types";
 import { Suspense } from "react";
 import Stocks from "@/../stocks_data.json";
+import StockAnalysis from "@/app/(private)/dashboard/stock-analysis/page";
 
 interface StockDetailPageProps {
   params: {
@@ -50,6 +51,7 @@ async function StockDetailContainer(props: StockDetailPageProps) {
     close: parseFloat(values.close),
     low: parseFloat(values.low),
     high: parseFloat(values.high),
+    volume: parseInt(values.volume),
   }));
 
   return (

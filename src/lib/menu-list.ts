@@ -23,6 +23,7 @@ import {
   HandCoins,
   Vault,
   View,
+  LineChart,
 } from "lucide-react";
 
 type Submenu = {
@@ -129,6 +130,13 @@ export function getMenuList(pathname: string): { navMain: NavItem[] } {
         url: "/dashboard/profile/settings",
         icon: Settings,
         isActive: pathname === "/dashboard/profile/settings",
+        items: [],
+      },
+      {
+        title: "Technical Analysis",
+        url: "/dashboard/stock-analysis",
+        icon: LineChart,
+        isActive: pathname === "/dashboard/stock-analysis",
         items: [],
       },
     ],
