@@ -193,11 +193,11 @@ export default function UserProfileInformation({
         </CardHeader>
         <CardContent>
           <div className="flex items-center space-x-4 mb-4">
-            <img
+            {/* <img
               src={user.avatar}
               alt="User Avatar"
               className="w-20 h-20 rounded-full"
-            />
+            /> */}
             <div>
               <h2 className="text-2xl font-semibold">{user.name}</h2>
               <p className="">{user.email}</p>

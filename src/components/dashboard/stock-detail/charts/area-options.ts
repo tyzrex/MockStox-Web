@@ -21,7 +21,6 @@ export const areaChartOptions: ApexOptions = {
     },
     animations: {
       enabled: true,
-      easing: "easeinout",
       speed: 800,
       animateGradually: {
         enabled: true,

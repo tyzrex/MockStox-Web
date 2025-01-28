@@ -51,7 +51,7 @@ export default function StockAnalysis({
         date: stocksData[p.index].date,
       }))
     );
-  }, []);
+  }, [stocksData]);
 
   return (
     <div className="container mx-auto p-4">
