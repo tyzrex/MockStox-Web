@@ -36,6 +36,22 @@ export class DashboardApi extends BaseApi {
     });
   }
 
+  async getStockHistoryByDate({
+    slug,
+    from,
+    to,
+  }: {
+    slug: string;
+    from: string;
+    to: string;
+  }) {
+    return this.handleServerQuery<StockData>({
+      query: `stocks/range/${slug}?from=${from}&to=${to}`,
+      cache: "no-store",
+      isProtected: true,
+    });
+  }
+
   async getStocksBySector({ sector }: { sector: string }) {
     return this.handleServerQuery<any[]>({
       query: `stocks/list?sector=${sector}`,

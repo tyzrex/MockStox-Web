@@ -125,7 +125,7 @@ export default async function TradesPage() {
               <Card
                 key={trade.id}
                 className={`${
-                  trade.action === "BUY" ? "bg-green-300" : "bg-red-300"
+                  trade.action === "BUY" ? "bg-green-200" : "bg-red-200"
                 } transition-colors border border-mockstox-secondary duration-200 hover:shadow-lg`}
               >
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -142,7 +142,7 @@ export default async function TradesPage() {
                     ) : (
                       <ArrowUpIcon className="mr-1" />
                     )}
-                    {trade.action}
+                    {trade.action === "BUY" ? "Bought" : "Sold"}
                   </div>
                 </CardHeader>
                 <CardContent>

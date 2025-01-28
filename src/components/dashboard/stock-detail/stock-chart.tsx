@@ -37,8 +37,6 @@ export default function StockDashboard({
     }));
   }, [history]);
 
-  console.log(formattedHistory);
-
   const [buyQuantity, setBuyQuantity] = useState(0);
   const [sellQuantity, setSellQuantity] = useState(0);
 

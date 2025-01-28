@@ -16,6 +16,34 @@ export function calculateRSI(data: number[], period = 14): number[] {
   return rsi.getResult();
 }
 
+interface MACD {
+  macdLine: number[];
+  signalLine: number[];
+  histogram: number[];
+}
+
+const calculateEMA = (data: number[], period: number): number[] => {
+  const k = 2 / (period + 1);
+  const ema: number[] = [data[0]]; // Initialize with the first data point
+
+  for (let i = 1; i < data.length; i++) {
+    ema.push(data[i] * k + ema[i - 1] * (1 - k));
+  }
+
+  return ema;
+};
+
+export const calculateMACD = (data: number[]): MACD => {
+  const ema12 = calculateEMA(data, 12);
+  const ema26 = calculateEMA(data, 26);
+
+  const macdLine = ema12.map((value, index) => value - ema26[index]);
+  const signalLine = calculateEMA(macdLine, 9);
+  const histogram = macdLine.map((value, index) => value - signalLine[index]);
+
+  return { macdLine, signalLine, histogram };
+};
+
 interface Candle {
   open: number;
   high: number;
