@@ -1,13 +1,4 @@
 import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-} from "recharts";
-import {
   TrendingUp,
   DollarSign,
   Activity,
@@ -25,24 +16,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { formatNepaliCurrency } from "@/lib/utils";
-
-// Mock data for the dashboard
-const portfolioPerformance = [
-  { name: "Jan", value: 4000 },
-  { name: "Feb", value: 3000 },
-  { name: "Mar", value: 5000 },
-  { name: "Apr", value: 4500 },
-  { name: "May", value: 6000 },
-  { name: "Jun", value: 5500 },
-];
 
 interface StockPerformers {
   id: number;
@@ -125,7 +99,7 @@ export default function Dashboard({
   return (
     <div>
       <div className="mx-auto">
-        <div className="flex justify-between items-center mb-8">
+        <div className="flex justify-between items-center mb-4">
           <h1 className="text-3xl font-bold">Trading Dashboard</h1>
         </div>
 

@@ -1,11 +1,11 @@
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
 import HeroSection from "@/components/landing/hero-section";
+import { Footer } from "@/components/ui/large-name-footer";
 
 export default function Home() {
   return (
     <div>
       <HeroSection />
+      <Footer />
     </div>
   );
 }
