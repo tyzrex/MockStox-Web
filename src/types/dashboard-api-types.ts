@@ -18,6 +18,7 @@ interface StockHistory {
     close: string;
     low: string;
     high: string;
+    volume: string;
   };
 }
 
