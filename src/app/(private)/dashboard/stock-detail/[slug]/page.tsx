@@ -4,7 +4,7 @@ import { dashboardApi } from "@/services/api/mockstox-api";
 import { FormattedHistory } from "@/types/dashboard-api-types";
 import { Suspense } from "react";
 import Stocks from "@/../stocks_data.json";
-import StockAnalysis from "@/app/stock-analysis/page";
+import StockAnalysis from "@/app/(private)/dashboard/stock-analysis/page";
 
 interface StockDetailPageProps {
   params: {
@@ -63,7 +63,6 @@ async function StockDetailContainer(props: StockDetailPageProps) {
       />
 
       <CompanyInfoCard company={stockDetail[0]} />
-      <StockAnalysis stocksData={formattedHistory} />
     </div>
   );
 }

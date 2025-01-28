@@ -8,17 +8,15 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { FormattedHistory } from "@/types/dashboard-api-types";
+import { PatternsTable } from "@/components/stock-analysis/PatternsTable";
+import RSIChart from "@/components/stock-analysis/RSIChart";
+import CandlestickChart from "@/components/stock-analysis/CandlestickChart";
 import {
   calculateSMA,
   calculateRSI,
   identifyPatterns,
 } from "../../../utils/indicators";
-
-import { mockStockData } from "../../../utils/mockData";
-import { PatternsTable } from "../../../app/stock-analysis/PatternsTable";
-import RSIChart from "../../../app/stock-analysis/RSIChart";
-import CandlestickChart from "../../../app/stock-analysis/CandlestickChart";
-import { FormattedHistory } from "@/types/dashboard-api-types";
 
 export default function StockAnalysis({
   stocksData,

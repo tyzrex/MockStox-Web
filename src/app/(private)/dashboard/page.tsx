@@ -3,12 +3,11 @@ import { dashboardApi } from "@/services/api/mockstox-api";
 
 export default async function Page() {
   const { response, error } = await dashboardApi.getUserDashboardData();
-  if (error) {
+  if (error || !response) {
     console.error(error);
     return null;
   }
 
-  console.log(response);
   return (
     <Dashboard
       funds={response.funds}
