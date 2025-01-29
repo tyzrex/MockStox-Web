@@ -26,7 +26,7 @@ interface MetricsProps {
 export function PredictionMetrics({
   potential_gain,
   potential_loss,
-  risk_reward_ratio,
+  // risk_reward_ratio,
   volatility,
   buy_probability,
   sell_probability,
@@ -86,19 +86,6 @@ export function PredictionMetrics({
           <CardTitle className="text-lg font-medium">Risk Metrics</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-2">
-              <Scale className="h-5 w-5 text-blue-500" />
-              <span className="text-sm">Risk/Reward Ratio</span>
-            </div>
-            <span
-              className={`text-lg font-bold ${
-                risk_reward_ratio >= 0 ? "text-green-500" : "text-red-500"
-              }`}
-            >
-              {risk_reward_ratio.toFixed(2)}
-            </span>
-          </div>
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
               <LineChart className="h-5 w-5 text-purple-500" />

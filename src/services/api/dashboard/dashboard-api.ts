@@ -71,6 +71,15 @@ export class DashboardApi extends BaseApi {
     });
   }
 
+  async getUserFundsClient() {
+    return this.handleClientQuery<any>({
+      query: "user/get-funds",
+      cache: "no-store",
+      isProtected: true,
+      tags: ["user-funds"],
+    });
+  }
+
   async loadUserFund({ amount }: { amount: number }) {
     return this.handleServerAction<any, any>({
       endpoint: "user/load-funds/",
@@ -119,7 +128,7 @@ export class DashboardApi extends BaseApi {
   }
 
   async getUserWatchlist() {
-    return this.handleServerQuery<any>({
+    return this.handleServerQuery<StockListItem[]>({
       query: "user/wishlist/list/",
       cache: "no-store",
       isProtected: true,
@@ -129,9 +138,8 @@ export class DashboardApi extends BaseApi {
 
   async removeFromWatchlist({ symbol }: { symbol: string }) {
     return this.handleServerAction<any, any>({
-      endpoint: "user/wishlist/remove/",
-      method: "POST",
-      data: { symbol },
+      endpoint: `user/wishlist/remove/${symbol}/`,
+      method: "DELETE",
       revalidateTagName: "watchlist",
       successMessage: "Stock removed from watchlist.",
       isProtected: true,

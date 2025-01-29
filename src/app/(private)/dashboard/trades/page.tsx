@@ -2,6 +2,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowDownIcon, ArrowUpIcon } from "lucide-react";
 import { format } from "date-fns";
 import { transactionApi } from "@/services/api/mockstox-api";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 interface Trade {
   id: number;
@@ -16,95 +18,17 @@ interface Trade {
   user: number;
 }
 
-// const trades: Trade[] = [
-//   {
-//     id: 1,
-//     created_at: "2024-10-01T22:51:53.427031+05:45",
-//     updated_at: null,
-//     deleted_at: null,
-//     quantity: 5,
-//     symbol: "NABIL",
-//     unit_price: "568.00",
-//     date: "2024-10-01",
-//     action: "BUY",
-//     user: 1,
-//   },
-//   {
-//     id: 2,
-//     created_at: "2024-10-01T22:52:58.513275+05:45",
-//     updated_at: null,
-//     deleted_at: null,
-//     quantity: 2,
-//     symbol: "NABIL",
-//     unit_price: "568.00",
-//     date: "2024-10-01",
-//     action: "SELL",
-//     user: 1,
-//   },
-//   {
-//     id: 3,
-//     created_at: "2024-10-02T05:10:16.873140+05:45",
-//     updated_at: null,
-//     deleted_at: null,
-//     quantity: 5,
-//     symbol: "NABIL",
-//     unit_price: "568.00",
-//     date: "2024-10-02",
-//     action: "BUY",
-//     user: 1,
-//   },
-//   {
-//     id: 4,
-//     created_at: "2024-10-02T05:23:49.457693+05:45",
-//     updated_at: null,
-//     deleted_at: null,
-//     quantity: 100,
-//     symbol: "ACLBSL",
-//     unit_price: "1030.00",
-//     date: "2024-10-02",
-//     action: "BUY",
-//     user: 1,
-//   },
-//   {
-//     id: 5,
-//     created_at: "2024-10-02T05:30:47.348321+05:45",
-//     updated_at: null,
-//     deleted_at: null,
-//     quantity: 232,
-//     symbol: "ACLBSL",
-//     unit_price: "1030.00",
-//     date: "2024-10-02",
-//     action: "BUY",
-//     user: 1,
-//   },
-//   {
-//     id: 6,
-//     created_at: "2024-10-02T05:30:50.404622+05:45",
-//     updated_at: null,
-//     deleted_at: null,
-//     quantity: 233,
-//     symbol: "ACLBSL",
-//     unit_price: "1030.00",
-//     date: "2024-10-02",
-//     action: "SELL",
-//     user: 1,
-//   },
-//   {
-//     id: 7,
-//     created_at: "2024-10-02T05:43:04.475172+05:45",
-//     updated_at: null,
-//     deleted_at: null,
-//     quantity: 233,
-//     symbol: "CHDC",
-//     unit_price: "1804.80",
-//     date: "2024-10-02",
-//     action: "BUY",
-//     user: 1,
-//   },
-// ];
-
-export default async function TradesPage() {
-  const { response, error } = await transactionApi.getAllTransactions();
+export default async function TradesPage({
+  searchParams,
+}: {
+  searchParams?: {
+    page: string;
+  };
+}) {
+  const page = searchParams?.page ? parseInt(searchParams.page) : 1;
+  const { response, error } = await transactionApi.getAllTransactions({
+    page: page,
+  });
 
   if (error || !response) {
     return <>Error</>;
@@ -183,6 +107,33 @@ export default async function TradesPage() {
           </div>
         </>
       )}
+
+      <div className="flex flex-row space-x-2">
+        <div className="mt-6">
+          <div className="flex justify-center">
+            {response.previous && (
+              <Button asChild disabled={!response.previous}>
+                <Link
+                  href={`/dashboard/trades?page=${page - 1}`}
+                  className="px-4 py-2 rounded-lg"
+                >
+                  Previous
+                </Link>
+              </Button>
+            )}
+            {response.next && (
+              <Button asChild disabled={!response.next}>
+                <Link
+                  href={`/dashboard/trades?page=${page + 1}`}
+                  className="px-4 py-2 rounded-lg"
+                >
+                  Next
+                </Link>
+              </Button>
+            )}
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

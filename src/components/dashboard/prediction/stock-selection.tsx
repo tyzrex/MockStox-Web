@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Loader2, TrendingUp } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import { useRouter, useSearchParams } from "next/navigation";
+import PageHeader from "@/components/shared/page-header";
 
 export default function StockSeletion({
   stocks,
@@ -49,7 +50,10 @@ export default function StockSeletion({
 
   return (
     <div className="space-y-8">
-      <h1 className="text-3xl font-bold mb-8">Select Stock</h1>
+      <PageHeader
+        title="Price Prediction"
+        description="Predict the future price of a stock using machine learning."
+      />
 
       <div className="flex space-x-4">
         <Select value={selectedStock} onValueChange={setSelectedStock}>

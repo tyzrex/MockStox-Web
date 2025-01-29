@@ -20,7 +20,7 @@ export interface StockPrediction {
   hold_probability: number;
 }
 
-const COMMERCIAL_BANKS = [
+export const COMMERCIAL_BANKS = [
   "ADBL",
   "CZBIL",
   "EBL",

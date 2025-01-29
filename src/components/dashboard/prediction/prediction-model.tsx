@@ -37,6 +37,7 @@ import type {
   StockHolding,
   StockPrediction,
 } from "@/types/dashboard-api-types";
+import { COMMERCIAL_BANKS } from "../stock-detail/quick-trade";
 
 interface PredictionModalProps {
   isOpen: boolean;
@@ -134,7 +135,7 @@ const PredictionModal: React.FC<PredictionModalProps> = ({
             {symbol} Trading Analysis
           </DialogTitle>
         </DialogHeader>
-        {prediction ? (
+        {prediction && COMMERCIAL_BANKS.includes(symbol) ? (
           <ScrollArea className="max-h-[70vh]">
             <div className="grid grid-cols-2 gap-10 p-1">
               {/* Potential Returns Section */}
