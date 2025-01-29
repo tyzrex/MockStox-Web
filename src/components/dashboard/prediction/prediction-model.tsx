@@ -1,4 +1,5 @@
 import type React from "react";
+import { useState, useEffect } from "react";
 import {
   Dialog,
   DialogContent,
@@ -7,7 +8,16 @@ import {
   DialogFooter,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { formatNepaliCurrency } from "@/lib/utils";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { formatNepaliCurrency, showErrorToasts } from "@/lib/utils";
+
 import {
   AlertCircle,
   ArrowUpCircle,
@@ -18,7 +28,12 @@ import {
 } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { StockPrediction } from "@/types/dashboard-api-types";
+import {
+  buyStock,
+  sellStock,
+} from "@/services/api/transaction/transaction-actions";
+import { toast } from "sonner";
+import { StockHolding, StockPrediction } from "@/types/dashboard-api-types";
 
 interface PredictionModalProps {
   isOpen: boolean;
@@ -26,8 +41,8 @@ interface PredictionModalProps {
   prediction: StockPrediction;
   symbol: string;
   tradeType: "buy" | "sell";
-  quantity: number;
-  onConfirm: () => void;
+  holdings: StockHolding[];
+  onTradeComplete: () => void;
 }
 
 const PredictionModal: React.FC<PredictionModalProps> = ({
@@ -36,9 +51,21 @@ const PredictionModal: React.FC<PredictionModalProps> = ({
   prediction,
   symbol,
   tradeType,
-  quantity,
-  onConfirm,
+  holdings,
+  onTradeComplete,
 }) => {
+  const [quantity, setQuantity] = useState(0);
+  const [selectedHolding, setSelectedHolding] = useState<StockHolding | null>(
+    null
+  );
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    if (tradeType === "sell" && holdings.length > 0) {
+      setSelectedHolding(holdings[0]);
+    }
+  }, [tradeType, holdings]);
+
   const showWarning =
     (tradeType === "buy" && prediction.buy_probability < 0.5) ||
     (tradeType === "sell" && prediction.sell_probability < 0.5);
@@ -58,6 +85,40 @@ const PredictionModal: React.FC<PredictionModalProps> = ({
     return "text-red-500";
   };
 
+  const handleTrade = async () => {
+    setIsLoading(true);
+    try {
+      let response;
+      if (tradeType === "buy") {
+        response = await buyStock({
+          stockSymbol: symbol,
+          quantity: quantity,
+        });
+      } else {
+        if (!selectedHolding) {
+          toast.error("Please select a holding to sell.");
+          return;
+        }
+        response = await sellStock({
+          quantity: quantity,
+          id: selectedHolding.id,
+        });
+      }
+      if (response.success) {
+        toast.success(response.message);
+        onTradeComplete();
+        onClose();
+      } else {
+        showErrorToasts(response.errorData);
+      }
+    } catch (error) {
+      console.error("Error during trade:", error);
+      toast.error("An unexpected error occurred. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-2xl">
@@ -68,7 +129,7 @@ const PredictionModal: React.FC<PredictionModalProps> = ({
         </DialogHeader>
 
         <ScrollArea className="max-h-[70vh]">
-          <div className="grid grid-cols-1 gap-6 p-1">
+          <div className="grid grid-cols-2 gap-10 p-1">
             {/* Potential Returns Section */}
             <div className="space-y-4">
               <h3 className="text-lg font-semibold">Potential Returns</h3>
@@ -120,19 +181,15 @@ const PredictionModal: React.FC<PredictionModalProps> = ({
                       <span>Volatility</span>
                     </div>
                     <span className="text-purple-500">
-                      {(prediction.volatility * 100).toFixed(2)}%
+                      {prediction.volatility.toFixed(2)}%
                     </span>
-                  </div>
-                  <div className="flex justify-between text-sm text-muted-foreground mt-1">
-                    <span>Low Risk</span>
-                    <span>High Risk</span>
                   </div>
                 </div>
               </div>
             </div>
 
             {/* Trading Signals Section */}
-            <div className="space-y-4">
+            <div className="space-y-4 col-span-2">
               <h3 className="text-lg font-semibold">Trading Signals</h3>
               <div className="space-y-3">
                 <div className="flex justify-between items-center">
@@ -140,7 +197,7 @@ const PredictionModal: React.FC<PredictionModalProps> = ({
                   <span
                     className={getProbabilityColor(prediction.buy_probability)}
                   >
-                    {(prediction.buy_probability * 100).toFixed(1)}%
+                    {prediction.buy_probability.toFixed(1)}%
                   </span>
                 </div>
                 <div className="flex justify-between items-center">
@@ -148,7 +205,7 @@ const PredictionModal: React.FC<PredictionModalProps> = ({
                   <span
                     className={getProbabilityColor(prediction.hold_probability)}
                   >
-                    {(prediction.hold_probability * 100).toFixed(1)}%
+                    {prediction.hold_probability.toFixed(1)}%
                   </span>
                 </div>
                 <div className="flex justify-between items-center">
@@ -156,13 +213,56 @@ const PredictionModal: React.FC<PredictionModalProps> = ({
                   <span
                     className={getProbabilityColor(prediction.sell_probability)}
                   >
-                    {(prediction.sell_probability * 100).toFixed(1)}%
+                    {prediction.sell_probability.toFixed(1)}%
                   </span>
                 </div>
                 <div className="mt-2 bg-secondary/50 p-2 rounded-md text-center font-medium">
                   {getSignalStrength()}
                 </div>
               </div>
+            </div>
+          </div>
+
+          {/* Trade Input Section */}
+          <div className="mt-6 space-y-4">
+            <h3 className="text-lg font-semibold">Trade Details</h3>
+            <div className="flex items-center gap-4">
+              <Input
+                type="number"
+                value={quantity}
+                onChange={(e) =>
+                  setQuantity(Math.max(0, Number.parseInt(e.target.value) || 0))
+                }
+                placeholder="Enter quantity"
+                className="flex-grow"
+              />
+              {tradeType === "sell" && (
+                <Select
+                  value={selectedHolding?.id.toString()}
+                  onValueChange={(value) =>
+                    setSelectedHolding(
+                      holdings.find((h) => h.id.toString() === value) || null
+                    )
+                  }
+                >
+                  <SelectTrigger className="w-[180px]">
+                    <SelectValue placeholder="Select holding" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {holdings.map((holding) => (
+                      <SelectItem
+                        key={holding.id}
+                        value={holding.id.toString()}
+                      >
+                        {holding.quantity} @{" "}
+                        {formatNepaliCurrency(
+                          Number.parseFloat(holding.buying_price)
+                        )}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              )}
             </div>
           </div>
 
@@ -183,7 +283,12 @@ const PredictionModal: React.FC<PredictionModalProps> = ({
             Cancel
           </Button>
           <Button
-            onClick={onConfirm}
+            onClick={handleTrade}
+            disabled={
+              isLoading ||
+              quantity <= 0 ||
+              (tradeType === "sell" && !selectedHolding)
+            }
             variant={showWarning ? "destructive" : "default"}
             className={
               !showWarning
@@ -193,12 +298,13 @@ const PredictionModal: React.FC<PredictionModalProps> = ({
                 : ""
             }
           >
-            {showWarning
+            {isLoading
+              ? "Processing..."
+              : showWarning
               ? "Proceed Anyway"
               : `Confirm ${
                   tradeType.charAt(0).toUpperCase() + tradeType.slice(1)
-                }`}{" "}
-            ({quantity} Shares)
+                }`}
           </Button>
         </DialogFooter>
       </DialogContent>

@@ -71,7 +71,7 @@ export interface StockHolding {
   id: number;
   stock: number;
   quantity: number;
-  buyin_price: string;
+  buying_price: string;
   symbol: string;
   created_at: string;
 }
