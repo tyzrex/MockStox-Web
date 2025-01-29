@@ -4,6 +4,7 @@ import { format } from "date-fns";
 import { transactionApi } from "@/services/api/mockstox-api";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import PageHeader from "@/components/shared/page-header";
 
 interface Trade {
   id: number;
@@ -41,7 +42,10 @@ export default async function TradesPage({
 
   return (
     <div>
-      <h1 className="text-3xl font-bold mb-6">Your Trades</h1>
+      <PageHeader
+        title="Trades"
+        description="List of all trades done by you."
+      />
 
       {response.results.length === 0 ? (
         <div>

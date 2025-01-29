@@ -1,19 +1,27 @@
 "use client";
-import { useState } from "react";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+
+import * as React from "react";
+import { Check, ChevronsUpDown, Loader2, TrendingUp } from "lucide-react";
+import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { Loader2, TrendingUp } from "lucide-react";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { useToast } from "@/components/ui/use-toast";
 import { useRouter, useSearchParams } from "next/navigation";
 import PageHeader from "@/components/shared/page-header";
 
-export default function StockSeletion({
+export default function StockSelection({
   stocks,
 }: {
   stocks: {
@@ -22,13 +30,12 @@ export default function StockSeletion({
 }) {
   const searchParams = useSearchParams();
   const symbol = searchParams.get("symbol");
-  const [selectedStock, setSelectedStock] = useState<string>(
+  const [open, setOpen] = React.useState(false);
+  const [selectedStock, setSelectedStock] = React.useState<string>(
     symbol ? (symbol as string) : ""
   );
-  const [loading, setLoading] = useState(false);
-  const [predictionData, setPredictionData] = useState<any>(null);
+  const [loading, setLoading] = React.useState(false);
   const { toast } = useToast();
-
   const router = useRouter();
 
   const handlePrediction = async () => {
@@ -56,18 +63,53 @@ export default function StockSeletion({
       />
 
       <div className="flex space-x-4">
-        <Select value={selectedStock} onValueChange={setSelectedStock}>
-          <SelectTrigger className="w-[280px]">
-            <SelectValue placeholder="Select a stock" />
-          </SelectTrigger>
-          <SelectContent>
-            {stocks.map((stock) => (
-              <SelectItem key={stock.symbol} value={stock.symbol}>
-                {stock.symbol}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+        <Popover open={open} onOpenChange={setOpen}>
+          <PopoverTrigger asChild>
+            <Button
+              variant="outline"
+              role="combobox"
+              aria-expanded={open}
+              className="w-[280px] justify-between"
+            >
+              {selectedStock
+                ? stocks.find((stock) => stock.symbol === selectedStock)?.symbol
+                : "Select stock..."}
+              <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="w-[280px] p-0">
+            <Command>
+              <CommandInput placeholder="Search stock..." />
+              <CommandList>
+                <CommandEmpty>No stock found.</CommandEmpty>
+                <CommandGroup>
+                  {stocks.map((stock) => (
+                    <CommandItem
+                      key={stock.symbol}
+                      value={stock.symbol}
+                      onSelect={(currentValue) => {
+                        setSelectedStock(
+                          currentValue === selectedStock ? "" : currentValue
+                        );
+                        setOpen(false);
+                      }}
+                    >
+                      <Check
+                        className={cn(
+                          "mr-2 h-4 w-4",
+                          selectedStock === stock.symbol
+                            ? "opacity-100"
+                            : "opacity-0"
+                        )}
+                      />
+                      {stock.symbol}
+                    </CommandItem>
+                  ))}
+                </CommandGroup>
+              </CommandList>
+            </Command>
+          </PopoverContent>
+        </Popover>
         <Button onClick={handlePrediction} disabled={loading}>
           {loading ? (
             <>

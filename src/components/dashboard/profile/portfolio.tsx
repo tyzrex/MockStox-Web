@@ -32,6 +32,7 @@ import {
   Cell,
 } from "recharts";
 import { formatNepaliCurrency } from "@/lib/utils";
+import PageHeader from "@/components/shared/page-header";
 
 interface Transaction {
   id: number;
@@ -93,7 +94,10 @@ export default function MyPortfolio({
   return (
     <div className="min-h-screen">
       <div className="mx-auto space-y-6">
-        <h1 className="text-3xl font-bold">My Portfolio</h1>
+        <PageHeader
+          title="My Portfolio"
+          description="View your historical transactions and current holdings"
+        />
         {/* Main Content Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {/* Sector Donut Chart */}

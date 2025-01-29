@@ -1,6 +1,4 @@
 "use client";
-
-import { useState, useEffect } from "react";
 import {
   Card,
   CardContent,
@@ -12,11 +10,6 @@ import { FormattedHistory } from "@/types/dashboard-api-types";
 import { PatternsTable } from "@/components/stock-analysis/patterns-table";
 import RSIChart from "@/components/stock-analysis/rsi-chart";
 import CandlestickChart from "@/components/stock-analysis/candle-stick-chart";
-import {
-  calculateSMA,
-  calculateRSI,
-  identifyPatterns,
-} from "../../../utils/indicators";
 
 export default function StockAnalysis({
   stocksData,
@@ -33,7 +26,6 @@ export default function StockAnalysis({
 }) {
   return (
     <div className="mx-auto w-full py-4">
-      <h1 className="text-3xl font-bold mb-4">Stock Technical Analysis</h1>
       <div className="grid gap-4">
         <Card>
           <CardHeader>

@@ -48,16 +48,7 @@ async function StockPrediction({ symbol }: { symbol: string }) {
           <Loader2 className="h-8 w-8 animate-spin" />
         </div>
       ) : (
-        <StockPredictionClient
-          // historicalData={Object.entries(response.history).map(
-          //   ([date, values]) => ({
-          //     date,
-          //     price: Number(values.close),
-          //   })
-          // )}
-          data={data.response}
-          symbol={symbol}
-        />
+        <StockPredictionClient data={data.response} symbol={symbol} />
       )}
     </>
   );
@@ -99,7 +90,6 @@ export default async function StockPage({ searchParams }: StockPageProps) {
             }
           >
             <StockPrediction symbol={symbol} />
-            {/* <StockPredictionClient data={data} symbol={symbol} /> */}
           </Suspense>
         </>
       )}

@@ -234,6 +234,35 @@ const PredictionModal: React.FC<PredictionModalProps> = ({
                     {getSignalStrength()}
                   </div>
                 </div>
+
+                {/* show tomorrow after 7 days and after 15 days prices */}
+                <div className="space-y-4 mt-4">
+                  <h3 className="text-lg font-semibold">Future Prices</h3>
+                  <div className="space-y-4">
+                    <div className="flex justify-between items-center">
+                      <span>Tomorrow</span>
+                      <span className="font-semibold">
+                        {formatNepaliCurrency(prediction.predictions.tomorrow)}
+                      </span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span>After 7 days</span>
+                      <span className="font-semibold">
+                        {formatNepaliCurrency(
+                          prediction.predictions.sevenDaysLater
+                        )}
+                      </span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span>After 15 days</span>
+                      <span className="font-semibold">
+                        {formatNepaliCurrency(
+                          prediction.predictions.fifteenDaysLater
+                        )}
+                      </span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </ScrollArea>
