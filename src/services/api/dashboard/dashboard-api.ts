@@ -1,6 +1,8 @@
 import { BaseApi, buildPageParam, ISessionService } from "../base-api";
 import {
+  PortfolioObject,
   StockData,
+  StockHolding,
   StockListItem,
   StockPrediction,
 } from "@/types/dashboard-api-types";
@@ -84,7 +86,24 @@ export class DashboardApi extends BaseApi {
     return this.handleServerQuery<StockPrediction>({
       query: `ml/predict?symbol=${symbol}`,
       cache: "no-store",
+      // isProtected: true,
+    });
+  }
+
+  async getPredictionBySymbolClientSide({ symbol }: { symbol: string }) {
+    return this.handleClientQuery<StockPrediction>({
+      query: `ml/predict?symbol=${symbol}`,
+      cache: "no-store",
+      // isProtected: true,
+    });
+  }
+
+  async getPortfolio() {
+    return this.handleServerQuery<PaginatedResponse<PortfolioObject>>({
+      query: "portfolio/me",
+      cache: "no-store",
       isProtected: true,
+      tags: ["portfolio"],
     });
   }
 

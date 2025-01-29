@@ -22,7 +22,7 @@ export default async function StockAnalysisPage({
 
   const stockSymbol = searchParams?.stock;
   let stockHistoricalData = null;
-  const number_of_months = searchParams?.number_of_months || 6;
+  const number_of_months = searchParams?.number_of_months || 12;
 
   let patterns, sma20, sma50, sma200, rsi;
 

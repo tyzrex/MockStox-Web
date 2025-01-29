@@ -37,10 +37,7 @@ export function CompanyInfoCard({ company }: { company: any }) {
           <p className="">Share Registrar</p>
           <p className="font-semibold">{company.share_registar}</p>
         </div>
-        <div>
-          <p className="">Sector</p>
-          <p className="font-semibold">Hydropower</p>
-        </div>
+
         <div>
           <p className="">Promoter Shares</p>
           <p className="font-semibold">{company.promoter_shares}%</p>

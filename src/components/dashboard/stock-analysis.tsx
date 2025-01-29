@@ -44,7 +44,7 @@ export default function StockAnalysis({
           </CardHeader>
           <CardContent>
             <CandlestickChart
-              data={stocksData}
+              stocksData={stocksData}
               sma20={sma20}
               sma50={sma50}
               patterns={patterns}

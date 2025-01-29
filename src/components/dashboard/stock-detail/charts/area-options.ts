@@ -6,7 +6,6 @@ export const areaChartOptions: ApexOptions = {
     type: "area",
     height: 400,
     background: "transparent",
-    foreColor: "#000",
     toolbar: {
       show: true,
       tools: {
@@ -35,17 +34,9 @@ export const areaChartOptions: ApexOptions = {
 
   xaxis: {
     type: "datetime",
-    labels: {
-      style: {
-        colors: "#000",
-      },
-    },
   },
   yaxis: {
     labels: {
-      style: {
-        colors: "#000",
-      },
       formatter: function (value: number) {
         return formatNepaliCurrency(value);
       },

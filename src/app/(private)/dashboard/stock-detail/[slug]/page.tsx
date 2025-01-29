@@ -13,24 +13,30 @@ interface StockDetailPageProps {
   searchParams?: {
     year: string;
     month: string;
+    number_of_months?: string;
   };
 }
 
 async function StockDetailContainer(props: StockDetailPageProps) {
-  console.log(props.params.slug);
   const year = props.searchParams?.year ?? new Date().getFullYear().toString();
   const month =
     props.searchParams?.month ?? new Date().getMonth().toString() + 1;
   const stockDetail = Stocks.filter(
     (stock) => stock.symbol === props.params.slug
   );
+  const number_of_months = props.searchParams?.number_of_months
+    ? parseInt(props.searchParams.number_of_months)
+    : 6;
+  const date = new Date();
+  date.setMonth(date.getMonth() - number_of_months);
+  const sixMonthsBack = date.toISOString().split("T")[0];
+  const today = new Date().toISOString().split("T")[0];
 
-  const { response, error } = await dashboardApi.getStockDetail({
+  const { response, error } = await dashboardApi.getStockHistoryByDate({
     slug: props.params.slug,
-    query: `year=${year}&month=${month}`,
+    from: sixMonthsBack,
+    to: today,
   });
-
-  console.log(response);
 
   if (error || !response) {
     return (
@@ -41,6 +47,13 @@ async function StockDetailContainer(props: StockDetailPageProps) {
         </h1>
       </div>
     );
+  }
+
+  const { response: PortfolioResponse, error: PortfolioError } =
+    await dashboardApi.getPortfolio();
+
+  if (PortfolioError || !PortfolioResponse) {
+    return <div>Error</div>;
   }
 
   const formattedHistory: FormattedHistory[] = Object.entries(
@@ -57,6 +70,7 @@ async function StockDetailContainer(props: StockDetailPageProps) {
   return (
     <div className="py-5 space-y-6">
       <StockChart
+        stockHolding={PortfolioResponse?.results}
         number_of_stocks={response.number_of_stocks}
         history={formattedHistory}
         symbol={response.symbol}
