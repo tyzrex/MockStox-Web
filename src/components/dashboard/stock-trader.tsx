@@ -59,7 +59,7 @@ export default function StockTrade({
       toast.success("Order placed successfully");
     } else if (side === "sell") {
       await sellStock({
-        stockSymbol: symbol,
+        id: 1,
         quantity: parseInt(quantity),
       });
       toast.success("Sell order placed successfully");

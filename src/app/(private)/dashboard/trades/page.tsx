@@ -110,6 +110,11 @@ export default async function TradesPage() {
     return <>Error</>;
   }
 
+  //show latest trades first
+  response.results.sort((a, b) => {
+    return new Date(b.date).getTime() - new Date(a.date).getTime();
+  });
+
   return (
     <div>
       <h1 className="text-3xl font-bold mb-6">Your Trades</h1>

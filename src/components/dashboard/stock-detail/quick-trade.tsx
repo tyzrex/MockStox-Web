@@ -242,7 +242,7 @@ export default function EnhancedTradingComponent({
         </CardContent>
       </Card>
 
-      {modalOpen && predictions && (
+      {modalOpen && (
         <PredictionModal
           isOpen={modalOpen}
           onClose={() => setModalOpen(false)}
