@@ -9,9 +9,9 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { FormattedHistory } from "@/types/dashboard-api-types";
-import { PatternsTable } from "@/components/stock-analysis/PatternsTable";
-import RSIChart from "@/components/stock-analysis/RSIChart";
-import CandlestickChart from "@/components/stock-analysis/CandlestickChart";
+import { PatternsTable } from "@/components/stock-analysis/patterns-table";
+import RSIChart from "@/components/stock-analysis/rsi-chart";
+import CandlestickChart from "@/components/stock-analysis/candle-stick-chart";
 import {
   calculateSMA,
   calculateRSI,
@@ -20,41 +20,19 @@ import {
 
 export default function StockAnalysis({
   stocksData,
+  rsi,
+  sma20,
+  sma50,
+  patterns,
 }: {
+  rsi: number[];
+  sma20: number[];
+  sma50: number[];
+  patterns: { pattern: string; index: number; date: string }[];
   stocksData: FormattedHistory[];
 }) {
-  const [stockData, setStockData] = useState<FormattedHistory[]>(stocksData);
-  const [sma20, setSma20] = useState<number[]>([]);
-  const [sma50, setSma50] = useState<number[]>([]);
-  const [rsi, setRsi] = useState<number[]>([]);
-  const [patterns, setPatterns] = useState<
-    { pattern: string; index: number; date: string }[]
-  >([]);
-
-  useEffect(() => {
-    // Use mock data instead of fetching
-    // Calculate indicators
-    const closes = stocksData.map((d) => d.close);
-    const highs = stocksData.map((d) => d.high);
-    const lows = stocksData.map((d) => d.low);
-
-    setSma20(calculateSMA(closes, 20));
-    setSma50(calculateSMA(closes, 50));
-    setRsi(calculateRSI(closes));
-
-    console.log(calculateSMA(closes, 20));
-
-    const identifiedPatterns = identifyPatterns(stocksData);
-    setPatterns(
-      identifiedPatterns.map((p) => ({
-        ...p,
-        date: stocksData[p.index].date,
-      }))
-    );
-  }, [stocksData]);
-
   return (
-    <div className="container mx-auto p-4">
+    <div className="mx-auto w-full py-4">
       <h1 className="text-3xl font-bold mb-4">Stock Technical Analysis</h1>
       <div className="grid gap-4">
         <Card>
@@ -66,7 +44,7 @@ export default function StockAnalysis({
           </CardHeader>
           <CardContent>
             <CandlestickChart
-              data={stockData}
+              stocksData={stocksData}
               sma20={sma20}
               sma50={sma50}
               patterns={patterns}

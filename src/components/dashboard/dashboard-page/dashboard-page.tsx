@@ -65,8 +65,8 @@ export default function Dashboard({
     funds,
     portfolioValue,
     profitLoss,
-    worstPerformers,
-    bestPerformers,
+    worstPerformers.length,
+    bestPerformers.length,
     recentTrades
   );
   const getMostActiveStock = () => {
@@ -90,11 +90,24 @@ export default function Dashboard({
 
   const getWorstPerformer = () => {
     return worstPerformers.length > 0
-      ? worstPerformers.sort(
-          (a, b) =>
-            parseFloat(b.percentage_change) - parseFloat(a.percentage_change)
+      ? worstPerformers.reduce((worst, current) =>
+          Number.parseFloat(current.percentage_change) <
+          Number.parseFloat(worst.percentage_change)
+            ? current
+            : worst
         )
-      : [{ symbol: "", percentage_change: "" }];
+      : { symbol: "", percentage_change: "" };
+  };
+
+  const getBestPerformer = () => {
+    return bestPerformers.length > 0
+      ? bestPerformers.reduce((best, current) =>
+          Number.parseFloat(current.percentage_change) >
+          Number.parseFloat(best.percentage_change)
+            ? current
+            : best
+        )
+      : { symbol: "", percentage_change: "" };
   };
 
   const [mostActiveStock, activeStockQuantity] = getMostActiveStock();
@@ -221,55 +234,39 @@ export default function Dashboard({
             </CardContent>
           </Card>
           <div className="flex flex-col gap-5">
-            <Card className="">
+            <Card className="h-full">
               <CardHeader>
                 <CardTitle>Worst Performers</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="space-y-4">
-                  <div className="space-y-4">
-                    {worstPerformers.every(
-                      (stock) => parseFloat(stock.percentage_change) > 0
-                    ) ? (
-                      <div className="text-center text-green-500 font-medium">
-                        {worstPerformers.length > 0 ? (
-                          <div className="text-center my-8 text-green-500 font-medium">
-                            All stocks are in profit
-                          </div>
-                        ) : (
-                          <div className="text-center my-8 text-green-500 font-medium">
-                            No stocks available
-                          </div>
-                        )}
-                      </div>
-                    ) : (
-                      worstPerformers.slice(0, 3).map((stock) => {
-                        if (parseFloat(stock.percentage_change) > 0) {
-                          return null;
-                        }
-                        return (
-                          <div key={stock.id} className="flex items-center">
-                            <div className="w-16 font-medium">
-                              {stock.symbol}
-                            </div>
-                            <div className="w-full border rounded-full h-2.5">
-                              <div
-                                className="bg-red-500 h-2.5 rounded-full"
-                                style={{
-                                  width: `${Math.abs(
-                                    parseFloat(stock.percentage_change)
-                                  )}%`,
-                                }}
-                              ></div>
-                            </div>
-                            <span className="w-12 text-right text-red-500 ml-2">
+                <div className="space-y-2">
+                  {worstPerformers.length === 0 ? (
+                    <div className="text-center text-gray-500 font-medium">
+                      No stocks available
+                    </div>
+                  ) : (
+                    worstPerformers
+                      .sort(
+                        (a, b) =>
+                          Number.parseFloat(a.percentage_change) -
+                          Number.parseFloat(b.percentage_change)
+                      )
+                      .slice(0, 3)
+                      .map((stock) => (
+                        <div
+                          key={stock.id}
+                          className="flex items-center justify-between"
+                        >
+                          <div className="font-medium">{stock.symbol}</div>
+                          <div className="flex items-center">
+                            <ArrowDownRight className="h-4 w-4 text-red-500 mr-1" />
+                            <span className="text-red-500 font-medium">
                               {stock.percentage_change}%
                             </span>
                           </div>
-                        );
-                      })
-                    )}
-                  </div>
+                        </div>
+                      ))
+                  )}
                 </div>
               </CardContent>
             </Card>
@@ -279,45 +276,33 @@ export default function Dashboard({
                 <CardTitle>Top Performers</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="space-y-4">
-                  {bestPerformers.every(
-                    (stock) => parseFloat(stock.percentage_change) < 0
-                  ) ? (
-                    <div className="text-center my-8 text-red-500 font-medium">
-                      {bestPerformers.length > 0 ? (
-                        <div className="text-center my-8 text-red-500 font-medium">
-                          All stocks are in loss
-                        </div>
-                      ) : (
-                        <div className="text-center my-8 text-red-500 font-medium">
-                          No stocks available
-                        </div>
-                      )}
+                <div className="space-y-2">
+                  {bestPerformers.length === 0 ? (
+                    <div className="text-center text-gray-500 font-medium">
+                      No stocks available
                     </div>
                   ) : (
-                    bestPerformers.slice(0, 3).map((stock) => {
-                      if (parseFloat(stock.percentage_change) < 0) {
-                        return null;
-                      }
-                      return (
-                        <div key={stock.id} className="flex items-center">
-                          <div className="w-16 font-medium">{stock.symbol}</div>
-                          <div className="w-full border rounded-full h-2.5">
-                            <div
-                              className="bg-green-500 h-2.5 rounded-full"
-                              style={{
-                                width: `${Math.abs(
-                                  parseFloat(stock.percentage_change)
-                                )}%`,
-                              }}
-                            ></div>
+                    bestPerformers
+                      .sort(
+                        (a, b) =>
+                          Number.parseFloat(b.percentage_change) -
+                          Number.parseFloat(a.percentage_change)
+                      )
+                      .slice(0, 3)
+                      .map((stock) => (
+                        <div
+                          key={stock.id}
+                          className="flex items-center justify-between"
+                        >
+                          <div className="font-medium">{stock.symbol}</div>
+                          <div className="flex items-center">
+                            <ArrowUpRight className="h-4 w-4 text-green-500 mr-1" />
+                            <span className="text-green-500 font-medium">
+                              {stock.percentage_change}%
+                            </span>
                           </div>
-                          <span className="w-12 text-right text-green-500 ml-2">
-                            {stock.percentage_change}%
-                          </span>
                         </div>
-                      );
-                    })
+                      ))
                   )}
                 </div>
               </CardContent>
@@ -326,20 +311,6 @@ export default function Dashboard({
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-          <Card className="">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-lg font-semibold">
-                Strading Streak
-              </CardTitle>
-              <TrendingUp className="h-6 w-6 text-green-500" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold text-primary-accent">
-                5 days
-              </div>
-              <p className="text-xs">Days traded consecutively</p>
-            </CardContent>
-          </Card>
           <Card className="">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-lg font-semibold">
@@ -363,14 +334,26 @@ export default function Dashboard({
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold text-red-500">
-                {getWorstPerformer()[0].symbol === ""
-                  ? "No stocks"
-                  : getWorstPerformer()[0].symbol}
+                {getWorstPerformer().symbol || "No stocks"}
               </div>
               <p className="text-xs">
-                {getWorstPerformer()[0].percentage_change === ""
-                  ? "No history"
-                  : getWorstPerformer()[0].percentage_change}
+                {getWorstPerformer().percentage_change || "No history"}
+              </p>
+            </CardContent>
+          </Card>
+          <Card className="">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-lg font-semibold">
+                Biggest Gain
+              </CardTitle>
+              <ArrowUpRight className="h-6 w-6 text-green-500" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold text-green-500">
+                {getBestPerformer().symbol || "No stocks"}
+              </div>
+              <p className="text-xs">
+                {getBestPerformer().percentage_change || "No history"}
               </p>
             </CardContent>
           </Card>

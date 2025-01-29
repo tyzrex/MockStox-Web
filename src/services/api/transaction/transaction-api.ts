@@ -47,18 +47,12 @@ export class TransactionApi extends BaseApi {
     });
   }
 
-  async sellStock({
-    stockSymbol,
-    quantity,
-  }: {
-    stockSymbol: string;
-    quantity: number;
-  }) {
+  async sellStock({ id, quantity }: { id: number; quantity: number }) {
     return this.handleServerAction({
       endpoint: "trading/sell/",
       method: "POST",
       data: {
-        symbol: stockSymbol,
+        id: id,
         quantity,
       },
       successMessage: "Stock sold successfully",

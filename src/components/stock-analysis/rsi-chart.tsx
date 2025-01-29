@@ -27,7 +27,7 @@ const RSIChart: React.FC<RSIChartProps> = ({ data }) => {
     yaxis: {
       min: 0,
       max: 100,
-      tickAmount: 5,
+      tickAmount: 10,
     },
     annotations: {
       yaxis: [

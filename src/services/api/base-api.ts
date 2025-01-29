@@ -67,6 +67,42 @@ export class BaseApi {
     return await this.sessionService.getUserSession();
   }
 
+  protected async handleClientQuery<K>({
+    query,
+    param,
+    cache,
+    tags,
+    isProtected = false,
+  }: {
+    query: string;
+    param?: string;
+    cache?: CacheOption;
+    tags?: string[];
+    isProtected?: boolean;
+  }) {
+    let session: Session | null = null;
+    if (isProtected) {
+      session = await getSession();
+      if (!session) {
+        throw new SessionError("Session not found");
+      }
+    }
+    const [error, response] = await goTry(
+      fetchWrapper<K>(`${query}${param ? param : ""}`, {
+        method: "GET",
+        cache: cache,
+        tags,
+        session: session,
+        validateStatus: (status: number) => status >= 200 && status < 300,
+      })
+    );
+
+    return {
+      error,
+      response: response?.data,
+    };
+  }
+
   protected async handleServerQuery<K>({
     query,
     param,

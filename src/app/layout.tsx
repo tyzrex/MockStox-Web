@@ -4,6 +4,7 @@ import "./globals.css";
 import { Toaster } from "sonner";
 import NextAuthProvider from "@/providers/next-auth-provider";
 import { ThemeProvider } from "@/providers/theme-provider";
+import ReactQueryProvider from "@/providers/react-query-provider";
 
 const inter = Outfit({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
@@ -25,8 +26,10 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <ThemeProvider attribute="class" disableTransitionOnChange>
-          <NextAuthProvider>{children}</NextAuthProvider>
-          <Toaster richColors />
+          <ReactQueryProvider>
+            <NextAuthProvider>{children}</NextAuthProvider>
+            <Toaster richColors />
+          </ReactQueryProvider>
         </ThemeProvider>
       </body>
     </html>

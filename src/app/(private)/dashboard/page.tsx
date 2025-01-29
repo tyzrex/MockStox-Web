@@ -8,13 +8,15 @@ export default async function Page() {
     return null;
   }
 
+  console.log(response);
+
   return (
     <Dashboard
       funds={response.funds}
       portfolioValue={response.portfolio_value}
       profitLoss={response.profit_or_loss}
-      worstPerformers={response.worst_performers}
-      bestPerformers={response.top_performers}
+      worstPerformers={response.top_performers}
+      bestPerformers={response.worst_performers}
       recentTrades={response.recent_transactions}
     />
   );

@@ -114,6 +114,7 @@ export default function StockPredictionClient({
   data,
   symbol,
 }: StockPredictionClientProps) {
+  console.log(data);
   const chartData = [
     {
       name: "Price",

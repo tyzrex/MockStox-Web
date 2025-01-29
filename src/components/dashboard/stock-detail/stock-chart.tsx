@@ -1,17 +1,17 @@
 "use client";
-import { useState, useMemo } from "react";
+import { useMemo } from "react";
 import { ArrowUpRight, ArrowDownRight } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import dynamic from "next/dynamic";
-import { FormattedHistory } from "@/types/dashboard-api-types";
+import { FormattedHistory, PortfolioObject } from "@/types/dashboard-api-types";
 import { formatNepaliCurrency } from "@/lib/utils";
-import DateSelector from "./date-picker";
-import { areaChartOptions } from "./charts/area-options";
 import {
   candlestickChartOptions,
   candlestickSeries,
 } from "./charts/candle-options";
 import EnhancedTradingComponent from "./quick-trade";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import { useRouter } from "next/navigation";
 
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
@@ -19,17 +19,14 @@ export default function StockDashboard({
   symbol,
   number_of_stocks,
   history,
+  stockHolding,
 }: {
   symbol: string;
+  stockHolding: PortfolioObject[];
   number_of_stocks: number;
   history: FormattedHistory[];
 }) {
-  const [selectedPeriod, setSelectedPeriod] = useState("1M");
-  const [startDate, setStartDate] = useState("2024-01");
-  const [endDate, setEndDate] = useState("2024-08");
-  const [quickTradeQuantity, setQuickTradeQuantity] = useState(0);
-  const [selectedChart, setSelectedChart] = useState("candlestick");
-
+  const router = useRouter();
   const formattedHistory = useMemo(() => {
     return history.map((item) => ({
       ...item,
@@ -37,21 +34,10 @@ export default function StockDashboard({
     }));
   }, [history]);
 
-  console.log(formattedHistory);
-
-  const [buyQuantity, setBuyQuantity] = useState(0);
-  const [sellQuantity, setSellQuantity] = useState(0);
-
   const latestPrice = formattedHistory[formattedHistory.length - 1].close;
   const previousClose = formattedHistory[formattedHistory.length - 2].close;
   const priceChange = latestPrice - previousClose;
   const percentageChange = (priceChange / previousClose) * 100;
-  const series = [
-    {
-      name: "Price",
-      data: formattedHistory.map((item) => [item.date, item.close]),
-    },
-  ];
 
   return (
     <div>
@@ -79,7 +65,56 @@ export default function StockDashboard({
             </div>
           </div>
           <div className="flex items-center space-x-4">
-            <DateSelector />
+            <ToggleGroup
+              variant="outline"
+              className="inline-flex gap-0 -space-x-px rounded-lg shadow-sm shadow-black/5 rtl:space-x-reverse"
+              type="single"
+            >
+              <ToggleGroupItem
+                className="rounded-none shadow-none first:rounded-s-lg last:rounded-e-lg focus-visible:z-10"
+                onClick={() => {
+                  router.push(
+                    `/dashboard/stock-detail/${symbol}?number_of_months=1`
+                  );
+                }}
+                value="1"
+              >
+                1 month
+              </ToggleGroupItem>
+              <ToggleGroupItem
+                className="rounded-none shadow-none first:rounded-s-lg last:rounded-e-lg focus-visible:z-10"
+                onClick={() => {
+                  router.push(
+                    `/dashboard/stock-detail/${symbol}?number_of_months=3`
+                  );
+                }}
+                value="3"
+              >
+                3 months
+              </ToggleGroupItem>
+              <ToggleGroupItem
+                className="rounded-none shadow-none first:rounded-s-lg last:rounded-e-lg focus-visible:z-10"
+                onClick={() => {
+                  router.push(
+                    `/dashboard/stock-detail/${symbol}?number_of_months=6`
+                  );
+                }}
+                value="6"
+              >
+                6 months
+              </ToggleGroupItem>
+              <ToggleGroupItem
+                className="rounded-none shadow-none first:rounded-s-lg last:rounded-e-lg focus-visible:z-10"
+                onClick={() => {
+                  router.push(
+                    `/dashboard/stock-detail/${symbol}?number_of_months=12`
+                  );
+                }}
+                value="12"
+              >
+                12 months
+              </ToggleGroupItem>
+            </ToggleGroup>
           </div>
         </div>
 
@@ -129,22 +164,7 @@ export default function StockDashboard({
 
         {/* Main Content */}
         <div className="grid xl:grid-cols-4 gap-6">
-          <div className="col-span-2 space-y-6">
-            <Card className="">
-              <CardContent className="p-6">
-                <h3 className="text-lg font-semibold">Line Charts</h3>
-
-                <Chart
-                  options={areaChartOptions}
-                  series={series}
-                  type="area"
-                  height={400}
-                />
-              </CardContent>
-            </Card>
-          </div>
-
-          <div className="col-span-2 space-y-6">
+          <div className="col-span-4 space-y-6">
             <Card className="">
               <CardContent className="p-6">
                 <h3 className="text-lg font-semibold">CandleStick Chart</h3>
@@ -161,6 +181,7 @@ export default function StockDashboard({
 
           <div className="col-span-4">
             <EnhancedTradingComponent
+              stockHolding={stockHolding}
               symbol={symbol}
               number_of_stocks={number_of_stocks}
               latestPrice={formattedHistory[formattedHistory.length - 1].close}

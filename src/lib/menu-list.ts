@@ -83,13 +83,7 @@ export function getMenuList(pathname: string): { navMain: NavItem[] } {
           },
         ],
       },
-      {
-        title: "Live Market",
-        url: "/dashboard/live-market",
-        icon: Radio,
-        isActive: pathname === "/dashboard/live-market",
-        items: [],
-      },
+
       {
         title: "My Trades",
         url: "/dashboard/trades",

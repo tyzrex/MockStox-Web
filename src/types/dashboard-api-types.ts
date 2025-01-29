@@ -67,3 +67,20 @@ export interface StockPrediction {
   sell_probability: number;
   hold_probability: number;
 }
+export interface StockHolding {
+  id: number;
+  stock: number;
+  quantity: number;
+  buying_price: string;
+  symbol: string;
+  created_at: string;
+}
+
+export interface PortfolioObject {
+  id: number;
+  stocks: StockHolding[];
+  created_at: string;
+  updated_at: string;
+  deleted_at: string;
+  user: number;
+}

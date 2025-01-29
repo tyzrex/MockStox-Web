@@ -16,14 +16,14 @@ export async function buyStock({
 }
 
 export async function sellStock({
-  stockSymbol,
+  id,
   quantity,
 }: {
-  stockSymbol: string;
+  id: number;
   quantity: number;
 }) {
   return transactionApi.sellStock({
-    stockSymbol,
+    id,
     quantity,
   });
 }
