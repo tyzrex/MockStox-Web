@@ -29,6 +29,7 @@ import {
   sellStock,
 } from "@/services/api/transaction/transaction-actions";
 import { toast } from "sonner";
+import PageHeader from "../shared/page-header";
 
 export default function StockTrade({
   stocks,
@@ -59,7 +60,7 @@ export default function StockTrade({
       toast.success("Order placed successfully");
     } else if (side === "sell") {
       await sellStock({
-        stockSymbol: symbol,
+        id: 1,
         quantity: parseInt(quantity),
       });
       toast.success("Sell order placed successfully");
@@ -72,7 +73,10 @@ export default function StockTrade({
   return (
     <div>
       <div className="mx-auto">
-        <h1 className="text-3xl font-bold mb-8">Trade Execution</h1>
+        <PageHeader
+          title="Trade Execution"
+          description="Quickly place buy or sell orders for stocks."
+        />
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <Card>

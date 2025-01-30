@@ -62,8 +62,8 @@ export const candlestickChartOptions: ApexOptions = {
   plotOptions: {
     candlestick: {
       colors: {
-        upward: "#00ff00",
-        downward: "#ff0000",
+        upward: "#26a69a",
+        downward: "#ef5350",
       },
     },
   },

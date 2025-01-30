@@ -1,3 +1,4 @@
+import PageHeader from "@/components/shared/page-header";
 import {
   Table,
   TableBody,
@@ -33,7 +34,10 @@ const categories = Object.keys(stockData);
 export default function StockCategories() {
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-5">Stock Categories</h1>
+      <PageHeader
+        title="Stock Categories"
+        description="List of all categories of stocks available for trading."
+      />
       <Table>
         <TableHeader>
           <TableRow>

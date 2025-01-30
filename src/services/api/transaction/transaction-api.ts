@@ -18,9 +18,10 @@ export class TransactionApi extends BaseApi {
     super(sessionService);
   }
 
-  async getAllTransactions() {
+  async getAllTransactions({ page }: { page?: number } = {}) {
     return this.handleServerQuery<PaginatedResponse<Trade>>({
       query: "user/transactions",
+      param: page ? buildPageParam(page) : undefined,
       isProtected: true,
       cache: "no-store",
       tags: ["my-trades", "stock-detail"],

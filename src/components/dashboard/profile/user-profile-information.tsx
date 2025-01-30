@@ -204,24 +204,6 @@ export default function UserProfileInformation({
             </div>
           </div>
           <p className="text-sm mb-4">{user.bio}</p>
-          <div className="grid grid-cols-2 gap-4 text-sm">
-            <div>
-              <p className="">Member since</p>
-              <p>{user.joinDate}</p>
-            </div>
-            <div>
-              <p className="">Total trades</p>
-              <p>{user.totalTrades}</p>
-            </div>
-            <div>
-              <p className="">Success rate</p>
-              <p>{user.successRate}%</p>
-            </div>
-            <div>
-              <p className="">Favorite stock</p>
-              <p>{user.favoriteStock}</p>
-            </div>
-          </div>
         </CardContent>
       </Card>
 

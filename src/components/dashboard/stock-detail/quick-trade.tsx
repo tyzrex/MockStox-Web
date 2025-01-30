@@ -8,6 +8,7 @@ import { dashboardApi } from "@/services/api/mockstox-api";
 import { useQuery } from "@tanstack/react-query";
 import { PortfolioObject, StockHolding } from "@/types/dashboard-api-types";
 import PredictionModal from "../prediction/prediction-model";
+import { Badge } from "@/components/ui/badge";
 
 export interface StockPrediction {
   predictions: Record<string, number>;
@@ -20,7 +21,7 @@ export interface StockPrediction {
   hold_probability: number;
 }
 
-const COMMERCIAL_BANKS = [
+export const COMMERCIAL_BANKS = [
   "ADBL",
   "CZBIL",
   "EBL",
@@ -158,7 +159,13 @@ export default function EnhancedTradingComponent({
                       </div>
                       <div className="flex justify-between">
                         <span>Predicted Price</span>
-                        <span>{formatNepaliCurrency(price)}</span>
+                        <Badge
+                          className={
+                            price > latestPrice ? "bg-green-500" : "bg-red-500"
+                          }
+                        >
+                          <span>{formatNepaliCurrency(price)}</span>
+                        </Badge>
                       </div>
                     </div>
                   ))}
@@ -242,7 +249,7 @@ export default function EnhancedTradingComponent({
         </CardContent>
       </Card>
 
-      {modalOpen && predictions && (
+      {modalOpen && (
         <PredictionModal
           isOpen={modalOpen}
           onClose={() => setModalOpen(false)}
